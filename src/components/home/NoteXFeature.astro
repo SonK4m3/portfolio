@@ -1,0 +1,38 @@
+---
+import Container from '../primitives/Container.astro';
+import Link from '../typography/Link.astro';
+
+interface Props { productImage?: string; productImageAlt?: string }
+const { productImage, productImageAlt = 'NoteX product interface' } = Astro.props as Props;
+---
+<section class="notex-feature" id="work" aria-labelledby="notex-title">
+  <Container>
+    <p class="notex-eyebrow">Selected work / 01</p>
+    <h2 id="notex-title">NoteX</h2>
+    <div class="notex-grid">
+      <p class="notex-thesis">AI products for how people learn, capture knowledge, and work.</p>
+      <div class="notex-meta" aria-label="Project role and disciplines">
+        <div><span>Role</span><strong>Product Engineer<br />Frontend Lead</strong></div>
+        <div><span>Disciplines</span><strong>Product<br />Frontend Architecture<br />AI UX</strong></div>
+      </div>
+      <div class="notex-copy">
+        <p>NoteX is a production AI product serving students and professionals across learning, note-taking, and meeting workflows.</p>
+        <p>I work across product engineering, UI/UX, frontend architecture, feature development, and the systems that allow the product to evolve across platforms and use cases.</p>
+      </div>
+    </div>
+    {productImage && <figure class="notex-visual"><img src={productImage} alt={productImageAlt} loading="lazy" /><figcaption>Fig. 01 — NoteX / Production product</figcaption></figure>}
+    <div class="notex-footer"><div class="notex-disciplines" aria-hidden="true"><span>Product engineering</span><span class="architecture-cue">Frontend architecture</span><span>AI UX</span></div><Link href="/work/notex" variant="arrow">View case study</Link></div>
+  </Container>
+</section>
+<style>
+  .notex-feature { position:relative; padding-block:clamp(6rem,12vw,11rem); border-top:1px solid var(--color-border); background-image:linear-gradient(to right,color-mix(in srgb,var(--color-border) 35%,transparent) 1px,transparent 1px); background-size:calc((100% - (var(--page-gutter) * 2)) / 12) 100%; background-position:var(--page-gutter) 0; }
+  .notex-eyebrow,.notex-meta span,.notex-disciplines,.notex-visual figcaption { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  h2 { margin-top:clamp(2rem,5vw,5rem); font-size:clamp(6rem,16vw,15rem); line-height:.72; letter-spacing:-.09em; }
+  .notex-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; margin-top:clamp(5rem,10vw,10rem); }
+  .notex-thesis { grid-column:7 / span 6; max-width:18ch; font-size:clamp(2rem,4vw,4rem); line-height:1; letter-spacing:-.05em; }
+  .notex-meta { grid-column:1 / span 4; display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; margin-top:5rem; }.notex-meta div { display:grid; gap:.75rem; }.notex-meta strong { font-size:.85rem; line-height:1.6; text-transform:uppercase; }
+  .notex-copy { grid-column:7 / span 5; display:grid; gap:1.25rem; margin-top:5rem; color:var(--color-muted); font-size:clamp(1rem,1.5vw,1.2rem); }
+  .notex-visual { margin:6rem 0 0; }.notex-visual img { display:block; width:100%; height:auto; }.notex-visual figcaption { margin-top:1rem; }
+  .notex-footer { display:flex; justify-content:space-between; align-items:end; gap:2rem; margin-top:6rem; padding-top:1.5rem; border-top:1px solid var(--color-border); }.notex-disciplines { display:flex; flex-wrap:wrap; gap:1.5rem; }.architecture-cue { color:var(--color-text); }
+  @media (max-width:640px) { .notex-feature { background-size:25% 100%; } h2 { font-size:clamp(5rem,27vw,8rem); }.notex-grid { display:block; margin-top:5rem; }.notex-thesis { max-width:12ch; }.notex-meta { grid-template-columns:1fr 1fr; margin-top:4rem; }.notex-copy { margin-top:4rem; }.notex-footer { align-items:start; flex-direction:column; }.notex-disciplines { flex-direction:column; gap:.75rem; } }
+</style>

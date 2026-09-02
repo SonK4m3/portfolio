@@ -48,6 +48,16 @@ test('NoteX case study follows the seven-chapter structure', async ({ page }) =>
   await expect(page.locator('.content-placeholder')).toContainText('[TBD]');
 });
 
+test('homepage presents NoteX and the architecture signature', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'NoteX', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'I design systems, not just screens.' })).toBeVisible();
+  await expect(page.locator('.architecture-layers li')).toHaveCount(6);
+  await expect(page.locator('.state-ownership > div')).toHaveCount(4);
+  await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
+  await expect(page.getByText('[MOCK]')).toHaveCount(0);
+});
+
 test('crawlability files exist', async ({ request }) => {
   expect((await request.get('/robots.txt')).status()).toBe(200);
   expect((await request.get('/sitemap-index.xml')).status()).toBe(200);

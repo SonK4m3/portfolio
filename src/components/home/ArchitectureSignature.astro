@@ -1,0 +1,35 @@
+---
+import Container from '../primitives/Container.astro';
+import Link from '../typography/Link.astro';
+
+const layers = [
+  { name:'Experience', detail:'Interaction, feedback, and perceived performance', tech:'' },
+  { name:'Product', detail:'Use cases, workflows, and product behavior', tech:'' },
+  { name:'Business', detail:'Rules, permissions, and operational constraints', tech:'' },
+  { name:'State', detail:'Not all state deserves the same home.', tech:'Zustand' },
+  { name:'Data', detail:'Server truth. Local persistence. Realtime change.', tech:'React Query · Dexie · SSE' },
+  { name:'Platform', detail:'Web. Extension. Desktop.', tech:'Next.js · Browser · Desktop' },
+];
+---
+<section class="architecture-signature" aria-labelledby="architecture-title">
+  <Container>
+    <p class="architecture-eyebrow">System architecture</p>
+    <div class="architecture-intro"><h2 id="architecture-title">I design systems,<br />not just screens.</h2><p>A frontend is where product behavior, data, state, runtime constraints, and interaction meet. The architecture decides how those pieces remain understandable as the product grows.</p></div>
+    <ol class="architecture-layers" aria-label="Frontend architecture layers">
+      {layers.map((layer,index) => <li><span class="layer-index">{String(index+1).padStart(2,'0')}</span><strong>{layer.name}</strong><p>{layer.detail}</p>{layer.tech && <small>{layer.tech}</small>}</li>)}
+    </ol>
+    <div class="state-signature"><p>Not all state<br />deserves the<br />same home.</p><div><strong>State management is not a library decision.</strong><span>It is an ownership decision.</span></div></div>
+    <div class="state-ownership" aria-label="State ownership model"><div><span>UI state</span><strong>Zustand</strong></div><div><span>Server state</span><strong>React Query</strong></div><div><span>Local data</span><strong>Dexie</strong></div><div><span>Realtime</span><strong>SSE</strong></div></div>
+    <Link href="/work/notex#designing-the-frontend-architecture" variant="arrow">Explore the NoteX architecture</Link>
+  </Container>
+</section>
+<style>
+  .architecture-signature { padding-block:clamp(7rem,14vw,13rem); border-top:1px solid var(--color-border); background:var(--color-surface); }
+  .architecture-eyebrow,.layer-index,.architecture-layers small,.state-ownership span { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .architecture-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; margin-top:3rem; }.architecture-intro h2 { grid-column:1 / span 8; font-size:clamp(3.5rem,7vw,7rem); line-height:.9; letter-spacing:-.07em; }.architecture-intro > p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:1.1rem; }
+  .architecture-layers { margin:clamp(6rem,12vw,12rem) 0 0; padding:0; list-style:none; border-top:1px solid var(--color-border); }.architecture-layers li { display:grid; grid-template-columns:4rem 3fr 4fr 2fr; gap:1rem; align-items:center; min-height:7rem; border-bottom:1px solid var(--color-border); transition:opacity 180ms ease,color 180ms ease; }.architecture-layers strong { font-size:clamp(1.5rem,3vw,2.75rem); text-transform:uppercase; }.architecture-layers p { color:var(--color-muted); }.architecture-layers small { text-align:right; }.architecture-layers:has(li:hover) li:not(:hover) { opacity:.28; }.architecture-layers li:hover { color:var(--color-accent); }
+  .state-signature { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; margin-top:clamp(7rem,14vw,14rem); }.state-signature > p { grid-column:1 / span 8; font-size:clamp(4rem,8vw,8rem); line-height:.82; letter-spacing:-.075em; text-transform:uppercase; }.state-signature > div { grid-column:9 / span 4; align-self:end; display:grid; gap:.5rem; }.state-signature span { color:var(--color-muted); }
+  .state-ownership { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-block:6rem 3rem; border-top:1px solid var(--color-border); }.state-ownership div { display:grid; gap:2rem; padding-top:1rem; }.state-ownership strong { font-size:1.1rem; }
+  @media (max-width:640px) { .architecture-intro { display:block; }.architecture-intro h2 { font-size:3.5rem; }.architecture-intro > p { margin-top:2rem; }.architecture-layers li { grid-template-columns:2rem 1fr; gap:.75rem; padding-block:1.5rem; }.architecture-layers p,.architecture-layers small { grid-column:2; text-align:left; }.architecture-layers:has(li:hover) li:not(:hover) { opacity:1; }.state-signature { display:block; }.state-signature > p { font-size:clamp(3.5rem,16vw,5rem); }.state-signature > div { margin-top:2rem; }.state-ownership { grid-template-columns:1fr 1fr; }.state-ownership div { min-height:7rem; } }
+  @media (prefers-reduced-motion:reduce) { .architecture-layers li { transition:none; } }
+</style>
