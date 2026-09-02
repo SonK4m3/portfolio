@@ -38,6 +38,16 @@ test('small viewport has no horizontal overflow', async ({ page }) => {
   expect(overflow).toBe(false);
 });
 
+test('NoteX case study follows the seven-chapter structure', async ({ page }) => {
+  await page.goto('/work/notex');
+  await expect(page.locator('h1')).toHaveText('NoteX');
+  await expect(page.locator('.prose h2')).toHaveCount(7);
+  await expect(page.locator('.architecture-diagram')).toBeVisible();
+  await expect(page.locator('.lifecycle')).toBeVisible();
+  await expect(page.locator('.platform-diagram')).toBeVisible();
+  await expect(page.locator('.content-placeholder')).toContainText('[TBD]');
+});
+
 test('crawlability files exist', async ({ request }) => {
   expect((await request.get('/robots.txt')).status()).toBe(200);
   expect((await request.get('/sitemap-index.xml')).status()).toBe(200);

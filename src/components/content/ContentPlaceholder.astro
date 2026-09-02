@@ -1,4 +1,5 @@
 ---
-const { label = 'CONTENT TBD' } = Astro.props;
+interface Props { label?: string }
+const { label = 'CONTENT TBD' } = Astro.props as Props;
 ---
 <div class="content-placeholder" role="note"><span class="text-meta">{label}</span></div>

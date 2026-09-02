@@ -1,0 +1,10 @@
+---
+interface Metric { value: string; label: string; mock?: boolean }
+interface Props { metrics: Metric[] }
+const { metrics } = Astro.props as Props;
+---
+<div class="metric-grid" aria-label="Case study metrics">
+  {metrics.map(({ value, label, mock = false }) => (
+    <div><strong>{value}</strong><span>{label}{mock ? ' [MOCK]' : ''}</span></div>
+  ))}
+</div>

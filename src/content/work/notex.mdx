@@ -10,6 +10,9 @@ disciplines: ['Product', 'Frontend architecture', 'AI experiences']
 technologies: ['Next.js', 'React', 'TypeScript']
 ---
 
+import MetricGrid from '../../components/content/MetricGrid.astro';
+import ContentPlaceholder from '../../components/content/ContentPlaceholder.astro';
+
 ## From Product to System
 
 NoteX started as an application. It grew into a system.
@@ -86,7 +89,9 @@ That includes frontend technical ownership, solution review, architecture feedba
 
 Any figures below are intentionally marked until verified:
 
-<div class="metric-grid"><div><strong>10K+</strong><span>users [MOCK]</span></div><div><strong>1K+</strong><span>paid users [MOCK]</span></div><div><strong>50K+</strong><span>sessions [MOCK]</span></div></div>
+<MetricGrid metrics={[{ value: '10K+', label: 'users', mock: true }, { value: '1K+', label: 'paid users', mock: true }, { value: '50K+', label: 'sessions', mock: true }]} />
+
+<ContentPlaceholder label="Evidence and screenshots [TBD]" />
 
 The most meaningful result was not a single feature. It was creating a frontend foundation that could keep evolving as NoteX added new use cases, richer content, asynchronous AI workflows, and additional product surfaces.
 
