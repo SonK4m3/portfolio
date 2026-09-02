@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import WorkLayout from '../../layouts/WorkLayout.astro';
-import Container from '../../components/primitives/Container.astro';
+import Container from '../../components/Container.astro';
 import Breadcrumbs from '../../components/navigation/Breadcrumbs.astro';
 import ProjectMeta from '../../components/work/ProjectMeta.astro';
 import CaseStudyNav from '../../components/work/CaseStudyNav.astro';
@@ -9,4 +9,4 @@ import CaseStudyNav from '../../components/work/CaseStudyNav.astro';
 export async function getStaticPaths(){const entries=await getCollection('work',({data})=>data.published);return entries.map((entry)=>({params:{slug:entry.id},props:{entry}}));}
 const {entry}=Astro.props; const {Content}=await render(entry); const {title,description,role,disciplines,technologies}=entry.data;
 ---
-<WorkLayout title={`${title} — Work`} description={description}><article class="case-study"><Container width="reading"><Breadcrumbs items={[{ label: 'Work', href: '/work' }, { label: title }]} /><header class="case-study-header"><span class="eyebrow">Case study / {role ?? '[ROLE TBD]'}</span><h1>{title}</h1><p class="lead">{description}</p><ProjectMeta role={role} disciplines={disciplines} technologies={technologies} /></header><div class="prose"><Content /></div><CaseStudyNav /></Container></article></WorkLayout>
+<WorkLayout title={`${title} — Work`} description={description}><article class="case-study"><Container class="container-reading"><Breadcrumbs items={[{ label: 'Work', href: '/work' }, { label: title }]} /><header class="case-study-header"><span class="eyebrow">Case study / {role ?? '[ROLE TBD]'}</span><h1>{title}</h1><p class="lead">{description}</p><ProjectMeta role={role} disciplines={disciplines} technologies={technologies} /></header><div class="prose"><Content /></div><CaseStudyNav /></Container></article></WorkLayout>
