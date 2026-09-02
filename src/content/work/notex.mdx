@@ -1,21 +1,101 @@
 ---
 title: NoteX
-description: 'AI-powered knowledge workspace [CONTENT: refine product description]'
+description: 'Building the product system behind how people learn, think, and work.'
 published: true
 featured: true
 order: 1
-role: '[CONTENT: role and scope]'
-disciplines: ['Product', 'Interface', 'AI systems']
-technologies: ['[TECHNOLOGY TBD]']
+role: 'Product Engineer · Frontend Lead'
+period: '2024 — Present [MOCK]'
+disciplines: ['Product', 'Frontend architecture', 'AI experiences']
+technologies: ['Next.js', 'React', 'TypeScript']
 ---
-> [CONTENT: Product summary]
-## The problem
-[CONTENT TBD]
-## The idea
-[CONTENT TBD]
-## My role
-[CONTENT TBD]
-## Engineering decisions
-[CONTENT TBD]
-## What I learned
-[CONTENT TBD]
+
+## From Product to System
+
+NoteX started as an application. It grew into a system.
+
+The product brings together learning, note-taking, and meetings. Those workflows create different expectations: a student reviewing a lecture needs a different experience from a professional returning to a two-hour meeting; manually created notes behave differently from content generated asynchronously by AI.
+
+As NoteX expanded across B2C and B2B contexts, the challenge changed. We were no longer building individual features inside a web application. We were building a product system: shared capabilities, context-specific experiences, and clear responsibility across the frontend architecture.
+
+> Product complexity was becoming architecture complexity.
+
+<div class="system-words" aria-label="NoteX product surfaces"><span>LEARN</span><span>NOTE</span><span>MEET</span><span>B2C</span><span>B2B</span><span>WEB</span><span>EXTENSION</span><span>DESKTOP</span></div>
+
+## Designing the Frontend Architecture
+
+### Not all state deserves the same home.
+
+The frontend coordinates server data, local interaction state, long-running AI tasks, realtime events, and persistence without exposing that complexity to the user.
+
+I approached state management as an ownership problem: what owns this information, how long should it live, and who needs to know when it changes?
+
+<div class="architecture-diagram" role="img" aria-label="Conceptual NoteX frontend architecture"><strong>PRODUCT EXPERIENCE</strong><div class="diagram-branches"><span>INTERACTION<br /><small>Zustand</small></span><span>BUSINESS<br /><small>Product rules</small></span></div><b>DATA LAYER</b><div class="diagram-branches"><span>SERVER STATE<br /><small>React Query</small></span><span>REALTIME<br /><small>SSE</small></span><span>LOCAL DATA<br /><small>Dexie</small></span></div><strong>API / PLATFORM</strong></div>
+
+The stack is not the story. The boundary is. Server state needs caching and synchronization. Interaction state needs to stay responsive. Local data needs an explicit lifetime and source of truth. Realtime events should update the smallest meaningful part of the product.
+
+With server-rendered initial data and client-side runtime behavior, server/client boundaries became product decisions. The goal was to place each responsibility where it produced the best combination of performance, maintainability, and user experience.
+
+## Making AI Feel Like Product
+
+### Generation is easy. Reliability is the product.
+
+AI introduces uncertainty: generation takes time, results can fail, tasks can outlive a page transition, context can be incomplete, and quota can run out. The interface needs to turn that uncertainty into something users can understand and trust.
+
+For each AI-powered experience, the product must answer: what started, what is running, whether the user can leave and return, what happens on failure, whether retry is safe, and where the result appears.
+
+<div class="lifecycle" aria-label="AI product lifecycle"><span>INTENT</span><span>CONTEXT</span><span>GENERATION</span><span>VALIDATION</span><span>RECOVERY</span><span>PRODUCT STATE</span></div>
+
+AI should feel like a capability inside the product, not a separate machine the user has to manage. The system can be complex; the mental model should not be.
+
+## Designing the Experience
+
+### Loading is part of the interface.
+
+Perceived performance is part of frontend architecture. A transition should preserve context, show the expected change, and replace content without making the whole interface feel unstable.
+
+```text
+REQUEST → PRESERVE CONTEXT → SHOW EXPECTED CHANGE → RESOLVE → REPLACE CONTENT
+```
+
+The same principle applies to rich content and failure states. Notes may include structured text, media, PDFs, audio, mind maps, and AI output, but those formats should still feel like parts of one product language.
+
+## Beyond the Web
+
+### The product should meet users where the work happens.
+
+Not every use case belongs in the main web application. A meeting workflow may benefit from a browser extension; local files and operating-system integration may justify a desktop surface.
+
+<div class="platform-diagram" aria-label="NoteX platform model"><strong>NOTEX CORE</strong><div><span><b>WEB</b><small>workspace · editing · knowledge</small></span><span><b>EXTENSION</b><small>meeting context · capture · side panel</small></span><span><b>DESKTOP</b><small>local system · files · integration</small></span></div></div>
+
+The goal is not feature parity. It is shared capabilities with context-specific experiences. Each platform should earn its existence by improving a real workflow.
+
+## Product Engineering in Practice
+
+### Good frontend architecture often starts before frontend code.
+
+As Product Engineer and Frontend Lead, I work across product, interface, architecture, and implementation. I collaborate with Product Owners, Business Analysts, Backend engineers, and other team members to refine use cases and evaluate how technical choices affect the final experience.
+
+That includes frontend technical ownership, solution review, architecture feedback, code review, clarifying ownership between layers, and helping engineers reason about trade-offs. Leadership is expressed through clear systems and decisions that remain understandable when the original author is not in the room.
+
+> A good architecture should help people make good decisions even when you are not in the room.
+
+## Results & Lessons
+
+### Metrics
+
+Any figures below are intentionally marked until verified:
+
+<div class="metric-grid"><div><strong>10K+</strong><span>users [MOCK]</span></div><div><strong>1K+</strong><span>paid users [MOCK]</span></div><div><strong>50K+</strong><span>sessions [MOCK]</span></div></div>
+
+The most meaningful result was not a single feature. It was creating a frontend foundation that could keep evolving as NoteX added new use cases, richer content, asynchronous AI workflows, and additional product surfaces.
+
+### What I learned
+
+Frontend architecture is not separate from the user experience. Where state lives changes responsiveness. Where rendering happens changes loading. How asynchronous work is modeled changes whether AI feels reliable. How platforms share capabilities changes whether the product feels coherent.
+
+## What Comes Next
+
+NoteX continues to evolve across product contexts and platforms. The next challenge is preserving coherence as the system expands: improving platform boundaries, AI reliability, local and realtime workflows, performance, and frontend architecture without making the product harder to understand.
+
+> BUILD SYSTEMS PEOPLE DO NOT HAVE TO THINK ABOUT.
