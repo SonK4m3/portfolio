@@ -1,5 +1,5 @@
 ---
-interface Props { width?: 'content' | 'reading' | 'wide' | 'full'; as?: 'div' | 'section' | 'article'; }
+export interface Props { width?: 'content' | 'reading' | 'wide' | 'full'; as?: 'div' | 'section' | 'article'; }
 const { width = 'content', as: Tag = 'div' } = Astro.props as Props;
 ---
 <Tag class={`container container-${width}`}><slot /></Tag>
