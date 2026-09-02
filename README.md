@@ -12,10 +12,10 @@ Static-first portfolio foundation for a Product Engineer focused on AI products,
 ## Local setup
 
 ```bash
-npm install
-npm run dev
-npm run check
-npm run build
+pnpm install
+pnpm dev
+pnpm check
+pnpm build
 ```
 
 ## Content architecture

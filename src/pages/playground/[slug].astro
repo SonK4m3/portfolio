@@ -1,0 +1,6 @@
+---
+import { getCollection, render } from 'astro:content'; import NoteLayout from '../../layouts/NoteLayout.astro'; import Container from '../../components/Container.astro';
+export async function getStaticPaths() { const entries = await getCollection('experiments', ({ data }) => data.published); return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })); }
+const { entry } = Astro.props; const { Content } = await render(entry); const { title, description } = entry.data;
+---
+<NoteLayout title={`${title} — Playground`} description={description}><Container><span class="eyebrow">Experiment</span><h1>{title}</h1><p class="lead">{description}</p><div class="prose"><Content /></div></Container></NoteLayout>
