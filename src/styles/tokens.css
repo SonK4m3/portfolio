@@ -1,0 +1,2 @@
+:root { --bg:#f7f7f4; --surface:#fff; --text:#171714; --muted:#6f6f68; --border:#deded7; --accent:#265d50; --font-sans:Inter,ui-sans-serif,system-ui,sans-serif; --font-mono:'SFMono-Regular',Consolas,monospace; --page-gutter:clamp(1.25rem,4vw,4rem); --content-width:88rem; --reading-width:42rem; --space-section:clamp(5rem,12vw,10rem); }
+@media (prefers-color-scheme: dark) { :root { --bg:#171714; --surface:#22221e; --text:#f4f3ed; --muted:#aaa99f; --border:#383832; --accent:#8ed1bd; } }

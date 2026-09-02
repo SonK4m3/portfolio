@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import Container from '../../components/Container.astro'; import { getCollection } from 'astro:content'; const work=(await getCollection('work',({data})=>data.published)).sort((a,b)=>a.data.order-b.data.order);
+---
+<BaseLayout title="Work — Product Engineer"><section class="section"><Container><span class="eyebrow">Selected work</span><h1>Work</h1><div class="work-list" style="margin-top:4rem">{work.map((entry)=><a class="project" href={`/work/${entry.id}`}><span class="project-index">{String(entry.data.order).padStart(2,'0')}</span><div><h2 style="font-size:2rem">{entry.data.title}</h2><p>{entry.data.description}</p></div><span class="project-meta">View ↗</span></a>)}</div></Container></section></BaseLayout>

@@ -1,0 +1,4 @@
+---
+import Container from './Container.astro'; import { siteConfig, navigation } from '../data/site';
+---
+<header class="site-header"><Container><a class="brand" href="/">{siteConfig.name}</a><nav aria-label="Primary navigation">{navigation.map((item) => <a href={item.href}>{item.label}</a>)}</nav></Container></header>

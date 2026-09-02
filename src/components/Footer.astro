@@ -1,0 +1,4 @@
+---
+import Container from './Container.astro'; import { siteConfig } from '../data/site';
+---
+<footer class="site-footer"><Container><p>Let's build something useful.</p><div class="footer-meta"><span>© {new Date().getFullYear()}</span>{siteConfig.email && <a href={`mailto:${siteConfig.email}`}>Email</a>}</div></Container></footer>
