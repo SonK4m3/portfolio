@@ -16,6 +16,7 @@ pnpm install
 pnpm dev
 pnpm check
 pnpm build
+pnpm test:e2e
 ```
 
 ## Content architecture
@@ -36,6 +37,10 @@ Unknown personal, product, metric, and contact details are explicit placeholders
 ## Deployment
 
 No deployment target has been selected. The site remains static-first and host-agnostic.
+
+## Reliability
+
+Playwright smoke tests cover all public routes, metadata, JSON-LD, navigation, keyboard focus, reduced motion, mobile overflow, `robots.txt`, sitemap, and the social preview asset. GitHub Actions runs the same check, build, and browser tests on pushes to `main` and pull requests.
 
 ## Handoff
 
