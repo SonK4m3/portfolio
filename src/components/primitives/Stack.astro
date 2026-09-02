@@ -1,0 +1,5 @@
+---
+interface Props { gap?: 'sm' | 'md' | 'lg'; }
+const { gap = 'md' } = Astro.props;
+---
+<div class={`stack stack-${gap}`}><slot /></div>

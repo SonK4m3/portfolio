@@ -1,0 +1,5 @@
+---
+import Container from '../primitives/Container.astro'; import Section from '../primitives/Section.astro'; import Heading from '../typography/Heading.astro'; import Link from '../typography/Link.astro';
+const { text, href = '/about' } = Astro.props;
+---
+<Section><Container><Heading size="section">A little context.</Heading><p class="about-preview">{text}</p><Link href={href} variant="arrow">More about me</Link></Container></Section>

@@ -1,0 +1,6 @@
+---
+interface Props { href: string; label: string; }
+const { href, label } = Astro.props;
+const active = Astro.url.pathname === href || (href !== '/' && Astro.url.pathname.startsWith(`${href}/`));
+---
+<a href={href} aria-current={active ? 'page' : undefined}>{label}</a>

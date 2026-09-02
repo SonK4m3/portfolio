@@ -1,0 +1,5 @@
+---
+const { github, linkedin, email } = Astro.props;
+const links = [{ label: 'GitHub', href: github }, { label: 'LinkedIn', href: linkedin }, { label: 'Email', href: email ? `mailto:${email}` : null }].filter((item) => item.href);
+---
+{links.length > 0 && <nav class="social-links" aria-label="Social links">{links.map((link) => <a href={link.href} target={link.label === 'Email' ? undefined : '_blank'} rel={link.label === 'Email' ? undefined : 'noreferrer'}>{link.label}</a>)}</nav>}

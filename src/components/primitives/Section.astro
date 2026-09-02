@@ -1,0 +1,5 @@
+---
+interface Props { spacing?: 'compact' | 'default' | 'large'; tone?: 'default' | 'muted' | 'bordered'; id?: string; }
+const { spacing = 'default', tone = 'default', id } = Astro.props;
+---
+<section id={id} class={`section section-${spacing} section-tone-${tone}`}><slot /></section>

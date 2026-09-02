@@ -1,0 +1,5 @@
+---
+interface Props { gap?: 'sm' | 'md' | 'lg'; align?: 'start' | 'center' | 'end'; }
+const { gap = 'md', align = 'center' } = Astro.props;
+---
+<div class={`cluster cluster-${gap} cluster-align-${align}`}><slot /></div>

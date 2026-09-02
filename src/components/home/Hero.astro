@@ -1,0 +1,5 @@
+---
+import Container from '../primitives/Container.astro'; import Section from '../primitives/Section.astro'; import Heading from '../typography/Heading.astro'; import Lead from '../typography/Lead.astro'; import Link from '../typography/Link.astro';
+const { eyebrow = 'Product Engineer', title, description, action } = Astro.props;
+---
+<Section spacing="large"><Container><span class="eyebrow">{eyebrow}</span><Heading as="h1" size="display">{title}</Heading><Lead>{description}</Lead>{action && <Link href={action.href} variant="arrow">{action.label}</Link>}</Container></Section>
