@@ -1,0 +1,5 @@
+.container-reading { max-width:var(--reading-max); } .container-wide { max-width:var(--wide-max); }
+.section-compact { padding-block:4rem; } .section-large { padding-block:clamp(7rem,16vw,14rem); }
+.stack { display:flex; flex-direction:column; } .stack-default { gap:1.5rem; } .stack-tight { gap:.75rem; } .stack-loose { gap:3rem; }
+.cluster { display:flex; flex-wrap:wrap; align-items:center; gap:1rem; }
+.page-title { margin-top:2rem; } .page-intro { margin-top:3rem; }

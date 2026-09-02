@@ -1,0 +1,6 @@
+.text-display { font-size:clamp(4rem,12vw,9.5rem); line-height:.88; letter-spacing:-.075em; }
+.text-heading-xl { font-size:clamp(2.5rem,6vw,5rem); line-height:.95; letter-spacing:-.06em; }
+.text-heading-lg { font-size:clamp(2rem,4vw,3.5rem); line-height:1; letter-spacing:-.04em; }
+.text-lead { max-width:var(--reading-max); font-size:clamp(1.15rem,2vw,1.4rem); line-height:1.45; color:var(--color-muted); }
+.text-body { max-width:var(--reading-max); font-size:1rem; line-height:1.7; }
+.text-meta { font-family:var(--font-mono); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; }

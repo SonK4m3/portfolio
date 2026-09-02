@@ -1,0 +1,4 @@
+---
+const { cite } = Astro.props;
+---
+<figure class="content-quote"><blockquote><slot /></blockquote>{cite && <figcaption>— {cite}</figcaption>}</figure>

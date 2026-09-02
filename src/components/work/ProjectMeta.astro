@@ -1,0 +1,4 @@
+---
+const { role = '[ROLE TBD]', disciplines = [] } = Astro.props;
+---
+<div class="project-meta"><span>{role}</span>{disciplines.length > 0 && <span>{disciplines.join(' · ')}</span>}</div>

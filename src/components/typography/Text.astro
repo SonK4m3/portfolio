@@ -1,0 +1,4 @@
+---
+const { variant = 'body', class: className = '' } = Astro.props;
+---
+<p class={`text-${variant} ${className}`}><slot /></p>

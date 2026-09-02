@@ -1,0 +1,4 @@
+---
+const { index, title, description, href, role } = Astro.props;
+---
+<a class="project" href={href}><span class="project-index">{index}</span><div><h3>{title}</h3><p>{description}</p></div><span class="project-meta">{role ?? '[ROLE TBD]'}</span></a>
