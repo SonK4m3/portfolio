@@ -1,4 +1,5 @@
 ---
-const { href = '/work', label = 'Back to work' } = Astro.props;
+interface Props { href?: string; label?: string }
+const { href = '/work', label = 'Back to work' } = Astro.props as Props;
 ---
 <nav class="case-study-nav" aria-label="Case study navigation"><a class="hero-link" href={href}>← {label}</a></nav>

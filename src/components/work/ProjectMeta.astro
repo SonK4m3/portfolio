@@ -1,4 +1,5 @@
 ---
-const { role = '[ROLE TBD]', disciplines = [] } = Astro.props;
+interface Props { role?: string; disciplines?: string[]; technologies?: string[] }
+const { role = '[ROLE TBD]', disciplines = [], technologies = [] } = Astro.props as Props;
 ---
-<div class="project-meta"><span>{role}</span>{disciplines.length > 0 && <span>{disciplines.join(' · ')}</span>}</div>
+<div class="project-meta" aria-label="Project metadata"><span>{role}</span>{disciplines.length > 0 && <span>{disciplines.join(' · ')}</span>}{technologies.length > 0 && <span>{technologies.join(' · ')}</span>}</div>
