@@ -1,5 +1,33 @@
 ---
-import Container from '../primitives/Container.astro'; import Section from '../primitives/Section.astro'; import Heading from '../typography/Heading.astro'; import Lead from '../typography/Lead.astro'; import Link from '../typography/Link.astro';
+import Container from '../primitives/Container.astro';
+import Link from '../typography/Link.astro';
 const { eyebrow = 'Product Engineer', title, description, action } = Astro.props;
 ---
-<Section spacing="large"><Container><span class="eyebrow">{eyebrow}</span><Heading as="h1" size="display">{title}</Heading><Lead>{description}</Lead>{action && <Link href={action.href} variant="arrow">{action.label}</Link>}</Container></Section>
+<section class="systems-hero" data-systems-hero>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-system-layer" aria-hidden="true">
+    <span class="hero-word hero-word-product">PRODUCT</span><span class="hero-word hero-word-interface">INTERFACE</span><span class="hero-word hero-word-state">STATE</span><span class="hero-word hero-word-data">DATA</span><span class="hero-word hero-word-system">SYSTEM</span><span class="hero-word hero-word-ai">AI</span>
+  </div>
+  <Container>
+    <div class="hero-meta"><span>{eyebrow}</span><span>2026 / VIETNAM</span></div>
+    <div class="hero-composition"><div class="hero-headline"><h1>{title}</h1></div><div class="hero-supporting"><p>{description}</p>{action && <Link href={action.href} variant="arrow">{action.label}</Link>}</div></div>
+  </Container>
+</section>
+<script is:inline>
+  const hero = document.querySelector('[data-systems-hero]');
+  if (hero) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateScroll = () => { const bounds = hero.getBoundingClientRect(); const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(1, bounds.height - window.innerHeight))); hero.style.setProperty('--hero-scroll', String(progress)); };
+    const updatePointer = (event) => { if (reducedMotion.matches || window.matchMedia('(max-width: 640px)').matches) return; const bounds = hero.getBoundingClientRect(); hero.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`); hero.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`); };
+    hero.addEventListener('pointermove', updatePointer, { passive: true }); window.addEventListener('scroll', updateScroll, { passive: true }); updateScroll();
+  }
+</script>
+<style>
+  .systems-hero { position:relative; min-height:100svh; overflow:hidden; padding-block:1.5rem 8rem; isolation:isolate; --hero-scroll:0; --pointer-x:50%; --pointer-y:45%; }
+  .hero-grid { position:absolute; inset:0; z-index:-2; opacity:calc(.2 + (var(--hero-scroll) * .18)); background-image:linear-gradient(to right, color-mix(in srgb, var(--color-border) 55%, transparent) 1px, transparent 1px),linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px); background-size:calc((100% - (var(--page-gutter) * 2)) / 12) 100%,100% 20%; background-position:var(--page-gutter) 0,0 20%; mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent); }
+  .hero-grid::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--pointer-x) var(--pointer-y),color-mix(in srgb,var(--color-text) 20%,transparent),transparent 26rem); opacity:.24; }
+  .hero-system-layer { position:absolute; inset:0; z-index:-1; pointer-events:none; color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.12em; }.hero-word { position:absolute; opacity:calc(.025 + (var(--hero-scroll) * .2)); transition:opacity 220ms ease; }.hero-word-product { top:22%; left:17%; }.hero-word-interface { top:62%; left:23%; }.hero-word-state { top:28%; right:18%; }.hero-word-data { top:58%; left:57%; }.hero-word-system { top:40%; right:13%; }.hero-word-ai { top:75%; right:28%; }
+  .hero-meta { display:flex; justify-content:space-between; color:var(--color-muted); font:600 .72rem var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }.hero-composition { display:grid; grid-template-columns:repeat(12,1fr); min-height:calc(100svh - 5rem); align-content:center; padding-top:6rem; }.hero-headline { grid-column:1 / span 9; align-self:center; }.hero-headline h1 { max-width:10ch; margin:0; font-size:clamp(4.5rem,8.5vw,8rem); line-height:.9; letter-spacing:-.075em; }.hero-supporting { grid-column:9 / span 4; align-self:end; padding-bottom:4rem; }.hero-supporting p { max-width:28rem; color:var(--color-muted); font-size:clamp(1.1rem,1.7vw,1.35rem); line-height:1.35; }.hero-supporting .link { margin-top:2.5rem; border-bottom:1px solid currentColor; padding-bottom:.35rem; font-weight:600; }
+  @media (max-width:640px) { .systems-hero { min-height:calc(100svh - 4rem); padding-bottom:4rem; }.hero-grid { background-size:25% 100%,100% 12.5%; }.hero-system-layer { font-size:.62rem; }.hero-word-product { top:25%; left:8%; }.hero-word-interface { top:43%; left:8%; }.hero-word-state { top:52%; right:8%; }.hero-word-data { top:62%; left:8%; }.hero-word-system { top:71%; right:8%; }.hero-word-ai { top:80%; left:8%; }.hero-meta { gap:1rem; font-size:.62rem; }.hero-composition { display:flex; min-height:calc(100svh - 8rem); flex-direction:column; justify-content:center; gap:2rem; padding-top:3rem; }.hero-headline h1 { max-width:8ch; font-size:clamp(3.5rem,15vw,5.5rem); }.hero-supporting { padding:0; }.hero-supporting p { max-width:22rem; font-size:1rem; }.hero-supporting .link { margin-top:1.5rem; } }
+  @media (prefers-reduced-motion:reduce) { .hero-word { opacity:.12; transition:none; }.hero-grid { opacity:.35; }.hero-grid::after { display:none; } }
+</style>
