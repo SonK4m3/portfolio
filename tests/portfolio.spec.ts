@@ -72,14 +72,14 @@ test('homepage presents NoteX and the architecture signature', async ({ page }) 
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'NoteX', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'I design systems, not just screens.' })).toBeVisible();
-  await expect(page.locator('.architecture-layers li')).toHaveCount(6);
-  await expect(page.locator('.state-ownership > div')).toHaveCount(4);
+  await expect(page.locator('.architecture-map .map-node')).toHaveCount(8);
+  await expect(page.locator('.task-trace li')).toHaveCount(8);
   await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
-  await expect(page.getByText('[MOCK]')).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: 'Product engineering happens between disciplines.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What I own.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Generation is easy/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Experiments/ })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Good products come from/ })).toBeVisible();
+  await expect(page.locator('.how-i-build li')).toHaveCount(3);
+  await expect(page.getByRole('heading', { name: /The principles only matter/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Build something thoughtful/ })).toBeVisible();
 });
 
