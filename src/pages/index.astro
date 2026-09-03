@@ -1,4 +1,14 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import Container from '../components/primitives/Container.astro'; import Section from '../components/primitives/Section.astro'; import SectionHeading from '../components/SectionHeading.astro'; import Hero from '../components/home/Hero.astro'; import NoteXFeature from '../components/home/NoteXFeature.astro'; import ArchitectureSignature from '../components/home/ArchitectureSignature.astro'; import AboutPreview from '../components/home/AboutPreview.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import TransitionStatement from '../components/home/TransitionStatement.astro';
+import NoteXFeature from '../components/home/NoteXFeature.astro';
+import ProductEngineer from '../components/home/ProductEngineer.astro';
+import ArchitectureSignature from '../components/home/ArchitectureSignature.astro';
+import AIProductSignature from '../components/home/AIProductSignature.astro';
+import ExperimentsArchive from '../components/home/ExperimentsArchive.astro';
+import HowIBuild from '../components/home/HowIBuild.astro';
+import AboutPreview from '../components/home/AboutPreview.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
 ---
-<BaseLayout><Hero title="I build AI products with taste and technical depth." description="I work across product, interface, and engineering — turning complex ideas into thoughtful systems that can reach production." action={{ label: 'Selected work', href: '#work' }} /><NoteXFeature /><ArchitectureSignature /><Section><Container><SectionHeading eyebrow="AI product" title="Generation is easy. Reliability is the product." /><p class="about-preview muted">The useful work is in context, feedback, recovery, and turning uncertain model behavior into a product people can trust.</p></Container></Section><Section><Container><SectionHeading eyebrow="03 / Playground" title="Experiments, in progress." /><p class="about-preview muted">AI, RAG, agents, browser APIs, recording, desktop, and the systems that make new product ideas possible.</p></Container></Section><AboutPreview text="I'm a Product Engineer interested in the space where software engineering, product thinking, and AI meet." /></BaseLayout>
+<BaseLayout><Hero title="I build AI products with taste and technical depth." description="I work across product, interface, and engineering — turning complex ideas into thoughtful systems that can reach production." action={{ label: 'Selected work', href: '#work' }} /><TransitionStatement /><NoteXFeature /><ProductEngineer /><ArchitectureSignature /><AIProductSignature /><ExperimentsArchive /><HowIBuild /><AboutPreview /><FinalCTA /></BaseLayout>

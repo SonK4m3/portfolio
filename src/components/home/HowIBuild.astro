@@ -1,0 +1,15 @@
+---
+import Container from '../primitives/Container.astro';
+const principles = [
+  ['Start with the problem.','Before deciding how to build something, I want to understand what behavior actually needs to exist and why it matters to the person using it.','Start with the real use case. Technology comes second.'],
+  ['Make complexity invisible.','A product can contain a complicated system without asking the user to understand it. The job is often to absorb that complexity on their behalf.','Complex systems should not create complicated experiences.'],
+  ['Architecture is UX.','Loading, latency, state ownership, errors, rendering boundaries, and recovery all shape how a product feels.','Users experience the consequences of technical decisions.'],
+  ['AI needs systems, not prompts.','Context, product state, evaluation, retry behavior, progress, failure, and recovery matter. The model is only one part of the product.','Reliable AI is a workflow, not a single request.'],
+  ['Ship. Learn. Refine.','I care about taking ideas through implementation, production constraints, feedback, and iteration.','A product is not finished when the code merges.'],
+];
+---
+<section class="how-i-build" aria-labelledby="build-title"><Container><p class="build-kicker">How I build</p><div class="build-intro"><h2 id="build-title">Good products come from a sequence of clear choices.</h2><p>About the problem, the system, the experience, and what is worth shipping.</p></div><ol>{principles.map(([title,body,line],index)=><li><span>{String(index+1).padStart(2,'0')}</span><div><h3>{title}</h3><p>{body}</p><strong>{line}</strong></div></li>)}</ol></Container></section>
+<style>
+  .how-i-build { padding-block:clamp(7rem,14vw,13rem); border-top:1px solid var(--color-border); }.build-kicker,.how-i-build ol > li > span { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.build-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; margin-top:3rem; }.build-intro h2 { grid-column:1 / span 8; font-size:clamp(3rem,6vw,6rem); line-height:.92; letter-spacing:-.065em; }.build-intro > p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:1.1rem; }.how-i-build ol { margin:7rem 0 0; padding:0; border-top:1px solid var(--color-border); list-style:none; }.how-i-build li { display:grid; grid-template-columns:5rem 1fr; gap:1rem; padding-block:2rem; border-bottom:1px solid var(--color-border); }.how-i-build li > div { display:grid; grid-template-columns:4fr 4fr 3fr; gap:2rem; }.how-i-build h3 { font-size:clamp(1.5rem,3vw,2.5rem); text-transform:uppercase; }.how-i-build li p { color:var(--color-muted); }.how-i-build li strong { font-size:.9rem; text-transform:uppercase; }
+  @media (max-width:640px) { .build-intro { display:block; }.build-intro > p { margin-top:2rem; }.how-i-build li { grid-template-columns:2.5rem 1fr; }.how-i-build li > div { display:block; }.how-i-build li p,.how-i-build li strong { display:block; margin-top:1rem; } }
+</style>

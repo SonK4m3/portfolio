@@ -17,9 +17,10 @@ test.describe('portfolio routes and metadata', () => {
 
 test('navigation reaches work and about', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Work', exact: true }).click();
+  const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
+  await navigation.getByRole('link', { name: 'Work', exact: true }).click();
   await expect(page).toHaveURL(/\/work\/?$/);
-  await page.getByRole('link', { name: 'About', exact: true }).click();
+  await navigation.getByRole('link', { name: 'About', exact: true }).click();
   await expect(page).toHaveURL(/\/about\/?$/);
 });
 
@@ -56,6 +57,11 @@ test('homepage presents NoteX and the architecture signature', async ({ page }) 
   await expect(page.locator('.state-ownership > div')).toHaveCount(4);
   await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
   await expect(page.getByText('[MOCK]')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Product engineering happens between disciplines.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Generation is easy/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Experiments/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Good products come from/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Build something thoughtful/ })).toBeVisible();
 });
 
 test('crawlability files exist', async ({ request }) => {

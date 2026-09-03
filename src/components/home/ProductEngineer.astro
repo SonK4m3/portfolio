@@ -1,0 +1,14 @@
+---
+import Container from '../primitives/Container.astro';
+const pillars = [
+  ['Product','Start with the real use case, not the implementation.'],
+  ['Interface','Interaction, loading, feedback, and failure are part of the product — not polish added later.'],
+  ['Systems','State, data, business logic, and architecture need clear ownership.'],
+  ['Shipping','Ideas matter when they survive the path from ambiguity to production.'],
+];
+---
+<section class="product-engineer" aria-labelledby="product-engineer-title"><Container><p class="section-kicker">Product engineer</p><div class="product-engineer-intro"><h2 id="product-engineer-title">Product engineering happens between disciplines.</h2><p>I like working where product decisions and technical decisions overlap.</p></div><div class="pillar-grid">{pillars.map(([title,body],index)=><article><span>{String(index+1).padStart(2,'0')}</span><h3>{title}</h3><p>{body}</p></article>)}</div></Container></section>
+<style>
+  .product-engineer { padding-block:clamp(7rem,14vw,13rem); border-top:1px solid var(--color-border); }.section-kicker,.pillar-grid span { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.product-engineer-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; margin-top:3rem; }.product-engineer-intro h2 { grid-column:1 / span 8; font-size:clamp(3rem,6vw,6rem); line-height:.92; letter-spacing:-.065em; }.product-engineer-intro p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:1.1rem; }.pillar-grid { display:grid; grid-template-columns:repeat(4,1fr); margin-top:7rem; border-top:1px solid var(--color-border); }.pillar-grid article { min-height:18rem; padding:1rem 1rem 2rem 0; border-right:1px solid var(--color-border); }.pillar-grid article:last-child { border-right:0; padding-left:1rem; }.pillar-grid article:not(:first-child) { padding-left:1rem; }.pillar-grid h3 { margin-top:4rem; font-size:1.4rem; text-transform:uppercase; }.pillar-grid p { margin-top:1rem; color:var(--color-muted); }
+  @media (max-width:640px) { .product-engineer-intro { display:block; }.product-engineer-intro p { margin-top:2rem; }.pillar-grid { grid-template-columns:1fr; }.pillar-grid article,.pillar-grid article:not(:first-child),.pillar-grid article:last-child { min-height:auto; padding:1.5rem 0; border-right:0; border-bottom:1px solid var(--color-border); }.pillar-grid h3 { margin-top:2rem; } }
+</style>
