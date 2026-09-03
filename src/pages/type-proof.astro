@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/primitives/Container.astro';
+const words = ['Sản phẩm', 'Trải nghiệm', 'Kiến trúc', 'Kỹ thuật', 'Hệ thống', 'Dữ liệu', 'Ghi chú', 'Cuộc họp', 'Tư duy sản phẩm', 'Trí tuệ nhân tạo'];
+const glyphs = ['ă â ê ô ơ ư đ', 'á à ả ã ạ', 'ấ ầ ẩ ẫ ậ', 'ế ề ể ễ ệ', 'ố ồ ổ ỗ ộ', 'ớ ờ ở ỡ ợ', 'ứ ừ ử ữ ự'];
+---
+<BaseLayout title="Vietnamese Typography Proof — Son Nguyen" description="Vietnamese glyph coverage proof for the portfolio type system." noindex>
+  <section class="type-proof section">
+    <Container>
+      <p class="eyebrow">Typography proof / Vietnamese</p>
+      <h1>Ngôn ngữ cũng là một phần của hệ thống.</h1>
+      <div class="proof-grid">
+        <section aria-labelledby="sans-proof"><p class="proof-meta">Geist Sans / structural voice</p><h2 id="sans-proof">Sản phẩm tốt làm cho sự phức tạp trở nên vô hình.</h2><p class="sans">{words.join(' · ')}</p></section>
+        <section aria-labelledby="serif-proof"><p class="proof-meta">IBM Plex Serif / editorial voice</p><h2 id="serif-proof">Kiến trúc không chỉ là quyết định kỹ thuật. Đó là quyết định về quyền sở hữu.</h2><p class="serif">{words.join(' · ')}</p></section>
+        <section aria-labelledby="mono-proof"><p class="proof-meta">Geist Mono / system voice</p><h2 id="mono-proof">STATE / DATA / OWNERSHIP / TRÍ TUỆ NHÂN TẠO</h2><p class="mono">{words.join(' / ')}</p></section>
+        <section aria-labelledby="glyph-proof"><p class="proof-meta">Glyph coverage</p><h2 id="glyph-proof">Dấu tiếng Việt</h2><div class="glyphs">{glyphs.map(line => <p>{line}</p>)}</div></section>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+<style>
+  .type-proof h1 { max-width:10ch; margin-top:var(--space-8); font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.045em; }
+  .proof-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:var(--space-11); }
+  .proof-grid section { grid-column:span 6; min-height:26rem; border-top:1px solid var(--color-line); padding:var(--space-4) 0 var(--space-9); }
+  .proof-grid h2 { max-width:18ch; margin-top:var(--space-8); font-size:var(--type-heading); }
+  .proof-grid section > p:last-child,.glyphs { margin-top:var(--space-8); color:var(--color-muted); font-size:var(--type-body-lg); line-height:1.7; }
+  .proof-meta { color:var(--color-muted); font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
+  .serif { font-family:var(--font-serif); }.mono,.glyphs { font-family:var(--font-mono); }.glyphs { display:grid; gap:var(--space-2); }
+  @media (max-width:900px) { .proof-grid { grid-template-columns:repeat(8,1fr); }.proof-grid section { grid-column:span 4; } }
+  @media (max-width:640px) { .type-proof h1 { font-size:clamp(3.25rem,15vw,5rem); }.proof-grid { grid-template-columns:repeat(4,1fr); margin-top:var(--space-9); }.proof-grid section { grid-column:1 / -1; min-height:auto; } }
+</style>

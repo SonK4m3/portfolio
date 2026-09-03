@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const routes = ['/', '/work', '/work/notex', '/about', '/notes', '/playground'];
+const routes = ['/', '/work', '/work/notex', '/about', '/notes', '/playground', '/type-proof'];
 
 test.describe('portfolio routes and metadata', () => {
   for (const route of routes) {
@@ -31,6 +31,25 @@ test('keyboard focus and reduced motion are supported', async ({ page }) => {
   await expect(page.locator('.skip-link')).toBeFocused();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('html')).toBeVisible();
+});
+
+test('theme control persists an explicit light or dark preference', async ({ page }) => {
+  await page.goto('/');
+  const theme = page.getByRole('button', { name: 'Toggle color theme' });
+  const initial = await page.locator('html').getAttribute('data-theme');
+  await theme.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', initial === 'dark' ? 'light' : 'dark');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', initial === 'dark' ? 'light' : 'dark');
+});
+
+test('Vietnamese proof renders all required type voices and glyph groups', async ({ page }) => {
+  await page.goto('/type-proof');
+  await expect(page.getByRole('heading', { name: 'Ngôn ngữ cũng là một phần của hệ thống.' })).toBeVisible();
+  await expect(page.getByText('Geist Sans / structural voice')).toBeVisible();
+  await expect(page.getByText('IBM Plex Serif / editorial voice')).toBeVisible();
+  await expect(page.getByText('Geist Mono / system voice')).toBeVisible();
+  await expect(page.getByText('ứ ừ ử ữ ự')).toBeVisible();
 });
 
 test('small viewport has no horizontal overflow', async ({ page }) => {

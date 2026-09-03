@@ -1,4 +1,4 @@
 ---
-import Container from './primitives/Container.astro'; import { siteConfig } from '../data/site'; import { navigation } from '../data/navigation'; import NavLink from './navigation/NavLink.astro';
+import Container from './primitives/Container.astro'; import { siteConfig } from '../data/site'; import { navigation } from '../data/navigation'; import NavLink from './navigation/NavLink.astro'; import ThemeControls from './navigation/ThemeControls.astro';
 ---
-<header class="site-header"><Container><a class="brand" href="/">{siteConfig.name}</a><nav aria-label="Primary navigation">{navigation.map((item) => <NavLink href={item.href} label={item.label} />)}</nav></Container></header>
+<header class="site-header"><Container><a class="brand" href="/">{siteConfig.name}</a><nav aria-label="Primary navigation">{navigation.map((item) => <NavLink href={item.href} label={item.label} />)}</nav><ThemeControls /></Container></header>
