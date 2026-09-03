@@ -1,8 +1,8 @@
 ---
 import Container from '../primitives/Container.astro';
 ---
-<section class="transition-statement"><Container><h2>Complex systems.<br />Thoughtful products.</h2><p>The interface is only the part people see.</p></Container></section>
+<section class="transition-statement density-quiet" data-density="quiet"><Container><h2>The interface is only<br />the part you see.</h2><p>The rest is structure, state, data, decisions, and everything that has to keep working.</p></Container></section>
 <style>
-  .transition-statement { padding-block:clamp(9rem,18vw,18rem); border-top:1px solid var(--color-border); }.transition-statement :global(.container) { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; }.transition-statement h2 { grid-column:1 / span 8; font-size:clamp(3.5rem,7vw,7rem); line-height:.9; letter-spacing:-.04em; text-wrap:balance; }.transition-statement p { grid-column:9 / span 4; align-self:end; max-width:24ch; color:var(--color-muted); font:400 var(--type-lead)/1.4 var(--font-serif); text-wrap:pretty; }
+  .transition-statement { min-height:68svh; display:grid; align-items:center; border-top:1px solid var(--color-border); }.transition-statement :global(.container) { display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; }.transition-statement h2 { grid-column:1 / span 8; max-width:14ch; font-size:clamp(3.5rem,7vw,7rem); line-height:.9; letter-spacing:-.04em; text-transform:uppercase; text-wrap:balance; }.transition-statement p { grid-column:9 / span 4; align-self:end; max-width:27ch; color:var(--color-muted); font:400 var(--type-lead)/1.4 var(--font-serif); text-wrap:pretty; }
   @media (max-width:640px) { .transition-statement :global(.container) { display:block; }.transition-statement p { margin-top:2rem; } }
 </style>

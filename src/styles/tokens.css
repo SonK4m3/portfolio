@@ -5,6 +5,7 @@
   --font-sans: 'Geist Variable', 'Geist', sans-serif; --font-serif: 'IBM Plex Serif', serif; --font-mono: 'Geist Mono Variable', 'Geist Mono', monospace; --font-handwritten: cursive;
   --canvas-max: 100rem; --container-max: var(--canvas-max); --content-width: var(--canvas-max); --reading-max: 42.5rem; --reading-width: var(--reading-max); --wide-max: var(--canvas-max); --page-gutter: clamp(1.25rem, 3.8vw, 4rem); --grid-gap: clamp(.75rem, 1.5vw, 1.5rem);
   --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 4rem; --space-9: 6rem; --space-10: 8rem; --space-11: 12rem; --space-12: 16rem; --space-section: clamp(6rem, 10vw, 10rem);
+  --section-void: clamp(12rem, 22vh, 18rem); --section-quiet: clamp(8rem, 16vh, 13rem); --section-balanced: clamp(7rem, 13vh, 11rem); --section-evidence: clamp(5rem, 10vh, 8rem); --section-technical: clamp(5rem, 9vh, 7rem);
   --radius-xs: 2px; --radius-sm: 4px; --radius-md: 8px;
   --type-display-xxl: clamp(4.75rem, 9vw, 9rem); --type-display-xl: clamp(4rem, 7.5vw, 7.5rem); --type-display-lg: clamp(3.25rem, 6vw, 6rem); --type-display-md: clamp(2.5rem, 4.5vw, 4.5rem); --type-heading: clamp(1.875rem, 3vw, 3.25rem); --type-subheading: clamp(1.5rem, 2.2vw, 2.125rem); --type-lead: clamp(1.25rem, 1.7vw, 1.6875rem); --type-body-lg: 1.25rem; --type-body: 1.125rem; --type-small: .875rem; --type-meta: .75rem;
   --duration-fast: 160ms; --duration-base: 280ms; --duration-slow: 600ms; --ease-system: cubic-bezier(.22, 1, .36, 1); --ease-out: var(--ease-system);

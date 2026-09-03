@@ -1,9 +1,40 @@
 ---
 import Container from '../primitives/Container.astro';
-const responsibilities = ['Product flow','UI / UX','Frontend architecture','FE technical decisions','Solution review','Team review','Platform evolution'];
+const primary = [
+  { title:'Frontend architecture', className:'ownership-architecture' },
+  { title:'Product / UI decisions', className:'ownership-product' },
+  { title:'Technical ownership', className:'ownership-technical' },
+];
+const secondary = ['Solution review','Team review','Platform evolution','PO / BA / BE collaboration'];
 ---
-<section class="product-engineer" aria-labelledby="product-engineer-title"><Container><p class="section-kicker">Product engineer / role scope</p><div class="product-engineer-intro"><h2 id="product-engineer-title">What I own.</h2><p>From clarifying the flow to reviewing the system that ships it.</p></div><ol class="ownership-list">{responsibilities.map((item,index)=><li><span>{String(index+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}</ol></Container></section>
+<section class="product-engineer density-balanced transition-hairline" aria-labelledby="product-engineer-title" data-density="balanced">
+  <Container>
+    <div class="product-engineer-intro"><h2 id="product-engineer-title">What I own.</h2><p>From clarifying the flow to reviewing the system that ships it.</p></div>
+    <ol class="ownership-primary">{primary.map((item,index)=><li class={item.className}><span>{String(index+1).padStart(2,'0')}</span><strong>{item.title}</strong></li>)}</ol>
+    <ul class="ownership-secondary">{secondary.map(item=><li>{item}</li>)}</ul>
+  </Container>
+</section>
 <style>
-  .product-engineer { padding-block:clamp(5rem,9vw,8rem); border-top:1px solid var(--color-border); }.section-kicker,.ownership-list span { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.product-engineer-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }.product-engineer-intro h2 { grid-column:1 / span 5; font-size:clamp(3rem,6vw,6rem); line-height:.92; letter-spacing:-.04em; text-transform:uppercase; }.product-engineer-intro p { grid-column:9 / span 4; align-self:end; max-width:30ch; color:var(--color-muted); font-size:1.1rem; text-wrap:pretty; }.ownership-list { display:grid; grid-template-columns:repeat(4,1fr); gap:0 var(--grid-gap); margin:5rem 0 0; padding:0; border-top:1px solid var(--color-border); list-style:none; }.ownership-list li { display:grid; grid-template-columns:2rem 1fr; gap:1rem; align-items:baseline; min-height:6rem; padding:1rem 0; border-bottom:1px solid var(--color-border); }.ownership-list li:nth-child(5) { grid-column:2; }.ownership-list strong { font-size:clamp(1rem,1.4vw,1.35rem); line-height:1.1; text-transform:uppercase; text-wrap:balance; }
-  @media (max-width:640px) { .product-engineer-intro { display:block; }.product-engineer-intro p { margin-top:2rem; }.ownership-list { grid-template-columns:1fr 1fr; }.ownership-list li:nth-child(5) { grid-column:auto; }.ownership-list li { min-height:5rem; padding-right:1rem; } }
+  .product-engineer { min-height:72svh; border-top:1px solid var(--color-border); }
+  .product-engineer-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); }
+  .product-engineer-intro h2 { grid-column:1 / span 6; font-size:clamp(3rem,6vw,6rem); line-height:.92; letter-spacing:-.04em; text-transform:uppercase; }
+  .product-engineer-intro p { grid-column:9 / span 4; align-self:end; max-width:30ch; color:var(--color-muted); font-size:1.1rem; text-wrap:pretty; }
+  .ownership-primary { position:relative; min-height:26rem; margin:clamp(5rem,9vw,9rem) 0 0; padding:0; list-style:none; }
+  .ownership-primary li { position:absolute; display:grid; grid-template-columns:2rem minmax(12rem,1fr); gap:1rem; align-items:start; }
+  .ownership-primary span,.ownership-secondary { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .ownership-primary strong { max-width:12ch; font-size:clamp(1.75rem,3.4vw,3.75rem); line-height:.93; letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance; }
+  .ownership-architecture { left:0; top:0; }
+  .ownership-product { right:7%; top:20%; }
+  .ownership-technical { left:16%; bottom:0; }
+  .ownership-secondary { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin:5rem 0 0; padding:1.5rem 0 0; border-top:1px solid var(--color-border); list-style:none; }
+  @media (max-width:640px) {
+    .product-engineer { min-height:auto; }
+    .product-engineer-intro { display:block; }
+    .product-engineer-intro p { margin-top:2rem; }
+    .ownership-primary { min-height:auto; display:grid; gap:3rem; }
+    .ownership-primary li { position:static; }
+    .ownership-product { margin-left:15%; }
+    .ownership-technical { margin-left:4%; }
+    .ownership-secondary { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:4rem; }
+  }
 </style>

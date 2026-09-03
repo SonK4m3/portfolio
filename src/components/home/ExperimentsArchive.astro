@@ -6,8 +6,40 @@ const experiments = [
   { index:'002', title:'AI Skills', category:'AI / Tools', year:'2026', description:'Small reusable experiments around context, tools, and product capabilities.' },
 ];
 ---
-<section class="experiments" aria-labelledby="experiments-title"><Container><p class="experiments-kicker">EXP / PLAYGROUND ARCHIVE</p><div class="experiments-intro"><h2 id="experiments-title">Experiments,<br />tools,<br />unfinished ideas.</h2><p>Small builds I use to test a workflow before deciding whether it deserves to become a product.</p></div><div class="experiment-list">{experiments.map(item=><article><span>{item.index}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><span>{item.category}</span><time>{item.year}</time></article>)}</div><figure class="experiment-evidence"><figcaption><span>EXP.001 / AI LATEX GENERATOR</span><small>[ASSETS REQUIRED]</small></figcaption><div class="artifact-grid"><div><span>OUTPUT / 01</span><strong>Generated PDF page</strong><p>Add a real exported page from the experiment.</p></div><div><span>TRACE / 02</span><strong>Compile + repair detail</strong><p>Add the real error, diagnosis, or repair diff.</p></div></div></figure><Link href="/playground" variant="arrow">Open playground</Link></Container></section>
+<section class="experiments density-balanced" aria-labelledby="experiments-title" data-density="balanced">
+  <Container>
+    <div class="experiments-layout">
+      <div class="experiments-archive">
+        <h2 id="experiments-title">Playground</h2>
+        <div class="experiment-list">{experiments.map(item=><article><span>{item.index}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><small>{item.category} / {item.year}</small></article>)}</div>
+        <Link href="/playground" variant="arrow">Open playground</Link>
+      </div>
+      <figure class="experiment-evidence media-offset"><figcaption><span>EXP.001 / DETAIL CROP</span><small>[ASSET REQUIRED]</small></figcaption><div><strong>Generated PDF<br />+ repair trace</strong><p>Add a tight, real artifact crop from the experiment.</p></div></figure>
+    </div>
+  </Container>
+</section>
 <style>
-  .experiments { padding-block:clamp(7rem,14vw,13rem); border-top:1px solid var(--color-border); }.experiments-kicker,.experiment-list > article > span,.experiment-list time,.experiment-evidence figcaption,.artifact-grid span { color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.experiments-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }.experiments-intro h2 { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; text-wrap:balance; }.experiments-intro > p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:var(--type-body); text-wrap:pretty; }.experiment-list { margin-block:7rem 3rem; border-top:1px solid var(--color-border); }.experiment-list article { display:grid; grid-template-columns:5rem 1fr 12rem 4rem; gap:var(--grid-gap); align-items:start; padding-block:1.5rem; border-bottom:1px solid var(--color-border); }.experiment-list h3 { font-size:clamp(1.5rem,3vw,2.5rem); }.experiment-list div p { max-width:38rem; margin-top:.75rem; color:var(--color-muted); }.experiment-evidence { width:calc(100% + min(3vw,3rem)); margin:7rem max(-3vw,-3rem) 3rem 0; border-block:1px solid var(--color-border); }.experiment-evidence figcaption { display:flex; justify-content:space-between; padding-block:1rem; }.experiment-evidence figcaption small { color:var(--color-accent); font:inherit; }.artifact-grid { display:grid; grid-template-columns:7fr 5fr; min-height:34rem; border-top:1px solid var(--color-border); }.artifact-grid > div { display:grid; align-content:center; justify-items:center; gap:1rem; padding:3rem; text-align:center; }.artifact-grid > div + div { border-left:1px solid var(--color-border); }.artifact-grid strong { max-width:12ch; font:400 var(--type-display-md)/.95 var(--font-serif); text-wrap:balance; }.artifact-grid p { max-width:26ch; color:var(--color-muted); text-wrap:pretty; }
-  @media (max-width:640px) { .experiments-intro { display:block; }.experiments-intro h2 { font-size:clamp(3.5rem,16vw,5rem); }.experiments-intro > p { margin-top:2rem; }.experiment-list article { grid-template-columns:2.5rem 1fr; }.experiment-list article > span:nth-of-type(2),.experiment-list time { grid-column:2; }.experiment-evidence { width:100%; margin-inline:0; }.artifact-grid { grid-template-columns:1fr; }.artifact-grid > div { min-height:20rem; padding:2rem 1rem; }.artifact-grid > div + div { border-left:0; border-top:1px solid var(--color-border); } }
+  .experiments { min-height:82svh; border-top:1px solid var(--color-border); }
+  .experiments-layout { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); align-items:center; }
+  .experiments-archive { grid-column:1 / span 5; }
+  h2 { font:560 var(--type-display-lg)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; }
+  .experiment-list { margin-block:4rem 2rem; border-top:1px solid var(--color-border); }
+  article { display:grid; grid-template-columns:3rem 1fr; gap:var(--grid-gap); padding-block:1.5rem; border-bottom:1px solid var(--color-border); }
+  article > span,article small,.experiment-evidence figcaption { color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  article h3 { font-size:clamp(1.4rem,2vw,2rem); line-height:1; text-transform:uppercase; }
+  article p { margin-top:.75rem; color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+  article small { grid-column:2; }
+  .experiment-evidence { grid-column:7 / -1; width:100%; margin:0; border-block:1px solid var(--color-border); }
+  .experiment-evidence figcaption { display:flex; justify-content:space-between; padding-block:1rem; }
+  .experiment-evidence figcaption small { color:var(--color-accent); font:inherit; }
+  .experiment-evidence > div { min-height:34rem; display:grid; align-content:center; justify-items:center; gap:1rem; border-top:1px solid var(--color-border); background:var(--color-surface); text-align:center; }
+  .experiment-evidence strong { font:400 var(--type-heading)/1 var(--font-serif); text-wrap:balance; }
+  .experiment-evidence p { max-width:24ch; color:var(--color-muted); text-wrap:pretty; }
+  @media (max-width:640px) {
+    .experiments { min-height:auto; }
+    .experiments-layout { display:block; }
+    h2 { font-size:clamp(3.5rem,16vw,5rem); }
+    .experiment-evidence { margin-top:5rem; }
+    .experiment-evidence > div { min-height:22rem; padding:2rem 1rem; }
+  }
 </style>

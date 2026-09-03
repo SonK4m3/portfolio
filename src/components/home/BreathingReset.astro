@@ -1,0 +1,11 @@
+<section class="breathing-reset density-quiet" aria-hidden="true">
+  <span>TRACE.01</span>
+  <i></i>
+</section>
+
+<style>
+  .breathing-reset { min-height:50svh; display:grid; grid-template-rows:auto 1fr; justify-items:center; gap:2rem; background:var(--color-bg); }
+  span { color:var(--color-muted); font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; }
+  i { width:1px; min-height:18vh; background:linear-gradient(to bottom,var(--color-border),transparent); }
+  @media (max-width:640px) { .breathing-reset { min-height:42svh; } i { min-height:12vh; } }
+</style>

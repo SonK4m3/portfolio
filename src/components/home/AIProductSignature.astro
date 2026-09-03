@@ -1,13 +1,53 @@
 ---
 import Container from '../primitives/Container.astro';
 import Link from '../typography/Link.astro';
-const trace = [['START','User starts generation'],['TASK','Task created'],['RUN','Generation continues'],['LEAVE','User leaves the note'],['EVENT','SSE update arrives'],['PERSIST','Task state persists'],['RETURN','User returns'],['RESULT','Result attaches to note']];
+const trace = [['00:00','User starts generation'],['00:01','Task created'],['00:04','Generation continues'],['00:06','User leaves the note'],['00:12','SSE update arrives'],['00:14','Task state persists'],['00:20','User returns'],['00:21','Result attaches to note']];
 const questions = ['Can the user leave?','What owns the task while they are gone?','What happens when they return?'];
 ---
-<section class="ai-product" aria-labelledby="ai-product-title"><Container><p class="ai-kicker">TRACE.01 / AI TASK LIFECYCLE</p><div class="ai-intro"><h2 id="ai-product-title">Generation is easy.<br />Reliability is<br />the product.</h2><div><p>A NoteX generation task can outlive the screen that started it. The product has to preserve the task, receive the update, and put the result back where the user expects it.</p><small>[FLOW TO VERIFY AGAINST PRODUCTION]</small></div></div><figure class="task-trace"><figcaption>LONG-RUNNING GENERATION / EVENT TRACE</figcaption><ol>{trace.map(([code,label],index)=><li class={index === 4 ? 'signal' : undefined}><span>{String(index+1).padStart(2,'0')} / {code}</span><strong>{label}</strong></li>)}</ol></figure><div class="ai-questions"><p>Product questions</p><ul>{questions.map(question=><li>{question}</li>)}</ul></div><blockquote>The model can finish later.<br />The product still has to remember.</blockquote><Link href="/work/notex#making-ai-feel-like-product" variant="arrow">Explore AI inside NoteX</Link></Container></section>
+<section class="ai-product density-technical" aria-labelledby="ai-product-title" data-density="technical">
+  <Container>
+    <p class="ai-kicker">TRACE.01 / AI TASK LIFECYCLE</p>
+    <div class="ai-intro"><h2 id="ai-product-title">Generation is easy.<br />Reliability is<br />the product.</h2><div><p>A NoteX generation task can outlive the screen that started it. The product has to preserve the task, receive the update, and put the result back where the user expects it.</p><small>[FLOW TO VERIFY AGAINST PRODUCTION]</small></div></div>
+    <div class="ai-field">
+      <figure class="task-trace"><figcaption>LONG-RUNNING GENERATION / EVENT TRACE</figcaption><ol>{trace.map(([time,label],index)=><li class={index === 4 ? 'signal' : undefined}><time>{time}</time><strong>{label}</strong></li>)}</ol></figure>
+      <div class="ai-questions"><p>Product questions</p><ul>{questions.map(question=><li>{question}</li>)}</ul></div>
+    </div>
+    <blockquote>The model can finish later.<br />The product still has to remember.</blockquote>
+    <Link href="/work/notex#making-ai-feel-like-product" variant="arrow">Explore AI inside NoteX</Link>
+  </Container>
+</section>
 <style>
-  .ai-product { padding-block:clamp(7rem,14vw,13rem); border-top:1px solid var(--color-border); }.ai-kicker,.ai-intro small,.task-trace figcaption,.task-trace span,.ai-questions > p { color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.ai-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }.ai-intro h2 { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; text-wrap:balance; }.ai-intro > div { grid-column:9 / span 4; align-self:end; display:grid; gap:1.2rem; color:var(--color-muted); font-size:var(--type-body); }.ai-intro small { color:var(--color-accent); }
-  .task-trace { width:min(88%,78rem); margin:clamp(7rem,12vw,12rem) auto 0; }.task-trace figcaption { margin-bottom:2rem; }.task-trace ol { margin:0; padding:0 0 0 3rem; border-left:1px solid var(--color-border); list-style:none; }.task-trace li { position:relative; display:grid; grid-template-columns:10rem 1fr; gap:var(--grid-gap); align-items:baseline; min-height:6.5rem; padding:0 0 2.5rem 2rem; }.task-trace li::before { content:''; position:absolute; left:-3.34rem; top:.2rem; width:.65rem; height:.65rem; border:1px solid var(--color-muted); background:var(--color-bg); }.task-trace li.signal::before { border-color:var(--color-accent); background:var(--color-accent); }.task-trace li.signal::after { content:'REALTIME EVENT'; position:absolute; top:-.1rem; right:0; padding:.35rem .6rem; border:1px solid var(--color-accent); color:var(--color-accent); font:600 .65rem var(--font-mono); letter-spacing:.1em; }.task-trace strong { font-size:clamp(1.5rem,3.5vw,3.5rem); line-height:1; text-transform:uppercase; text-wrap:balance; }
-  .ai-questions { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:10rem; }.ai-questions > p { grid-column:1 / span 3; }.ai-questions ul { grid-column:5 / span 8; margin:0; padding:0; list-style:none; }.ai-questions li { padding-block:1rem; border-top:1px solid var(--color-border); font-size:clamp(1.35rem,2.4vw,2.5rem); text-transform:uppercase; }.ai-product blockquote { max-width:25ch; margin:8rem 0 3rem 8%; font:400 var(--type-display-md)/1.05 var(--font-serif); letter-spacing:-.025em; }
-  @media (max-width:640px) { .ai-intro { display:block; }.ai-intro h2 { font-size:clamp(3.25rem,15vw,5rem); }.ai-intro > div { margin-top:2rem; }.task-trace { width:100%; margin-top:5rem; }.task-trace ol { padding-left:1.5rem; }.task-trace li { grid-template-columns:1fr; min-height:7rem; padding-left:1.5rem; }.task-trace li::before { left:-1.84rem; }.task-trace li.signal::after { position:static; width:max-content; grid-row:3; margin-top:.5rem; }.ai-questions { display:block; margin-top:6rem; }.ai-questions ul { margin-top:2rem; }.ai-product blockquote { margin-left:0; } }
+  .ai-product { min-height:165svh; border-top:1px solid var(--color-border); }
+  .ai-kicker,.ai-intro small,.task-trace figcaption,.task-trace time,.ai-questions > p { color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .ai-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }
+  .ai-intro h2 { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; text-wrap:balance; }
+  .ai-intro > div { grid-column:9 / span 4; align-self:end; display:grid; gap:1.2rem; color:var(--color-muted); font-size:var(--type-body); }
+  .ai-intro small { color:var(--color-accent); }
+  .ai-field { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); align-items:center; margin-top:clamp(10rem,18vw,17rem); }
+  .task-trace { grid-column:2 / span 7; margin:0; }
+  .task-trace figcaption { margin-bottom:2rem; }
+  .task-trace ol { margin:0; padding:0 0 0 3rem; border-left:1px solid var(--color-border); list-style:none; }
+  .task-trace li { position:relative; display:grid; grid-template-columns:6rem 1fr; gap:var(--grid-gap); align-items:baseline; min-height:6.5rem; padding:0 0 2.5rem 2rem; }
+  .task-trace li::before { content:''; position:absolute; left:-3.34rem; top:.2rem; width:.65rem; height:.65rem; border:1px solid var(--color-muted); background:var(--color-bg); }
+  .task-trace li.signal::before { border-color:var(--color-accent); background:var(--color-accent); }
+  .task-trace li.signal::after { content:'REALTIME EVENT'; position:absolute; top:-.1rem; right:0; padding:.35rem .6rem; border:1px solid var(--color-accent); color:var(--color-accent); font:600 .65rem var(--font-mono); letter-spacing:.1em; }
+  .task-trace strong { font-size:clamp(1.5rem,3.5vw,3.5rem); line-height:1; text-transform:uppercase; text-wrap:balance; }
+  .ai-questions { grid-column:9 / span 4; align-self:center; }
+  .ai-questions ul { margin:2rem 0 0; padding:0; list-style:none; }
+  .ai-questions li { padding-block:1.25rem; border-top:1px solid var(--color-border); font:400 var(--type-lead)/1.25 var(--font-serif); text-wrap:pretty; }
+  .ai-product blockquote { max-width:25ch; margin:clamp(10rem,18vw,18rem) 0 3rem 8%; font:400 var(--type-display-md)/1.05 var(--font-serif); letter-spacing:-.025em; }
+  @media (max-width:640px) {
+    .ai-product { min-height:auto; }
+    .ai-intro { display:block; }
+    .ai-intro h2 { font-size:clamp(3.25rem,15vw,5rem); }
+    .ai-intro > div { margin-top:2rem; }
+    .ai-field { display:block; margin-top:7rem; }
+    .task-trace { width:100%; }
+    .task-trace ol { padding-left:1.5rem; }
+    .task-trace li { grid-template-columns:4rem 1fr; min-height:7rem; padding-left:1.5rem; }
+    .task-trace li::before { left:-1.84rem; }
+    .task-trace li.signal::after { position:static; width:max-content; grid-column:2; margin-top:.5rem; }
+    .ai-questions { margin-top:6rem; }
+    .ai-product blockquote { margin:8rem 0 3rem; }
+  }
 </style>

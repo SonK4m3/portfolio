@@ -52,10 +52,13 @@ test('Vietnamese proof renders all required type voices and glyph groups', async
   await expect(page.getByText('ứ ừ ử ữ ự')).toBeVisible();
 });
 
-test('small viewport has no horizontal overflow', async ({ page }) => {
-  await page.goto('/');
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
-  expect(overflow).toBe(false);
+test('supported viewports have no horizontal overflow', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }, { width: 1600, height: 1000 }, { width: 1920, height: 1080 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+    expect(overflow).toBe(false);
+  }
 });
 
 test('NoteX case study follows the seven-chapter structure', async ({ page }) => {
@@ -77,10 +80,20 @@ test('homepage presents NoteX and the architecture signature', async ({ page }) 
   await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
   await expect(page.getByRole('heading', { name: 'What I own.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Generation is easy/ })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Experiments/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Playground', exact: true })).toBeVisible();
   await expect(page.locator('.how-i-build li')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: /The principles only matter/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Build something thoughtful/ })).toBeVisible();
+});
+
+test('homepage follows the Sprint B1 density rhythm', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('[data-density]')).toHaveCount(10);
+  const densitySequence = await page.locator('[data-density]').evaluateAll((sections) => sections.map((section) => section.getAttribute('data-density')));
+  expect(densitySequence).toEqual(['balanced','quiet','evidence','balanced','technical','technical','balanced','quiet','quiet','void']);
+  await expect(page.locator('.breathing-reset')).toBeVisible();
+  await expect(page.locator('.task-trace time').first()).toHaveText('00:00');
+  await expect(page.locator('.task-trace time').last()).toHaveText('00:21');
 });
 
 test('crawlability files exist', async ({ request }) => {

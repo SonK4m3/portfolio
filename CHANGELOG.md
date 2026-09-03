@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-09-03 — Sprint B1 scroll and spatial rhythm
+
+Turned the homepage from evenly spaced sections into a continuous, authored native-scroll sequence while preserving the locked Swiss Technical Editorial visual system.
+
+### Changed
+
+- Added five semantic density tokens: void, quiet, balanced, evidence, and technical.
+- Added reusable media framing modes for establishing, fill, detail, and offset compositions.
+- Reserved a clean Hero exit zone and reduced the engineering-instrument layer to supporting context.
+- Rewrote the transition chapter as a quiet editorial reset before NoteX.
+- Increased NoteX evidence scale with controlled canvas bleed while keeping the missing real product asset explicitly labelled.
+- Reduced What I Own to three primary responsibilities plus a secondary collaboration layer.
+- Enlarged and offset the Architecture system field to create the page's spatial peak.
+- Added a 50svh Architecture-to-AI breathing reset using only a trace label and hairline.
+- Rebuilt the AI lifecycle as a timestamped vertical event trace with a separate reflection column.
+- Compressed Playground into a lateral archive-and-artifact interlude.
+- Removed table-like separators from How I Build and increased the alternating typographic cadence.
+- Shifted About toward a serif-led human texture and gave the final CTA a full void composition.
+- Added mobile-specific density values and reduced technical-section voids for a deliberate 390px rhythm.
+
+### Constraints
+
+- Native browser scrolling remains unchanged; no snap, wheel interception, sticky scenes, or scroll animation were added.
+- NoteX and Playground evidence remain [ASSET REQUIRED] because no verified product screenshots are stored in the repository.
+
+### Validation
+
+- pnpm check — passed.
+- Playwright suite — 32/32 passed across desktop and mobile, including B1 density-order assertions.
+- Horizontal overflow checks — passed at 390x844, 1440x900, 1600x1000, and 1920x1080.
+- Impeccable layout detector — no findings.
+- Review exports: homepage-b1-1440-full.png, five 1440x900 viewport crops, desktop scroll recording, and 390px mobile scroll recording.
+
 ## 2026-09-03 — About technical dossier
 
 Added the `/about` page as a Personal Technical Dossier that extends the homepage's Swiss Technical Editorial system with higher information density and clearer personal context.
