@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026-09-03 — About technical dossier
+
+Added the `/about` page as a Personal Technical Dossier that extends the homepage's Swiss Technical Editorial system with higher information density and clearer personal context.
+
+### Changed
+
+- Added profile hero with role identity and an honest optional portrait asset marker.
+- Added quick-info metadata matrix for role, focus, current product, location, languages, and collaboration status.
+- Added layered introduction using mono, sans, serif, and restrained handwritten voices.
+- Added capability registry covering web, state/data, realtime, UI, content/media, platform, and AI.
+- Added experience record with ownership-oriented responsibilities and verification labels for unknown company/date details.
+- Added `NOW / 2026` temporal profile section for building, exploring, learning, and writing topics.
+- Added compressed education record with explicit `[TBD]` fields.
+- Added project/lab registry linking NoteX and experiments.
+- Added personal system map showing the Product / Design / Engineering / AI positioning with frontend architecture as the strongest edge.
+- Added contact/social placeholders and a closing CTA that loops back to selected work.
+- Added responsive layouts for metadata tables, capability rows, experience, registry, and system map.
+
+### Evidence status
+
+- Portrait, university, email, GitHub, LinkedIn, company name, and exact dates remain intentionally unverified placeholders.
+- Screenshot review export: `about-sprint-a5-1440.png` at a 1440px viewport width.
+
+### Validation
+
+- `pnpm check` — 0 errors, 0 warnings, 0 hints.
+- `pnpm build` — passed; 7 static pages generated.
+- Playwright suite — 30/30 passed on desktop and mobile.
+- Impeccable detector — no findings.
+
 ## 2026-09-03 — Sprint A.5 personalization
 
 Compared with `5236595`, this update makes the homepage more specific to NoteX and the Product Engineer role while preserving the locked Swiss Technical Editorial system.
