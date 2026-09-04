@@ -1,0 +1,93 @@
+---
+title: Architecture Layers
+slug: architecture-layers
+id: CMP.003
+category: system
+status: beta
+framework: [Astro]
+description: A readable system model that reduces architecture to ordered responsibility boundaries and one meaningful active layer.
+capabilities: [architecture, ownership, visualization]
+usedIn:
+  - { label: Home, href: /, area: Architecture signature }
+  - { label: NoteX, href: /work/notex#designing-the-frontend-architecture, area: Frontend architecture }
+tags: [architecture, systems, ownership]
+order: 3
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: anatomy, label: Anatomy }
+  - { id: usage, label: Usage }
+  - { id: variants, label: Variants }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+import ArchitecturePreview from '../../demos/architecture-layers/Preview.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="Architecture becomes useful when ownership is easier to see than complexity.">
+
+Architecture diagrams often become visually complex before they become useful. Architecture Layers reduces the model to ordered responsibility boundaries, allowing a reader to locate one active decision without understanding the entire system first.
+
+**It should not become** a complete infrastructure map, dependency graph, or substitute for technical documentation.
+
+</DocSection>
+
+<DocSection id="anatomy" index="02" title="Anatomy">
+
+1. Sequence index establishes reading order.
+2. Layer name identifies the responsibility boundary.
+3. Metadata names the layer's role.
+4. Description explains ownership in context.
+5. Signal rule marks one active boundary without hiding the others.
+
+</DocSection>
+
+<DocSection id="usage" index="03" title="Usage">
+
+```astro
+<ArchitectureLayers
+  layers={layers}
+  activeLayer="state"
+  title="Responsibility model"
+/>
+```
+
+Pass domain language from the product. The component supplies hierarchy, not the architecture itself.
+
+</DocSection>
+
+<DocSection id="variants" index="04" title="Variants" description="Only variants that correspond to real reading contexts.">
+
+<ArchitecturePreview variant="static" />
+
+- **Static** presents the full model without a preferred layer.
+- **Active** marks the responsibility currently discussed by nearby content.
+- **Compact** reduces the number of layers; it does not reduce type until the hierarchy becomes unreadable.
+
+</DocSection>
+
+<DocSection id="api" index="05" title="API">
+
+<ApiTable properties={[
+  { name:'layers', type:'ArchitectureLayer[]', description:'Ordered responsibility boundaries.' },
+  { name:'activeLayer', type:'string', description:'ID of the emphasized layer.' },
+  { name:'figureIndex', type:'string', default:'02', description:'Figure taxonomy index.' },
+  { name:'title', type:'string', default:'STATE / OWNERSHIP', description:'Figure label.' },
+  { name:'verification', type:'string', description:'Optional evidence state.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="06" title="Accessibility">
+
+Layers render as an ordered list. The active layer remains identifiable through border, index, and document context rather than vermilion alone. Hover dimming is progressive enhancement and never removes content from keyboard or touch users.
+
+</DocSection>
+
+<DocSection id="performance" index="07" title="Performance">
+
+No client state or diagram library. Layout uses CSS Grid, hover transitions target only opacity and border color, and reduced-motion mode shortens those transitions to effectively static behavior.
+
+</DocSection>

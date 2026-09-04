@@ -1,0 +1,12 @@
+---
+import ArchitectureLayers from '../../components/system/ArchitectureLayers.astro';
+export interface Props { variant?: 'active' | 'static' | 'compact' }
+const { variant = 'active' } = Astro.props as Props;
+const layers = [
+  { id:'experience', label:'Experience', meta:'Interface', description:'The visible product surface.' },
+  { id:'product', label:'Product', meta:'Intent', description:'User goals and product decisions.' },
+  { id:'state', label:'State', meta:'Ownership', description:'The active responsibility boundary.' },
+  { id:'platform', label:'Platform', meta:'Runtime', description:'Services, storage, and execution.' },
+];
+---
+<div data-production-preview="architecture-layers"><ArchitectureLayers layers={variant === 'compact' ? layers.slice(0,3) : layers} activeLayer={variant === 'active' ? 'state' : undefined} figureIndex="003" title="RESPONSIBILITY MODEL" verification="LIVE" /></div>

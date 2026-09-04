@@ -1,0 +1,108 @@
+---
+title: System Grid
+slug: system-grid
+id: CMP.006
+category: system
+status: experimental
+framework: [Astro, Native JS]
+description: A progressive system field that reveals labels by pointer proximity while preserving a quiet static grid for touch and reduced-motion contexts.
+capabilities: [interaction, grid, proximity, progressive-enhancement]
+usedIn:
+  - { label: Home, href: /, area: Hero system field }
+tags: [grid, pointer, interaction, performance]
+order: 6
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: anatomy, label: Anatomy }
+  - { id: proximity, label: Proximity }
+  - { id: usage, label: Usage }
+  - { id: variants, label: States }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+import SystemGridPreview from '../../demos/system-grid/Preview.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="The portfolio's structure becomes visible without becoming permanent visual noise.">
+
+System Grid turns the real twelve-column layout model into a restrained interaction. Nearby labels strengthen as a fine pointer moves through the field, suggesting that product structure exists beneath the visible interface.
+
+**It should not become** decorative technical wallpaper, a cursor gimmick, or a reason to hydrate the whole page.
+
+</DocSection>
+
+<DocSection id="anatomy" index="02" title="Grid anatomy">
+
+1. The responsive grid follows twelve, eight, and four-column contexts.
+2. Labels occupy explicit grid coordinates.
+3. Each label includes an intersection signal.
+4. Intensity controls the base field, not individual content importance.
+5. Reveal behavior is progressive enhancement over visible static structure.
+
+</DocSection>
+
+<DocSection id="proximity" index="03" title="Proximity model" description="One local calculation, scheduled with the browser.">
+
+For each visible label, the component measures the distance from the pointer to the label center. That distance becomes a bounded opacity value. The calculation is scheduled through `requestAnimationFrame` and scoped to the component's parent surface.
+
+```ts
+distance = hypot(pointerX - labelX, pointerY - labelY)
+opacity = max(0.22, 1 - distance / 420)
+```
+
+</DocSection>
+
+<DocSection id="usage" index="04" title="Usage">
+
+```astro
+<SystemGrid
+  labels={labels}
+  reveal="pointer"
+  intensity="quiet"
+/>
+```
+
+Place the grid inside a positioned surface. Labels should describe real structure or state, never invented system telemetry.
+
+</DocSection>
+
+<DocSection id="variants" index="05" title="States">
+
+<SystemGridPreview intensity="active" />
+
+- **Quiet** supports hero copy without competing with it.
+- **Medium** suits documentation previews.
+- **Active** makes the system legible for explanation, not general page backgrounds.
+- **Touch and reduced motion** keep a static low-intensity field.
+
+</DocSection>
+
+<DocSection id="api" index="06" title="API">
+
+<ApiTable properties={[
+  { name:'labels', type:'SystemGridLabel[]', description:'Label text and x/y presentation coordinates.' },
+  { name:'reveal', type:'pointer | scroll | always', default:'always', description:'Progressive reveal contract.' },
+  { name:'intensity', type:'quiet | medium | active', default:'quiet', description:'Base visual prominence.' },
+  { name:'className', type:'string', description:'Optional surface composition hook.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="07" title="Accessibility">
+
+The entire field is decorative and hidden from assistive technology; nearby content must carry every meaningful fact. Fine-pointer behavior is never required, touch receives a static fallback, and reduced-motion preference disables the proximity script.
+
+</DocSection>
+
+<DocSection id="performance" index="08" title="Performance">
+
+- Pointer state stays local to the owning surface.
+- Updates are scheduled with `requestAnimationFrame`.
+- No global store, canvas, WebGL, or whole-page hydration.
+- Touch and reduced-motion environments skip the calculation entirely.
+- Pointer exit removes inline proximity values and returns to the CSS baseline.
+
+</DocSection>

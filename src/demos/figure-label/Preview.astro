@@ -1,0 +1,14 @@
+---
+import FigureLabel from '../../components/editorial/FigureLabel.astro';
+---
+<figure class="figure-label-demo" data-production-preview="figure-label">
+  <div><span>PRODUCT EVIDENCE</span><strong>One visual, one traceable role.</strong><p>Figure taxonomy keeps screenshots, systems, experiments, and components legible across long-form work.</p></div>
+  <FigureLabel type="CMP" index="001" title="FIGURE LABEL" description="PRODUCTION COMPONENT" signal="VERIFIED" position="bottom" />
+</figure>
+<style>
+  .figure-label-demo { width:100%; margin:0; }
+  .figure-label-demo > div { min-height:17rem; display:grid; align-content:end; gap:var(--space-3); padding:var(--space-6); border:1px solid var(--color-border); }
+  span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; }
+  strong { max-width:18ch; font:560 var(--type-heading)/1 var(--font-sans); letter-spacing:-.03em; text-wrap:balance; }
+  p { max-width:48ch; color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+</style>

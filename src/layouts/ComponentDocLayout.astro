@@ -1,0 +1,89 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Container from '../components/primitives/Container.astro';
+import FigureLabel from '../components/editorial/FigureLabel.astro';
+import DossierMatrix from '../components/system/DossierMatrix.astro';
+import TechnicalDivider from '../components/foundation/TechnicalDivider.astro';
+import PreviewCanvas from '../components/docs/PreviewCanvas.astro';
+import ComponentStatus from '../components/docs/ComponentStatus.astro';
+import CodeEnhancer from '../components/docs/CodeEnhancer.astro';
+import { siteConfig } from '../data/site';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  entry: CollectionEntry<'components'>['data'];
+  Preview: any;
+  previous?: Pick<CollectionEntry<'components'>['data'], 'slug' | 'id' | 'title'>;
+  next?: Pick<CollectionEntry<'components'>['data'], 'slug' | 'id' | 'title'>;
+}
+const { entry, Preview, previous, next } = Astro.props as Props;
+const title = `${entry.title} — Components — ${siteConfig.name}`;
+const metaItems = [
+  { label:'Status', value:entry.status },
+  { label:'Framework', value:entry.framework.join(' / ') },
+  { label:'Category', value:entry.category },
+  { label:'Used in', value:entry.usedIn.map((item) => item.label).join(' / ') },
+];
+---
+<BaseLayout title={title} description={entry.description}>
+  <article class="component-doc">
+    <Container>
+      <header class="component-doc-header">
+        <FigureLabel as="div" type="CMP" index={entry.id.replace('CMP.','')} title={entry.category} signal={entry.status} />
+        <div class="title-block"><h1>{entry.title}</h1><p>{entry.description}</p></div>
+        <ComponentStatus status={entry.status} showDescription />
+        <DossierMatrix items={metaItems} columns={2} />
+      </header>
+
+      <section class="primary-preview" aria-labelledby="live-preview-title">
+        <TechnicalDivider label="Live preview" index="Production component" />
+        <h2 id="live-preview-title">The component, running here.</h2>
+        <PreviewCanvas><Preview /></PreviewCanvas>
+      </section>
+
+      <div class="documentation-grid">
+        <aside><span>On this page</span><nav aria-label="On this page">
+          {entry.sections.map((section) => <a href={`#${section.id}`}>{section.label}</a>)}
+          <a href="#used-in">Used in</a><a href="#status">Status</a>
+        </nav></aside>
+        <div class="component-doc-content"><slot />
+          <section class="generated-section" id="used-in"><TechnicalDivider label="Used in" index="Production proof" /><h2>Where it earns its place.</h2><ul>{entry.usedIn.map((item) => <li><a href={item.href}><strong>{item.label}</strong>{item.area && <span>{item.area}</span>}</a></li>)}</ul></section>
+          <section class="generated-section" id="status"><TechnicalDivider label="Status" index={entry.status} /><h2>Current contract.</h2><ComponentStatus status={entry.status} showDescription /></section>
+        </div>
+      </div>
+
+      <nav class="component-pagination" aria-label="Component pagination">
+        {previous ? <a rel="prev" href={`/components/${previous.slug}`}><span>Previous</span><strong>{previous.id} / {previous.title}</strong></a> : <span></span>}
+        {next && <a rel="next" href={`/components/${next.slug}`}><span>Next</span><strong>{next.id} / {next.title}</strong></a>}
+      </nav>
+    </Container>
+    <CodeEnhancer />
+  </article>
+</BaseLayout>
+<style>
+  .component-doc { padding-block:var(--space-9) var(--space-section-lg); }
+  .component-doc-header { min-height:calc(100svh - 8rem); display:grid; align-content:center; gap:var(--space-7); }
+  .title-block { display:grid; grid-template-columns:minmax(0,7fr) minmax(18rem,3fr); gap:var(--grid-gap); align-items:end; }
+  h1 { max-width:11ch; font:560 var(--type-display-xl)/.88 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; text-wrap:balance; }
+  .title-block p { max-width:34ch; color:var(--color-muted); font-size:var(--type-lead); text-wrap:pretty; }
+  .primary-preview { padding-block:var(--space-section-md); }
+  .primary-preview > h2 { max-width:14ch; margin:var(--space-7) 0; font:560 var(--type-display-md)/.95 var(--font-sans); letter-spacing:-.035em; text-wrap:balance; }
+  .documentation-grid { display:grid; grid-template-columns:minmax(10rem,2fr) minmax(0,8fr); gap:calc(var(--grid-gap) * 2); align-items:start; }
+  aside { position:sticky; top:7rem; display:grid; gap:var(--space-4); padding-top:var(--space-5); border-top:1px solid var(--color-border); }
+  aside > span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  aside nav { display:grid; gap:0; }
+  aside a { min-height:2.75rem; display:flex; align-items:center; border-bottom:1px solid var(--color-border); color:var(--color-muted); font-size:var(--type-small); }
+  .generated-section { scroll-margin-top:7rem; padding-block:var(--space-9); border-top:1px solid var(--color-border); }
+  .generated-section > h2 { max-width:15ch; margin:var(--space-7) 0; text-transform:uppercase; text-wrap:balance; }
+  .generated-section ul { display:grid; margin:0; padding:0; border-top:1px solid var(--color-border); list-style:none; }
+  .generated-section li a { min-height:5rem; display:flex; justify-content:space-between; gap:var(--space-4); align-items:center; border-bottom:1px solid var(--color-border); }
+  .generated-section li strong { font-size:var(--type-body-lg); }.generated-section li span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
+  .component-pagination { display:grid; grid-template-columns:1fr 1fr; gap:var(--grid-gap); padding-top:var(--space-8); border-top:1px solid var(--color-border); }
+  .component-pagination a { min-height:7rem; display:grid; align-content:space-between; padding:var(--space-4); border:1px solid var(--color-border); }
+  .component-pagination a:last-child { text-align:right; }.component-pagination span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.component-pagination strong { font-size:var(--type-body-lg); text-transform:uppercase; }
+  :global(.component-doc-content .code-frame) { position:relative; margin:var(--space-6) 0; border-block:1px solid var(--color-border); background:#111; color:#f1f1ec; }
+  :global(.component-doc-content pre) { margin:0; padding:var(--space-6); overflow:auto; font-size:.82rem; line-height:1.7; }
+  :global(.component-doc-content .code-copy) { position:absolute; top:.5rem; right:.5rem; min-width:4.5rem; min-height:2.75rem; border:1px solid #353535; background:#171717; color:#bdbdb8; font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+  @media (max-width:900px) { .title-block { grid-template-columns:1fr; }.component-doc-header { min-height:auto; padding-block:var(--space-9); }.documentation-grid { grid-template-columns:1fr; } aside { position:static; } aside nav { grid-template-columns:repeat(3,1fr); } aside a { padding-right:var(--space-3); } }
+  @media (max-width:640px) { .component-doc { padding-top:0; }.title-block h1 { font-size:clamp(3.5rem,16vw,5.25rem); }.title-block p { font-size:var(--type-body-lg); }.primary-preview { padding-block:var(--space-9); }.documentation-grid { gap:var(--space-7); } aside nav { grid-template-columns:1fr 1fr; }.component-pagination { grid-template-columns:1fr; }.component-pagination > span:empty { display:none; } }
+</style>

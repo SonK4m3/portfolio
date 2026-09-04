@@ -1,0 +1,13 @@
+---
+import LifecycleFlow from '../../components/system/LifecycleFlow.astro';
+export interface Props { orientation?: 'horizontal' | 'vertical'; active?: boolean }
+const { orientation = 'horizontal', active = true } = Astro.props as Props;
+const steps = [
+  { id:'intent', label:'Intent', meta:'00:00' },
+  { id:'context', label:'Context', meta:'00:02' },
+  { id:'generate', label:'Generate', meta:'00:04' },
+  { id:'verify', label:'Verify', meta:'00:12' },
+  { id:'return', label:'Return', meta:'00:21' },
+];
+---
+<div data-production-preview="lifecycle-flow"><LifecycleFlow steps={steps} active={active ? 'generate' : undefined} orientation={orientation} figureIndex="004" title="TASK LIFECYCLE" /></div>

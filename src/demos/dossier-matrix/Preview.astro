@@ -1,0 +1,13 @@
+---
+import DossierMatrix from '../../components/system/DossierMatrix.astro';
+export interface Props { compact?: boolean }
+const { compact = false } = Astro.props as Props;
+const items = [
+  { label:'Role', value:'Product Engineer' },
+  { label:'Focus', value:'AI products + interface systems' },
+  { label:'Runtime', value:'Astro / Native JS' },
+  { label:'Status', value:'Production' },
+];
+---
+<div class="dossier-preview" data-production-preview="dossier-matrix"><DossierMatrix items={compact ? items.slice(0,2) : items} columns={2} /></div>
+<style>.dossier-preview { width:100%; }</style>

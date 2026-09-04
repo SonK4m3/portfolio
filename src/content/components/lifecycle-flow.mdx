@@ -1,0 +1,93 @@
+---
+title: Lifecycle Flow
+slug: lifecycle-flow
+id: CMP.004
+category: interaction
+status: beta
+framework: [Astro]
+description: An ordered lifecycle that exposes progression, timing, and current state without requiring interaction to understand the flow.
+capabilities: [lifecycle, state, responsive]
+usedIn:
+  - { label: Home, href: /, area: AI task trace }
+  - { label: NoteX, href: /work/notex, area: Generation lifecycle }
+tags: [workflow, lifecycle, state]
+order: 4
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: anatomy, label: Anatomy }
+  - { id: usage, label: Usage }
+  - { id: variants, label: Variants }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+import LifecyclePreview from '../../demos/lifecycle-flow/Preview.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="A lifecycle should reveal sequence and state before it adds motion.">
+
+Product and AI workflows are easier to trust when their intermediate stages remain visible. Lifecycle Flow presents ordered stages, optional timing, and a current state while preserving the complete process around it.
+
+**It should not become** a progress animation that hides failure, recovery, or the difference between elapsed time and completion.
+
+</DocSection>
+
+<DocSection id="anatomy" index="02" title="Anatomy">
+
+The flow combines a semantic ordered list, a connecting rule, a stage marker, optional time metadata, a stage label, optional explanation, and one textual current-state signal.
+
+</DocSection>
+
+<DocSection id="usage" index="03" title="Usage">
+
+```astro
+<LifecycleFlow
+  steps={[
+    { id: 'intent', label: 'Intent' },
+    { id: 'generate', label: 'Generate' },
+    { id: 'verify', label: 'Verify' },
+    { id: 'return', label: 'Return' },
+  ]}
+  active="generate"
+  orientation="horizontal"
+/>
+```
+
+</DocSection>
+
+<DocSection id="variants" index="04" title="Variants">
+
+<LifecyclePreview orientation="vertical" />
+
+- **Horizontal** works as a wide process overview and becomes vertical when its container narrows.
+- **Vertical** supports long descriptions and technical traces.
+- **Static** removes the current stage while preserving sequence.
+- **Active** combines marker, text, and signal label.
+
+</DocSection>
+
+<DocSection id="api" index="05" title="API">
+
+<ApiTable properties={[
+  { name:'steps', type:'LifecycleStep[]', description:'Ordered lifecycle stages.' },
+  { name:'active', type:'string', description:'ID of the current stage.' },
+  { name:'orientation', type:'horizontal | vertical', default:'vertical', description:'Preferred wide-screen direction.' },
+  { name:'signalLabel', type:'string', default:'CURRENT', description:'Text attached to the active stage.' },
+  { name:'title', type:'string', default:'TASK LIFECYCLE', description:'Figure label.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="06" title="Accessibility">
+
+Stages are an ordered list in visual and DOM order. No keyboard interaction is required to understand the process. Current state is expressed with text and structure, mobile keeps the same sequence, and reduced motion leaves a complete static representation.
+
+</DocSection>
+
+<DocSection id="performance" index="07" title="Performance">
+
+The component ships no runtime JavaScript. Container queries choose the readable orientation locally, avoiding viewport-specific duplication and whole-page hydration.
+
+</DocSection>

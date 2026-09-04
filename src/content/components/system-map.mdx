@@ -1,0 +1,83 @@
+---
+title: System Map
+slug: system-map
+id: CMP.005
+category: system
+status: experimental
+framework: [Astro]
+description: A four-axis positioning model for explaining where a person, product, or system operates without inventing skill scores.
+capabilities: [positioning, diagram, annotation]
+usedIn:
+  - { label: About, href: /about, area: Personal system map }
+tags: [positioning, systems, diagram]
+order: 5
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: anatomy, label: Anatomy }
+  - { id: usage, label: Usage }
+  - { id: variants, label: States }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="Positioning is a relationship, not a percentage score.">
+
+System Map communicates how four disciplines pull on one role or system. Its marker shows a deliberate position between those forces without pretending that product, engineering, AI, or design can be measured as a skill percentage.
+
+**It should not become** a personality test, capability score, or evidence-free claim of equal expertise.
+
+</DocSection>
+
+<DocSection id="anatomy" index="02" title="Anatomy">
+
+Two semantic axes create four named directions. One marker communicates the current position, while the supporting definition list explains what each direction means in this context.
+
+</DocSection>
+
+<DocSection id="usage" index="03" title="Usage">
+
+```astro
+<SystemMap
+  axes={axes}
+  position={{ x: 62, y: 39 }}
+/>
+```
+
+Axis labels and descriptions must come from real product or role language. Position values tune composition; they are not published measurements.
+
+</DocSection>
+
+<DocSection id="variants" index="04" title="States">
+
+- **Default** places one marker inside the four-axis field.
+- **Mobile** reduces the field and reorganizes supporting definitions into two columns.
+- Future multi-marker comparison is intentionally outside the current contract.
+
+</DocSection>
+
+<DocSection id="api" index="05" title="API">
+
+<ApiTable properties={[
+  { name:'axes', type:'SystemAxis[]', description:'Exactly four labeled directions and descriptions.' },
+  { name:'position', type:'{ x: number; y: number }', default:'{ x: 61, y: 42 }', description:'Marker position as presentation percentages.' },
+  { name:'figureIndex', type:'string', default:'04', description:'Figure taxonomy index.' },
+  { name:'className', type:'string', description:'Optional composition hook.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="06" title="Accessibility">
+
+The visual field exposes a concise image description naming all axes. The supporting list repeats every axis with its contextual meaning, so color, geometry, and marker position are not the only sources of information.
+
+</DocSection>
+
+<DocSection id="performance" index="07" title="Performance">
+
+Static HTML and CSS custom properties only. No charting library, canvas, layout observer, or client-side coordinate calculation.
+
+</DocSection>

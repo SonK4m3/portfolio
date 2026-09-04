@@ -1,0 +1,84 @@
+---
+title: Figure Label
+slug: figure-label
+id: CMP.001
+category: editorial
+status: stable
+framework: [Astro]
+description: A shared taxonomy that makes visual evidence traceable across case studies, experiments, systems, and component documentation.
+capabilities: [caption, taxonomy, annotation]
+usedIn:
+  - { label: Home, href: /, area: NoteX evidence }
+  - { label: About, href: /about, area: Personal system }
+  - { label: NoteX, href: /work/notex, area: Architecture chapters }
+tags: [editorial, evidence, metadata]
+order: 1
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: usage, label: Usage }
+  - { id: variants, label: Variants }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="Evidence needs a role, not another decorative caption.">
+
+Long portfolio pages contain screenshots, diagrams, system models, experiments, and content blocks. Figure Label gives each artifact a stable type and index so readers can understand what they are looking at before interpreting it.
+
+**It should not become** a loud badge system or compete with the evidence it describes.
+
+</DocSection>
+
+<DocSection id="usage" index="02" title="Usage" description="The smallest useful contract comes first.">
+
+```astro
+<FigureLabel
+  type="SYS"
+  index="03"
+  title="State ownership"
+  signal="Verified"
+  as="div"
+/>
+```
+
+Use one label per figure. Keep the title concrete and let the optional signal communicate verification or current state.
+
+</DocSection>
+
+<DocSection id="variants" index="03" title="Variants">
+
+- **Top** introduces the artifact before it appears.
+- **Bottom** behaves as a conventional caption after the artifact.
+- **Signal** adds one restrained status term without changing the taxonomy.
+
+</DocSection>
+
+<DocSection id="api" index="04" title="API">
+
+<ApiTable properties={[
+  { name:'type', type:'FIG | SYS | CMP | EXP | BLK', default:'FIG', description:'Artifact taxonomy.' },
+  { name:'index', type:'string', description:'Visible sequence identifier.' },
+  { name:'title', type:'string', description:'Short artifact title.' },
+  { name:'description', type:'string', description:'Optional contextual phrase.' },
+  { name:'position', type:'top | bottom', default:'top', description:'Caption placement.' },
+  { name:'signal', type:'string', description:'Optional verification or state label.' },
+  { name:'as', type:'figcaption | div', default:'figcaption', description:'Semantic element for figure and non-figure contexts.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="05" title="Accessibility">
+
+The visible shorthand is combined into a readable `aria-label`. Decorative punctuation is hidden from assistive technology, and status text remains available as words rather than color alone.
+
+</DocSection>
+
+<DocSection id="performance" index="06" title="Performance">
+
+Server-rendered Astro markup with scoped CSS. It ships no client JavaScript and introduces no layout measurement or runtime state.
+
+</DocSection>

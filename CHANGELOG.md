@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-09-04 — P2 public component laboratory
+
+Turned the six production signature components into a public, self-documenting design engineering catalogue.
+
+### Documentation system
+
+- Added `/components` with an archive-style catalogue, primary-category filters, keyboard and pointer preview selection, scoped light/dark preview themes, and responsive production previews.
+- Added six statically generated `/components/[slug]` pages covering design intent, anatomy, usage, variants, API, accessibility, performance, production usage, and status.
+- Added a typed internal registry that fails the build when published metadata and production previews diverge.
+- Migrated component metadata to MDX with structured status, category, capability, usage links, tags, ordering, publication state, and jump-navigation sections.
+- Added reusable documentation primitives for preview canvases, status labels, responsive API records, anchored sections, copyable code, and the shared component document layout.
+- Added dedicated demo-data wrappers that import the real production components without copying implementation markup or behavior.
+
+### Product integration
+
+- Added Components to primary and footer navigation.
+- Preserved the established Astro and native-JavaScript architecture with no React runtime or whole-page hydration.
+- Added semantic `FigureLabel` rendering for both figure captions and non-figure documentation contexts.
+- Excluded internal `/dev/*` and `/type-proof` routes from the generated sitemap.
+- Added a durable product record describing the portfolio's audiences, purpose, constraints, evidence, and accessibility commitments.
+
+### Validation
+
+- Astro check and static production build cover 99 source files and 17 generated pages.
+- Playwright covers all public component routes on desktop and mobile, production preview wiring, filtering, keyboard focus, local preview themes, copy-code fallback, reduced motion, and responsive overflow.
+- Component overflow coverage includes 390px, 430px, 768px, 1024px, 1440px, and 1600px widths.
+- Visual QA exports cover the catalogue at desktop/mobile and the System Grid flagship documentation page.
+
 ## 2026-09-04 — P0/P1 signature system foundation
 
 Converted the portfolio's visual language into a reusable Astro design system and applied the first six signature components to real product pages.

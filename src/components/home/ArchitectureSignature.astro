@@ -14,7 +14,7 @@ const layers = [
 ---
 <section class="architecture-signature density-technical" id="architecture" aria-labelledby="architecture-title" data-density="technical">
   <Container>
-    <FigureLabel type="SYS" index="01" title="DECISION" description="STATE OWNERSHIP" />
+    <FigureLabel as="div" type="SYS" index="01" title="DECISION" description="STATE OWNERSHIP" />
     <div class="architecture-intro"><h2 id="architecture-title">I design systems,<br />not just screens.</h2><p>The question is not which state library to use. It is which part of the product should own the truth.</p></div>
     <ArchitectureLayers className="architecture-map" layers={layers} activeLayer="state" verification="CONCEPTUAL / VERIFY" />
     <div class="decision-note"><span>DECISION / OWNERSHIP</span><p>Server data belongs to the server-state layer. Local interaction state should not become a second source of truth.</p><small>[VERIFY]</small></div>

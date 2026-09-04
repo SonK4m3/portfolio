@@ -1,0 +1,43 @@
+<span class="code-announcer" aria-live="polite"></span>
+<style>.code-announcer { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }</style>
+<script>
+  const copyText = async (text: string) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch {}
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    const copied = (document as unknown as { execCommand(commandId: string): boolean }).execCommand('copy');
+    field.remove();
+    return copied;
+  };
+  document.querySelectorAll<HTMLElement>('.component-doc-content pre').forEach((pre) => {
+    if (pre.parentElement?.classList.contains('code-frame')) return;
+    const frame = document.createElement('div');
+    frame.className = 'code-frame';
+    pre.parentNode?.insertBefore(frame, pre);
+    frame.appendChild(pre);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'code-copy';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy code example');
+    frame.appendChild(button);
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+      const copied = await copyText(code);
+      button.textContent = copied ? 'Copied' : 'Retry';
+      const announcer = document.querySelector<HTMLElement>('.code-announcer');
+      if (announcer) announcer.textContent = copied ? 'Code copied to clipboard' : 'Copy failed. Try again.';
+      window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+    });
+  });
+</script>

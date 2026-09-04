@@ -1,0 +1,25 @@
+---
+export interface Props { id: string; index: string; title: string; description?: string }
+const { id, index, title, description } = Astro.props as Props;
+---
+<section class="doc-section" id={id}>
+  <header>
+    <span>{index}</span>
+    <div><h2>{title}</h2>{description && <p>{description}</p>}</div>
+    <a href={`#${id}`} aria-label={`Link to ${title}`}>Link</a>
+  </header>
+  <div class="doc-section-body"><slot /></div>
+</section>
+<style>
+  .doc-section { scroll-margin-top:7rem; padding-block:var(--space-9); border-top:1px solid var(--color-border); }
+  header { display:grid; grid-template-columns:3rem minmax(0,1fr) auto; gap:var(--grid-gap); align-items:start; margin-bottom:var(--space-7); }
+  header > span,header > a { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; font-variant-numeric:tabular-nums; }
+  h2 { max-width:14ch; font:560 var(--type-heading)/.98 var(--font-sans); letter-spacing:-.03em; text-transform:uppercase; text-wrap:balance; }
+  header p { max-width:48ch; margin-top:var(--space-3); color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+  header > a { min-width:2.75rem; min-height:2.75rem; display:grid; place-items:center; }
+  .doc-section-body { display:grid; gap:var(--space-5); color:var(--color-muted); }
+  .doc-section-body :global(p),.doc-section-body :global(ul),.doc-section-body :global(ol) { max-width:70ch; }
+  .doc-section-body :global(ul),.doc-section-body :global(ol) { margin:0; padding-left:1.25rem; }
+  .doc-section-body :global(strong) { color:var(--color-foreground); }
+  @media (max-width:640px) { .doc-section { padding-block:var(--space-8); } header { grid-template-columns:2rem 1fr auto; margin-bottom:var(--space-6); } }
+</style>

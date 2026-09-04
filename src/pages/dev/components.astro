@@ -32,10 +32,10 @@ const axes = [
     <SystemGrid labels={[{ id:'a', label:'COMPONENT FIELD', x:2, y:22 },{ id:'b', label:'SYSTEM PROOF', x:10, y:76 }]} intensity="quiet" />
     <Container>
       <header><p>DEV / COMPONENT REGISTRY</p><h1>Signature<br />system.</h1><span>{String(registry.length).padStart(2,'0')} COMPONENTS</span></header>
-      <section class="registry" aria-labelledby="registry-title"><FigureLabel type="CMP" index="01" title="REGISTRY" /><h2 id="registry-title">Component metadata</h2><DossierMatrix columns={3} items={registry.map(item => ({ label:`${item.data.id} / ${item.data.status}`, value:item.data.title }))} /></section>
-      <section><FigureLabel type="CMP" index="02" title="ARCHITECTURE LAYERS" /><ArchitectureLayers layers={layers} activeLayer="ownership" /></section>
-      <section><FigureLabel type="CMP" index="03" title="LIFECYCLE FLOW" /><LifecycleFlow steps={steps} active="run" /></section>
-      <section><FigureLabel type="CMP" index="04" title="SYSTEM MAP" /><SystemMap axes={axes} position={{ x:62, y:39 }} /></section>
+      <section class="registry" aria-labelledby="registry-title"><FigureLabel as="div" type="CMP" index="01" title="REGISTRY" /><h2 id="registry-title">Component metadata</h2><DossierMatrix columns={3} items={registry.map(item => ({ label:`${item.data.id} / ${item.data.status}`, value:item.data.title }))} /></section>
+      <section><FigureLabel as="div" type="CMP" index="02" title="ARCHITECTURE LAYERS" /><ArchitectureLayers layers={layers} activeLayer="ownership" /></section>
+      <section><FigureLabel as="div" type="CMP" index="03" title="LIFECYCLE FLOW" /><LifecycleFlow steps={steps} active="run" /></section>
+      <section><FigureLabel as="div" type="CMP" index="04" title="SYSTEM MAP" /><SystemMap axes={axes} position={{ x:62, y:39 }} /></section>
     </Container>
   </section>
 </BaseLayout>

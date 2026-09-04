@@ -17,7 +17,7 @@ const questions = ['Can the user leave?','What owns the task while they are gone
 ---
 <section class="ai-product density-technical" aria-labelledby="ai-product-title" data-density="technical">
   <Container>
-    <FigureLabel type="SYS" index="03" title="AI TASK LIFECYCLE" description="LONG-RUNNING GENERATION" signal="VERIFY FLOW" />
+    <FigureLabel as="div" type="SYS" index="03" title="AI TASK LIFECYCLE" description="LONG-RUNNING GENERATION" signal="VERIFY FLOW" />
     <div class="ai-intro"><h2 id="ai-product-title">Generation is easy.<br />Reliability is<br />the product.</h2><div><p>A NoteX generation task can outlive the screen that started it. The product has to preserve the task, receive the update, and put the result back where the user expects it.</p><small>[FLOW TO VERIFY AGAINST PRODUCTION]</small></div></div>
     <div class="ai-field">
       <LifecycleFlow className="task-trace" steps={trace} active="event" figureIndex="03" title="EVENT TRACE" signalLabel="REALTIME EVENT" />

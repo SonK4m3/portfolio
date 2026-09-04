@@ -1,0 +1,43 @@
+---
+export interface Props {
+  padding?: 'sm' | 'md' | 'lg';
+  theme?: 'inherit' | 'light' | 'dark';
+  align?: 'center' | 'stretch';
+  toolbar?: boolean;
+  label?: string;
+  className?: string;
+}
+const { padding = 'lg', theme = 'inherit', align = 'stretch', toolbar = true, label = 'Live preview', className = '' } = Astro.props as Props;
+---
+<div class:list={['preview-canvas', `padding-${padding}`, `align-${align}`, className]} data-preview-canvas data-theme={theme === 'inherit' ? undefined : theme}>
+  {toolbar && <div class="preview-toolbar">
+    <span>{label}</span>
+    <div role="group" aria-label="Preview color theme">
+      {(['inherit','light','dark'] as const).map((value) => <button type="button" data-preview-theme={value} aria-pressed={theme === value}>{value === 'inherit' ? 'System' : value}</button>)}
+    </div>
+  </div>}
+  <div class="preview-stage"><slot /></div>
+</div>
+<style>
+  .preview-canvas { --preview-pad:var(--space-7); position:relative; border-block:1px solid var(--color-border); background:var(--color-surface); color:var(--color-foreground); overflow:hidden; }
+  .preview-canvas[data-theme='light'] { color-scheme:light; --color-background:#f4f4f0; --color-surface:#fafaf7; --color-foreground:#111111; --color-muted:#70706b; --color-border:#d8d8d2; --color-signal:#ff3b30; --color-signal-contrast:#111111; }
+  .preview-canvas[data-theme='dark'] { color-scheme:dark; --color-background:#0c0c0c; --color-surface:#131313; --color-foreground:#f1f1ec; --color-muted:#8a8a84; --color-border:#292929; --color-signal:#ff3b30; --color-signal-contrast:#0c0c0c; }
+  .padding-sm { --preview-pad:var(--space-4); }.padding-md { --preview-pad:var(--space-6); }.padding-lg { --preview-pad:clamp(1.5rem,4vw,4rem); }
+  .preview-toolbar { min-height:3.5rem; display:flex; justify-content:space-between; align-items:center; gap:var(--space-4); padding:var(--space-2) var(--space-4); border-bottom:1px solid var(--color-border); color:var(--color-muted); font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .preview-toolbar > div { display:flex; align-items:center; }
+  button { min-width:3.5rem; min-height:2.75rem; padding:.5rem .75rem; border:0; background:transparent; color:var(--color-muted); font:inherit; letter-spacing:inherit; text-transform:uppercase; cursor:pointer; }
+  button[aria-pressed='true'] { color:var(--color-foreground); box-shadow:inset 0 -1px 0 var(--color-signal); }
+  .preview-stage { position:relative; min-height:clamp(20rem,48vw,38rem); padding:var(--preview-pad); background:var(--color-background); }
+  .align-center .preview-stage { display:grid; place-items:center; }
+  @media (max-width:640px) { .preview-toolbar { align-items:flex-start; }.preview-toolbar > span { padding-top:1rem; }.preview-stage { min-height:18rem; }.preview-toolbar button { min-width:auto; padding-inline:.55rem; } }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-preview-canvas]').forEach((canvas) => {
+    canvas.querySelectorAll<HTMLButtonElement>('[data-preview-theme]').forEach((button) => button.addEventListener('click', () => {
+      const value = button.dataset.previewTheme;
+      if (value === 'inherit') canvas.removeAttribute('data-theme');
+      else if (value) canvas.dataset.theme = value;
+      canvas.querySelectorAll<HTMLButtonElement>('[data-preview-theme]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+    }));
+  });
+</script>

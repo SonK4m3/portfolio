@@ -1,0 +1,78 @@
+---
+title: Dossier Matrix
+slug: dossier-matrix
+id: CMP.002
+category: editorial
+status: beta
+framework: [Astro]
+description: A responsive definition matrix for project scope, personal profiles, technical context, and other compact factual records.
+capabilities: [metadata, definition-list, responsive]
+usedIn:
+  - { label: Home, href: /, area: NoteX evidence }
+  - { label: About, href: /about, area: Personal dossier }
+tags: [metadata, editorial, responsive]
+order: 2
+published: true
+sections:
+  - { id: intent, label: Intent }
+  - { id: usage, label: Usage }
+  - { id: variants, label: Variants }
+  - { id: api, label: API }
+  - { id: accessibility, label: Accessibility }
+  - { id: performance, label: Performance }
+---
+import DocSection from '../../components/docs/DocSection.astro';
+import ApiTable from '../../components/docs/ApiTable.astro';
+
+<DocSection id="intent" index="01" title="Why it exists" description="Structured facts should scan without looking like dashboard cards.">
+
+Dossier Matrix groups related labels and values into one semantic record. The open grid preserves the editorial character of the portfolio while making roles, scope, runtime, and evidence status easy to compare.
+
+**It should not become** a metric dashboard or a collection of decorative statistic tiles.
+
+</DocSection>
+
+<DocSection id="usage" index="02" title="Usage">
+
+```astro
+<DossierMatrix
+  columns={2}
+  items={[
+    { label: 'Role', value: 'Product Engineer' },
+    { label: 'Runtime', value: 'Astro / Native JS' },
+  ]}
+/>
+```
+
+</DocSection>
+
+<DocSection id="variants" index="03" title="Variants">
+
+- **Two columns** suits focused project or profile metadata.
+- **Three columns** supports denser system records on wide canvases.
+- Both contracts collapse to one reading column on small screens.
+
+</DocSection>
+
+<DocSection id="api" index="04" title="API">
+
+<ApiTable properties={[
+  { name:'items', type:'DossierItem[]', description:'Label and value records.' },
+  { name:'columns', type:'2 | 3', default:'3', description:'Wide-screen column count.' },
+  { name:'signalSlash', type:'boolean', default:'true', description:'Shows the vermilion taxonomy slash.' },
+  { name:'className', type:'string', description:'Optional composition hook.' },
+]} />
+
+</DocSection>
+
+<DocSection id="accessibility" index="05" title="Accessibility">
+
+The component renders a native definition list. Each label remains adjacent to its value in the DOM, and the mobile layout preserves the same reading order without horizontal scrolling.
+
+</DocSection>
+
+<DocSection id="performance" index="06" title="Performance">
+
+Static Astro markup and CSS Grid only. No hydration, observers, measurement, or duplicated state.
+
+</DocSection>

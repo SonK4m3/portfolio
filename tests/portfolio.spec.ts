@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-const routes = ['/', '/work', '/work/notex', '/about', '/notes', '/playground', '/type-proof'];
+const componentRoutes = ['/components', '/components/figure-label', '/components/dossier-matrix', '/components/architecture-layers', '/components/lifecycle-flow', '/components/system-map', '/components/system-grid'];
+const routes = ['/', '/work', '/work/notex', '/about', '/notes', '/playground', '/type-proof', ...componentRoutes];
 
 test.describe('portfolio routes and metadata', () => {
   for (const route of routes) {
@@ -22,6 +23,13 @@ test('navigation reaches work and about', async ({ page }) => {
   await expect(page).toHaveURL(/\/work\/?$/);
   await navigation.getByRole('link', { name: 'About', exact: true }).click();
   await expect(page).toHaveURL(/\/about\/?$/);
+});
+
+test('global navigation exposes the component laboratory', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Components' }).click();
+  await expect(page).toHaveURL(/\/components\/?$/);
+  await expect(page.getByRole('heading', { name: /Small interface systems/ })).toBeVisible();
 });
 
 test('keyboard focus and reduced motion are supported', async ({ page }) => {
@@ -75,6 +83,16 @@ test('supported viewports have no horizontal overflow', async ({ page }) => {
   }
 });
 
+test('component catalogue and representative docs have no horizontal overflow', async ({ page }) => {
+  for (const route of ['/components', '/components/architecture-layers', '/components/system-grid']) {
+    for (const viewport of [{ width: 390, height: 844 }, { width: 430, height: 932 }, { width: 768, height: 1024 }, { width: 1024, height: 768 }, { width: 1440, height: 900 }, { width: 1600, height: 1000 }]) {
+      await page.setViewportSize(viewport);
+      await page.goto(route);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), `${route} overflows at ${viewport.width}px`).toBe(false);
+    }
+  }
+});
+
 test('NoteX case study follows the seven-chapter structure', async ({ page }) => {
   await page.goto('/work/notex');
   await expect(page.locator('h1')).toHaveText('NoteX');
@@ -121,6 +139,64 @@ test('development proofs expose the type, grid, and component foundations', asyn
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
   }
+});
+
+test('component catalogue lists six production entries and filters by primary category', async ({ page }) => {
+  await page.goto('/components');
+  await expect(page.locator('[data-component-entry]')).toHaveCount(6);
+  await expect(page.locator('.catalogue-preview [data-preview-entry]:not([hidden]) [data-production-preview]')).toHaveCount(1);
+
+  await page.getByRole('button', { name: 'editorial', exact: true }).click();
+  await expect(page.locator('[data-component-entry]:visible')).toHaveCount(2);
+  await expect(page.getByRole('button', { name: 'editorial', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('catalogue focus updates the live production preview', async ({ page }) => {
+  await page.goto('/components');
+  const entry = page.locator('[data-component-entry][data-slug="lifecycle-flow"]');
+  await entry.locator('[data-component-trigger]').focus();
+  await expect(entry).toHaveAttribute('data-active', 'true');
+  if ((page.viewportSize()?.width ?? 0) >= 768) {
+    await expect(page.locator('[data-preview-entry="lifecycle-flow"] [data-production-preview="lifecycle-flow"]')).toBeVisible();
+  } else {
+    await expect(entry.locator('.mobile-preview [data-production-preview="lifecycle-flow"]')).toBeVisible();
+  }
+});
+
+test('preview theme is local to its canvas', async ({ page }) => {
+  await page.goto('/components/system-grid');
+  const globalTheme = await page.locator('html').getAttribute('data-theme');
+  const canvas = page.locator('.primary-preview [data-preview-canvas]');
+  await canvas.getByRole('button', { name: 'dark', exact: true }).click();
+  await expect(canvas).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', globalTheme ?? 'dark');
+});
+
+test('component detail provides anchors, production preview, API and copyable code', async ({ page }) => {
+  await page.goto('/components/architecture-layers');
+  await expect(page.locator('h1')).toHaveText('Architecture Layers');
+  await expect(page.locator('[data-production-preview="architecture-layers"]').first()).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Accessibility' })).toHaveAttribute('href', '#accessibility');
+  await expect(page.locator('.api-table')).toBeVisible();
+  const copy = page.getByRole('button', { name: 'Copy code example' }).first();
+  await copy.click();
+  await expect(copy).toHaveText('Copied');
+  await expect(page.locator('.code-announcer')).toHaveText('Code copied to clipboard');
+});
+
+test('System Grid detail keeps progressive enhancement and reduced motion', async ({ page }) => {
+  await page.goto('/components/system-grid');
+  const preview = page.locator('.primary-preview [data-production-preview="system-grid"]');
+  const label = preview.locator('[data-grid-label]').first();
+  const finePointer = await page.evaluate(() => matchMedia('(hover:hover) and (pointer:fine)').matches);
+  await preview.hover({ position: { x: 240, y: 180 } });
+  expect(Boolean(await label.evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity')))).toBe(finePointer);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  const reducedPreview = page.locator('.primary-preview [data-production-preview="system-grid"]');
+  await reducedPreview.hover({ position: { x: 260, y: 190 } });
+  await expect.poll(() => reducedPreview.locator('[data-grid-label]').first().evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'))).toBe('');
 });
 
 test('homepage follows the Sprint B1 density rhythm', async ({ page }) => {

@@ -1,0 +1,10 @@
+---
+import SystemMap from '../../components/system/SystemMap.astro';
+const axes = [
+  { id:'product', label:'Product', description:'Intent' },
+  { id:'engineering', label:'Engineering', description:'Systems' },
+  { id:'ai', label:'AI', description:'Capability' },
+  { id:'design', label:'Design', description:'Experience' },
+];
+---
+<div data-production-preview="system-map"><SystemMap axes={axes} position={{ x:62, y:39 }} figureIndex="005" /></div>

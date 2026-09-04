@@ -1,0 +1,21 @@
+---
+import SystemGrid from '../../components/system/SystemGrid.astro';
+export interface Props { intensity?: 'quiet' | 'medium' | 'active' }
+const { intensity = 'medium' } = Astro.props as Props;
+const labels = [
+  { id:'structure', label:'STRUCTURE', x:2, y:24 },
+  { id:'state', label:'STATE', x:8, y:46 },
+  { id:'signal', label:'SIGNAL', x:10, y:76 },
+];
+---
+<div class="system-grid-demo" data-production-preview="system-grid">
+  <SystemGrid labels={labels} reveal="pointer" intensity={intensity} />
+  <div><span>SYSTEMS BENEATH THE INTERFACE</span><strong>Structure becomes the interaction.</strong><p>Move a fine pointer through the field. Touch and reduced-motion contexts keep the underlying grid quiet and readable.</p></div>
+</div>
+<style>
+  .system-grid-demo { position:relative; min-height:30rem; display:grid; align-items:end; overflow:hidden; }
+  .system-grid-demo > div:last-child { position:relative; z-index:1; display:grid; gap:var(--space-3); max-width:38rem; padding:var(--space-6); }
+  span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; }
+  strong { font:560 var(--type-heading)/1 var(--font-sans); letter-spacing:-.03em; text-wrap:balance; }
+  p { max-width:48ch; color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+</style>
