@@ -11,6 +11,7 @@ const components = defineCollection({
     slug: z.string(),
     id: z.string().regex(/^CMP\.\d{3}$/),
     description: z.string(),
+    reason: z.string(),
     category: z.enum(['system', 'editorial', 'interaction', 'annotation']),
     capabilities: z.array(z.string()).optional(),
     status: z.enum(['experimental', 'beta', 'stable']),

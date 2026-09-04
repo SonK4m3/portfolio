@@ -144,7 +144,9 @@ test('development proofs expose the type, grid, and component foundations', asyn
 test('component catalogue lists six production entries and filters by primary category', async ({ page }) => {
   await page.goto('/components');
   await expect(page.locator('[data-component-entry]')).toHaveCount(6);
+  await expect(page.locator('.component-reason')).toHaveCount(6);
   await expect(page.locator('.catalogue-preview [data-preview-entry]:not([hidden]) [data-production-preview]')).toHaveCount(1);
+  await expect(page.getByText('Built here. Used here.')).toBeVisible();
 
   await page.getByRole('button', { name: 'editorial', exact: true }).click();
   await expect(page.locator('[data-component-entry]:visible')).toHaveCount(2);

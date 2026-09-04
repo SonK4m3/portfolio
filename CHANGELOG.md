@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-04 — P2 catalogue art-direction refinement
+
+Refined the public component archive without changing its information architecture or Astro-native implementation.
+
+- Increased the active production preview into a stronger visual stage with component numbering, runtime state, and variant context.
+- Added one authored design principle to every component and strengthened the hierarchy between prose, labels, and metadata values.
+- Clarified the system metric language, improved filter focus treatment, and reduced the catalogue headline scale.
+- Added a closing editorial transition connecting component construction, production use, and documentation.
+- Preserved production-component rendering, category filtering, keyboard interaction, mobile previews, and local theme isolation.
+
 ## 2026-09-04 — P2 public component laboratory
 
 Turned the six production signature components into a public, self-documenting design engineering catalogue.

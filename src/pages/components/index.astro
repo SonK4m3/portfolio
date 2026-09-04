@@ -14,7 +14,7 @@ assertRegistryMatches(components.map((entry) => entry.data.slug));
 const categories = ['all', 'system', 'editorial', 'interaction'] as const;
 const metrics = [
   { label:'Components', value:String(components.length).padStart(2,'0') },
-  { label:'System views', value:String(components.filter(({data}) => data.category === 'system').length).padStart(2,'0') },
+  { label:'System components', value:String(components.filter(({data}) => data.category === 'system').length).padStart(2,'0') },
   { label:'Interactive', value:String(components.filter(({data}) => data.capabilities?.includes('interaction') || data.category === 'interaction').length).padStart(2,'0') },
   { label:'Runtime', value:'Astro / Native JS' },
 ];
@@ -42,7 +42,7 @@ const metrics = [
               return <article class="component-entry" data-component-entry data-category={entry.data.category} data-slug={entry.data.slug}>
                 <a class="component-row" href={`/components/${entry.data.slug}`} data-component-trigger aria-describedby={`${entry.data.slug}-description`}>
                   <span class="component-index">{entry.data.id}</span>
-                  <div><h3>{entry.data.title}</h3><p id={`${entry.data.slug}-description`}>{entry.data.description}</p></div>
+                  <div class="component-summary"><h3>{entry.data.title}</h3><p id={`${entry.data.slug}-description`}>{entry.data.description}</p><p class="component-reason">{entry.data.reason}</p></div>
                   <dl><div><dt>Category</dt><dd>{entry.data.category}</dd></div><div><dt>Framework</dt><dd>{entry.data.framework.join(' / ')}</dd></div><div><dt>Used in</dt><dd>{entry.data.usedIn.map((item) => item.label).join(' / ')}</dd></div></dl>
                   <ComponentStatus status={entry.data.status} />
                   <span class="open-label">Open / {String(index + 1).padStart(2,'0')}</span>
@@ -53,14 +53,26 @@ const metrics = [
           </div>
 
           <div class="catalogue-preview" aria-live="polite">
-            <PreviewCanvas label="Active component" padding="md">
+            <PreviewCanvas label="Active production component" padding="lg" className="catalogue-canvas">
               {components.map((entry, index) => {
                 const Preview = getComponentRegistryEntry(entry.data.slug).preview;
-                return <div class="preview-entry" data-preview-entry={entry.data.slug} hidden={index !== 0}><Preview /></div>;
+                return <div class="preview-entry" data-preview-entry={entry.data.slug} hidden={index !== 0}>
+                  <span class="preview-number" aria-hidden="true">{String(index + 1).padStart(3,'0')}</span>
+                  <div class="preview-component"><Preview /></div>
+                  <footer class="preview-caption">
+                    <span>{entry.data.id} / {entry.data.status}</span>
+                    <span>Production default / live Astro render</span>
+                  </footer>
+                </div>;
               })}
             </PreviewCanvas>
           </div>
         </div>
+      </section>
+
+      <section class="catalogue-closing" aria-label="Component laboratory principle">
+        <p>Built here. Used here.<br />Documented here.</p>
+        <span>06 components / one system</span>
       </section>
     </Container>
   </div>
@@ -74,30 +86,41 @@ const metrics = [
   .hero-copy span { color:var(--color-muted); font:500 var(--type-meta)/1.5 var(--font-mono); letter-spacing:.1em; }
   .catalogue { padding-top:var(--space-section-md); }
   .catalogue-heading { display:grid; gap:var(--space-7); margin-bottom:var(--space-7); }
-  .catalogue-heading h2 { max-width:12ch; font:560 var(--type-display-md)/.94 var(--font-sans); letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance; }
+  .catalogue-heading h2 { max-width:13ch; font:560 clamp(2.25rem,3.8vw,3.75rem)/.94 var(--font-sans); letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance; }
   .catalogue-filters { display:flex; flex-wrap:wrap; border-block:1px solid var(--color-border); margin-bottom:var(--space-7); }
   .catalogue-filters button { min-height:2.75rem; padding:.75rem var(--space-4); border:0; border-right:1px solid var(--color-border); background:transparent; color:var(--color-muted); font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
-  .catalogue-filters button[aria-pressed='true'] { color:var(--color-foreground); box-shadow:inset 0 -1px 0 var(--color-signal); }
+  .catalogue-filters button:hover { color:var(--color-foreground); background:var(--color-surface); }
+  .catalogue-filters button:focus-visible { position:relative; z-index:1; outline:2px solid var(--color-foreground); outline-offset:-3px; color:var(--color-foreground); }
+  .catalogue-filters button[aria-pressed='true'] { color:var(--color-foreground); box-shadow:inset 0 -2px 0 var(--color-signal); }
   .catalogue-layout { display:grid; grid-template-columns:minmax(0,5fr) minmax(24rem,5fr); gap:calc(var(--grid-gap) * 2); align-items:start; }
   .component-list { border-top:1px solid var(--color-border); }
   .component-entry[hidden] { display:none; }
   .component-row { position:relative; display:grid; grid-template-columns:5rem minmax(0,1fr) minmax(12rem,1fr); gap:var(--grid-gap); padding:var(--space-6) 0; border-bottom:1px solid var(--color-border); }
   .component-index,.open-label { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; font-variant-numeric:tabular-nums; }
   .component-row h3 { font:560 var(--type-subheading)/1 var(--font-sans); letter-spacing:-.03em; text-transform:uppercase; text-wrap:balance; }
-  .component-row p { max-width:45ch; margin-top:var(--space-3); color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+  .component-row p { max-width:48ch; margin-top:var(--space-3); color:var(--color-muted); font-size:clamp(.9rem,1vw,1rem); line-height:1.55; text-wrap:pretty; }
+  .component-row .component-reason { margin-top:var(--space-4); color:var(--color-foreground); font:italic 400 clamp(.95rem,1.05vw,1.08rem)/1.45 var(--font-serif); }
   .component-row dl { display:grid; gap:var(--space-3); margin:0; }
   .component-row dl > div { display:grid; grid-template-columns:5rem 1fr; gap:var(--space-2); }
-  .component-row dt,.component-row dd { margin:0; font:500 var(--type-meta)/1.3 var(--font-mono); text-transform:uppercase; }
-  .component-row dt { color:var(--color-muted); }.component-row dd { color:var(--color-foreground); }
+  .component-row dt,.component-row dd { margin:0; font-family:var(--font-mono); text-transform:uppercase; }
+  .component-row dt { color:var(--color-muted); font-size:.68rem; font-weight:500; line-height:1.3; letter-spacing:.08em; }.component-row dd { color:var(--color-foreground); font-size:.78rem; font-weight:520; line-height:1.35; letter-spacing:.025em; }
   .component-row :global(.component-status) { grid-column:2; }
   .open-label { grid-column:3; text-align:right; }
   .component-row::after { content:''; position:absolute; inset:0; z-index:-1; background:var(--color-surface); opacity:0; transition:opacity var(--motion-fast) var(--ease-system); }
   .component-row:hover::after,.component-row:focus-visible::after,.component-entry[data-active='true'] .component-row::after { opacity:1; }
   .catalogue-preview { position:sticky; top:6.5rem; }
+  .catalogue-preview :global(.catalogue-canvas .preview-stage) { min-height:clamp(34rem,58vw,46rem); }
+  .preview-entry { position:relative; min-height:100%; display:grid; grid-template-rows:1fr auto; align-items:center; gap:var(--space-7); }
   .preview-entry[hidden] { display:none; }
+  .preview-number { position:absolute; top:-.075em; right:-.03em; color:var(--color-foreground); opacity:.045; font:620 clamp(8rem,15vw,14rem)/.75 var(--font-sans); letter-spacing:-.08em; font-variant-numeric:tabular-nums; pointer-events:none; }
+  .preview-component { position:relative; z-index:1; width:100%; }
+  .preview-caption { position:relative; z-index:1; display:flex; justify-content:space-between; gap:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-border); color:var(--color-muted); font:500 .68rem/1.35 var(--font-mono); letter-spacing:.07em; text-transform:uppercase; }
   .mobile-preview { display:none; }
+  .catalogue-closing { min-height:60svh; display:grid; align-content:center; grid-template-columns:minmax(0,3fr) minmax(12rem,1fr); gap:var(--grid-gap); margin-top:var(--space-section-lg); padding-block:var(--space-section-md); border-top:1px solid var(--color-border); }
+  .catalogue-closing p { max-width:14ch; font:400 clamp(2.5rem,6vw,6rem)/.95 var(--font-serif); letter-spacing:-.045em; text-wrap:balance; }
+  .catalogue-closing span { align-self:end; color:var(--color-muted); font:500 var(--type-meta)/1.4 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
   @media (max-width:1023px) { .catalogue-layout { grid-template-columns:1fr; }.catalogue-preview { position:static; grid-row:1; }.component-row { grid-template-columns:4rem minmax(0,1fr) minmax(12rem,1fr); } }
-  @media (max-width:767px) { .components-hero { min-height:auto; padding-block:var(--space-9); }.components-hero h1 { font-size:clamp(3.5rem,16vw,5.25rem); }.hero-copy { grid-template-columns:1fr; }.catalogue-preview { display:none; }.mobile-preview { display:block; margin-bottom:var(--space-7); }.component-row { grid-template-columns:3rem 1fr; }.component-row dl { grid-column:2; margin-top:var(--space-3); }.component-row :global(.component-status) { grid-column:2; }.open-label { grid-column:2; text-align:left; }.component-row dl > div { grid-template-columns:5.5rem 1fr; } }
+  @media (max-width:767px) { .components-hero { min-height:auto; padding-block:var(--space-9); }.components-hero h1 { font-size:clamp(3.5rem,16vw,5.25rem); }.hero-copy { grid-template-columns:1fr; }.catalogue-preview { display:none; }.mobile-preview { display:block; margin-bottom:var(--space-7); }.component-row { grid-template-columns:3rem 1fr; }.component-row dl { grid-column:2; margin-top:var(--space-3); }.component-row :global(.component-status) { grid-column:2; }.open-label { grid-column:2; text-align:left; }.component-row dl > div { grid-template-columns:5.5rem 1fr; }.catalogue-closing { min-height:52svh; grid-template-columns:1fr; }.catalogue-closing span { align-self:auto; } }
 </style>
 <script>
   document.querySelectorAll<HTMLElement>('[data-component-catalogue]').forEach((catalogue) => {
