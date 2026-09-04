@@ -1,5 +1,43 @@
 # Changelog
 
+## 2026-09-04 — P0/P1 signature system foundation
+
+Converted the portfolio's visual language into a reusable Astro design system and applied the first six signature components to real product pages.
+
+### Foundation
+
+- Added canonical semantic color, typography, spacing, grid, surface, divider, and motion tokens with backward-compatible aliases.
+- Added a responsive 12-column desktop, 8-column tablet, and 4-column mobile page grid.
+- Added foundation primitives for page grids, grid items, hairlines, technical dividers, and hatch dividers.
+- Added a variable Caveat annotation face while preserving Geist Sans, IBM Plex Serif, and Geist Mono as the primary voices.
+- Added semantic motion classes and a complete reduced-motion fallback.
+- Added internal `/dev/type`, `/dev/grid`, and `/dev/components` proof routes, all excluded from indexing.
+
+### Signature components
+
+- Added `FigureLabel` with FIG, SYS, CMP, EXP, and BLK taxonomy.
+- Added `DossierMatrix` for structured product and profile metadata.
+- Added `ArchitectureLayers` for system boundaries and active ownership states.
+- Added `LifecycleFlow` with horizontal/vertical contracts and container-responsive fallback.
+- Added `SystemMap` for four-axis positioning without invented scores.
+- Added `SystemGrid` with restrained pointer proximity, touch fallback, and reduced-motion behavior.
+- Added content collection metadata for status, ownership, framework, and usage of all six components.
+
+### Production integration
+
+- Applied `SystemGrid`, `ArchitectureLayers`, and `LifecycleFlow` to the homepage.
+- Applied `FigureLabel` and `DossierMatrix` to the homepage NoteX evidence section.
+- Applied `DossierMatrix`, `FigureLabel`, and `SystemMap` to `/about`.
+- Applied `ArchitectureLayers`, `LifecycleFlow`, and `FigureLabel` to `/work/notex`.
+
+### Validation
+
+- Astro check — 0 errors, 0 warnings, 0 hints across 83 files.
+- Static build — 10 pages generated.
+- Playwright — route, metadata, navigation, theme, keyboard, reduced motion, signature integration, and overflow coverage on desktop and mobile.
+- Responsive overflow coverage includes 390px, 430px, 1440px, 1600px, and 1920px widths.
+- Impeccable detector — no findings after replacing heavy side accents with one-pixel signal rules.
+
 ## 2026-09-03 — Sprint B1 scroll and spatial rhythm
 
 Turned the homepage from evenly spaced sections into a continuous, authored native-scroll sequence while preserving the locked Swiss Technical Editorial visual system.

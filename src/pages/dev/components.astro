@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/primitives/Container.astro';
+import FigureLabel from '../../components/editorial/FigureLabel.astro';
+import DossierMatrix from '../../components/system/DossierMatrix.astro';
+import ArchitectureLayers from '../../components/system/ArchitectureLayers.astro';
+import LifecycleFlow from '../../components/system/LifecycleFlow.astro';
+import SystemMap from '../../components/system/SystemMap.astro';
+import SystemGrid from '../../components/system/SystemGrid.astro';
+
+const registry = (await getCollection('components')).sort((a,b) => a.data.id.localeCompare(b.data.id));
+const layers = [
+  { id:'experience', label:'Experience', meta:'Interface' },
+  { id:'ownership', label:'Ownership', meta:'State boundary', description:'The active decision belongs here.' },
+  { id:'runtime', label:'Runtime', meta:'Server / local' },
+];
+const steps = [
+  { id:'intent', label:'Intent', meta:'00:00' },
+  { id:'run', label:'Generate', meta:'00:04' },
+  { id:'return', label:'Return', meta:'00:21' },
+];
+const axes = [
+  { id:'product', label:'Product', description:'Intent' },
+  { id:'engineering', label:'Engineering', description:'Systems' },
+  { id:'ai', label:'AI', description:'Capability' },
+  { id:'design', label:'Design', description:'Experience' },
+];
+---
+<BaseLayout title="Signature Components — Dev" description="Internal component registry and composition proof." noindex>
+  <section class="component-dev">
+    <SystemGrid labels={[{ id:'a', label:'COMPONENT FIELD', x:2, y:22 },{ id:'b', label:'SYSTEM PROOF', x:10, y:76 }]} intensity="quiet" />
+    <Container>
+      <header><p>DEV / COMPONENT REGISTRY</p><h1>Signature<br />system.</h1><span>{String(registry.length).padStart(2,'0')} COMPONENTS</span></header>
+      <section class="registry" aria-labelledby="registry-title"><FigureLabel type="CMP" index="01" title="REGISTRY" /><h2 id="registry-title">Component metadata</h2><DossierMatrix columns={3} items={registry.map(item => ({ label:`${item.data.id} / ${item.data.status}`, value:item.data.title }))} /></section>
+      <section><FigureLabel type="CMP" index="02" title="ARCHITECTURE LAYERS" /><ArchitectureLayers layers={layers} activeLayer="ownership" /></section>
+      <section><FigureLabel type="CMP" index="03" title="LIFECYCLE FLOW" /><LifecycleFlow steps={steps} active="run" /></section>
+      <section><FigureLabel type="CMP" index="04" title="SYSTEM MAP" /><SystemMap axes={axes} position={{ x:62, y:39 }} /></section>
+    </Container>
+  </section>
+</BaseLayout>
+<style>
+  .component-dev { position:relative; overflow:hidden; padding-block:var(--space-section-md); }
+  .component-dev > :global(.container) { position:relative; z-index:1; }
+  header { min-height:70svh; display:grid; align-content:center; }
+  header p,header span { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  header h1 { margin-block:var(--space-5); font:560 var(--type-display-xxl)/.82 var(--font-sans); letter-spacing:-.05em; text-transform:uppercase; }
+  section section { padding-block:var(--space-section-md); border-top:1px solid var(--color-border); }
+  section section > h2 { margin:var(--space-7) 0; font:560 var(--type-heading)/1 var(--font-sans); letter-spacing:-.035em; }
+  section section > :global(.architecture-layers),section section > :global(.lifecycle-flow),section section > :global(.system-map-component) { margin-top:var(--space-7); }
+  @media (max-width:640px) { header { min-height:60svh; } header h1 { font-size:clamp(4rem,19vw,6rem); } }
+</style>

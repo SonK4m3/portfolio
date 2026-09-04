@@ -12,6 +12,9 @@ technologies: ['Next.js', 'React', 'TypeScript']
 
 import MetricGrid from '../../components/content/MetricGrid.astro';
 import ContentPlaceholder from '../../components/content/ContentPlaceholder.astro';
+import FigureLabel from '../../components/editorial/FigureLabel.astro';
+import ArchitectureLayers from '../../components/system/ArchitectureLayers.astro';
+import LifecycleFlow from '../../components/system/LifecycleFlow.astro';
 
 ## From Product to System
 
@@ -33,7 +36,7 @@ The frontend coordinates server data, local interaction state, long-running AI t
 
 I approached state management as an ownership problem: what owns this information, how long should it live, and who needs to know when it changes?
 
-<div class="architecture-diagram" role="img" aria-label="Conceptual NoteX frontend architecture"><strong>PRODUCT EXPERIENCE</strong><div class="diagram-branches"><span>INTERACTION<br /><small>Zustand</small></span><span>BUSINESS<br /><small>Product rules</small></span></div><b>DATA LAYER</b><div class="diagram-branches"><span>SERVER STATE<br /><small>React Query</small></span><span>REALTIME<br /><small>SSE</small></span><span>LOCAL DATA<br /><small>Dexie</small></span></div><strong>API / PLATFORM</strong></div>
+<ArchitectureLayers className="architecture-diagram" figureIndex="02" title="NOTEX / FRONTEND ARCHITECTURE" activeLayer="state" verification="CONCEPTUAL / VERIFY" layers={[{ id:'experience', label:'Product experience', meta:'User-facing behavior' },{ id:'interaction', label:'Interaction', meta:'Zustand' },{ id:'business', label:'Business', meta:'Product rules' },{ id:'state', label:'Data ownership', meta:'Lifetime / source / sync' },{ id:'runtime', label:'Server / realtime / local', meta:'React Query / SSE / Dexie' },{ id:'platform', label:'API / Platform', meta:'Web / extension / desktop' }]} />
 
 The stack is not the story. The boundary is. Server state needs caching and synchronization. Interaction state needs to stay responsive. Local data needs an explicit lifetime and source of truth. Realtime events should update the smallest meaningful part of the product.
 
@@ -47,7 +50,7 @@ AI introduces uncertainty: generation takes time, results can fail, tasks can ou
 
 For each AI-powered experience, the product must answer: what started, what is running, whether the user can leave and return, what happens on failure, whether retry is safe, and where the result appears.
 
-<div class="lifecycle" aria-label="AI product lifecycle"><span>INTENT</span><span>CONTEXT</span><span>GENERATION</span><span>VALIDATION</span><span>RECOVERY</span><span>PRODUCT STATE</span></div>
+<LifecycleFlow className="lifecycle" orientation="horizontal" active="generate" figureIndex="03" title="AI PRODUCT LIFECYCLE" signalLabel="ACTIVE" steps={[{ id:'intent', label:'Intent' },{ id:'context', label:'Context' },{ id:'generate', label:'Generate' },{ id:'verify', label:'Verify' },{ id:'recover', label:'Recover' },{ id:'return', label:'Return' }]} />
 
 AI should feel like a capability inside the product, not a separate machine the user has to manage. The system can be complex; the mental model should not be.
 
@@ -68,6 +71,8 @@ The same principle applies to rich content and failure states. Notes may include
 ### The product should meet users where the work happens.
 
 Not every use case belongs in the main web application. A meeting workflow may benefit from a browser extension; local files and operating-system integration may justify a desktop surface.
+
+<FigureLabel type="SYS" index="04" title="NOTEX" description="PLATFORM MODEL" />
 
 <div class="platform-diagram" aria-label="NoteX platform model"><strong>NOTEX CORE</strong><div><span><b>WEB</b><small>workspace · editing · knowledge</small></span><span><b>EXTENSION</b><small>meeting context · capture · side panel</small></span><span><b>DESKTOP</b><small>local system · files · integration</small></span></div></div>
 

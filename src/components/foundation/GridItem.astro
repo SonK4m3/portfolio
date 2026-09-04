@@ -1,0 +1,7 @@
+---
+export interface Props { className?: string; id?: string; start?: number; span?: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 'full' }
+const { className = '', id, start, span = 'full' } = Astro.props as Props;
+const style = start ? `--grid-start:${start}` : undefined;
+---
+<div id={id} class:list={[`grid-span-${span}`, className, { 'grid-item-start': start }]} style={style}><slot /></div>
+<style>.grid-item-start { grid-column-start:var(--grid-start); }</style>

@@ -1,15 +1,11 @@
 ---
 import Container from '../primitives/Container.astro';
 import Link from '../typography/Link.astro';
+import SystemGrid from '../system/SystemGrid.astro';
 const { eyebrow = 'Product Engineer', title, description, action } = Astro.props;
 ---
 <section class="systems-hero density-balanced transition-hairline" data-systems-hero data-density="balanced">
-  <div class="hero-grid" aria-hidden="true"></div>
-  <div class="hero-system-layer" aria-hidden="true">
-    <span class="hero-coordinate hero-coordinate-state"><i></i>[04 / 12] STATE</span>
-    <span class="hero-coordinate hero-coordinate-data"><i></i>[08 / 12] DATA</span>
-    <span class="hero-coordinate hero-coordinate-ai"><i></i>[11 / 12] AI</span>
-  </div>
+  <SystemGrid className="hero-system-grid" reveal="pointer" intensity="quiet" labels={[{ id:'state', label:'STATE', x:9, y:32 },{ id:'data', label:'DATA', x:7, y:65 },{ id:'ai', label:'AI', x:11, y:84 }]} />
   <Container>
     <div class="hero-meta"><span>{eyebrow}</span><span>2026 / VIETNAM</span></div>
     <div class="hero-composition"><div class="hero-headline"><h1>{title}</h1></div><div class="hero-supporting"><p>{description}</p>{action && <Link href={action.href} variant="arrow">{action.label}</Link>}</div></div>
@@ -17,9 +13,22 @@ const { eyebrow = 'Product Engineer', title, description, action } = Astro.props
 </section>
 <style>
   .systems-hero { position:relative; min-height:100svh; overflow:hidden; padding-top:1.5rem; padding-bottom:max(var(--section-balanced),20svh); isolation:isolate; }
-  .hero-grid { position:absolute; inset:0; z-index:-2; opacity:.2; background-image:linear-gradient(to right, color-mix(in srgb, var(--color-border) 55%, transparent) 1px, transparent 1px),linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px); background-size:calc((100% - (var(--page-gutter) * 2)) / 12) 100%,100% 20%; background-position:var(--page-gutter) 0,0 20%; mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent); }
-  .hero-system-layer { position:absolute; inset:0; z-index:-1; pointer-events:none; color:var(--color-muted); font:500 .65rem var(--font-mono); letter-spacing:.1em; }.hero-coordinate { position:absolute; display:flex; align-items:center; gap:.7rem; opacity:.26; }.hero-coordinate i { width:.65rem; height:.65rem; border:1px solid currentColor; position:relative; }.hero-coordinate i::before,.hero-coordinate i::after { content:''; position:absolute; background:currentColor; }.hero-coordinate i::before { width:1.25rem; height:1px; left:50%; top:50%; transform:translate(-50%,-50%); }.hero-coordinate i::after { width:1px; height:1.25rem; left:50%; top:50%; transform:translate(-50%,-50%); }.hero-coordinate-state { top:26%; right:21%; }.hero-coordinate-data { top:60%; left:51%; opacity:.16; }.hero-coordinate-ai { bottom:15%; right:10%; opacity:.22; }
-  .hero-meta { display:flex; justify-content:space-between; color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }.hero-composition { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); min-height:62svh; align-content:center; padding-top:6rem; }.hero-headline { grid-column:1 / span 9; align-self:center; }.hero-headline h1 { max-width:11ch; margin:0; font:560 clamp(4.75rem,6.7vw,6rem)/.91 var(--font-sans); letter-spacing:-.04em; text-wrap:balance; }.hero-supporting { grid-column:9 / span 4; align-self:center; transform:translateY(6rem); }.hero-supporting p { max-width:28rem; color:var(--color-muted); font-size:var(--type-lead); line-height:1.35; text-wrap:pretty; }.hero-supporting :global(.link) { margin-top:2.5rem; border-bottom:1px solid currentColor; padding-bottom:.35rem; font-weight:600; }
-  @media (max-width:1199px) and (min-width:641px) { .hero-grid { background-size:calc((100% - (var(--page-gutter) * 2)) / 8) 100%,100% 20%; }.hero-composition { grid-template-columns:repeat(8,1fr); }.hero-headline { grid-column:1 / span 7; }.hero-supporting { grid-column:5 / span 4; } }
-  @media (max-width:640px) { .systems-hero { min-height:calc(100svh - 4rem); padding-bottom:14svh; }.hero-grid { background-size:25% 100%,100% 12.5%; }.hero-system-layer { font-size:.58rem; }.hero-coordinate-state { top:24%; right:8%; }.hero-coordinate-data { top:57%; left:8%; }.hero-coordinate-ai { bottom:11%; right:8%; }.hero-meta { gap:1rem; font-size:.62rem; }.hero-composition { display:flex; min-height:66svh; flex-direction:column; justify-content:center; gap:2rem; padding-top:3rem; }.hero-headline h1 { max-width:8ch; font-size:clamp(3.5rem,15vw,5.5rem); }.hero-supporting { padding:0; transform:none; }.hero-supporting p { max-width:22rem; font-size:1rem; }.hero-supporting :global(.link) { margin-top:1.5rem; } }
+  .systems-hero :global(.hero-system-grid) { z-index:-1; }
+  .hero-meta { display:flex; justify-content:space-between; color:var(--color-muted); font:500 var(--type-meta) var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
+  .hero-composition { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); min-height:62svh; align-content:center; padding-top:6rem; }
+  .hero-headline { grid-column:1 / span 9; align-self:center; }
+  .hero-headline h1 { max-width:11ch; margin:0; font:560 clamp(4.75rem,6.7vw,6rem)/.91 var(--font-sans); letter-spacing:-.04em; text-wrap:balance; }
+  .hero-supporting { grid-column:9 / span 4; align-self:center; transform:translateY(6rem); }
+  .hero-supporting p { max-width:28rem; color:var(--color-muted); font-size:var(--type-lead); line-height:1.35; text-wrap:pretty; }
+  .hero-supporting :global(.link) { margin-top:2.5rem; border-bottom:1px solid currentColor; padding-bottom:.35rem; font-weight:600; }
+  @media (max-width:1199px) and (min-width:641px) { .hero-composition { grid-template-columns:repeat(8,1fr); }.hero-headline { grid-column:1 / span 7; }.hero-supporting { grid-column:5 / span 4; } }
+  @media (max-width:640px) {
+    .systems-hero { min-height:calc(100svh - 4rem); padding-bottom:14svh; }
+    .hero-meta { gap:1rem; font-size:.62rem; }
+    .hero-composition { display:flex; min-height:66svh; flex-direction:column; justify-content:center; gap:2rem; padding-top:3rem; }
+    .hero-headline h1 { max-width:8ch; font-size:clamp(3.5rem,15vw,5.5rem); }
+    .hero-supporting { padding:0; transform:none; }
+    .hero-supporting p { max-width:22rem; font-size:1rem; }
+    .hero-supporting :global(.link) { margin-top:1.5rem; }
+  }
 </style>

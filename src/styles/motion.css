@@ -1,0 +1,9 @@
+.motion-reveal { transition:opacity var(--motion-base) var(--ease-system),transform var(--motion-base) var(--ease-system); }
+.motion-align { transition:transform var(--motion-base) var(--ease-system); }
+.motion-focus { transition:outline-color var(--motion-fast) var(--ease-system),color var(--motion-fast) var(--ease-system); }
+.motion-signal { transition:opacity var(--motion-fast) var(--ease-system),border-color var(--motion-fast) var(--ease-system),color var(--motion-fast) var(--ease-system); }
+.motion-flow { transition:opacity var(--motion-slow) var(--ease-system),transform var(--motion-slow) var(--ease-system); }
+
+@media (prefers-reduced-motion:reduce) {
+  .motion-reveal,.motion-align,.motion-focus,.motion-signal,.motion-flow { transition-duration:.01ms; }
+}

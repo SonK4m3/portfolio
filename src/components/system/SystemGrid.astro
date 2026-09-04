@@ -1,0 +1,35 @@
+---
+export interface SystemGridLabel { id: string; label: string; x: number; y: number }
+export interface Props { className?: string; id?: string; labels: SystemGridLabel[]; reveal?: 'pointer' | 'scroll' | 'always'; intensity?: 'quiet' | 'medium' | 'active' }
+const { className = '', id, labels, reveal = 'always', intensity = 'quiet' } = Astro.props as Props;
+---
+<div id={id} class:list={['system-grid', `intensity-${intensity}`, className]} data-system-grid data-reveal={reveal} aria-hidden="true">
+  {labels.map(label => <span class="system-grid-label" data-grid-label style={`--x:${label.x};--y:${label.y}`}><i></i>[{String(label.x).padStart(2,'0')} / 12] {label.label}</span>)}
+</div>
+<style>
+  .system-grid { position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(to right,color-mix(in srgb,var(--color-border) 55%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in srgb,var(--color-border) 45%,transparent) 1px,transparent 1px); background-size:calc((100% - (var(--page-gutter) * 2)) / 12) 100%,100% 20%; background-position:var(--page-gutter) 0,0 20%; mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent); }
+  .intensity-quiet { opacity:.2; }.intensity-medium { opacity:.34; }.intensity-active { opacity:.55; }
+  .system-grid-label { position:absolute; left:calc(var(--x) / 12 * 100%); top:calc(var(--y) * 1%); display:flex; align-items:center; gap:.7rem; color:var(--color-muted); font:500 .65rem/1 var(--font-mono); letter-spacing:.1em; opacity:var(--proximity,.35); transform:translate(-50%,-50%); transition:opacity var(--motion-fast) var(--ease-system); }
+  .system-grid-label i { width:.65rem; height:.65rem; border:1px solid currentColor; }
+  @media (max-width:1199px) { .system-grid { background-size:calc((100% - (var(--page-gutter) * 2)) / 8) 100%,100% 20%; } }
+  @media (max-width:640px) { .system-grid { background-size:25% 100%,100% 12.5%; }.system-grid-label { font-size:.58rem; opacity:.24; } }
+  @media (prefers-reduced-motion:reduce) { .system-grid-label { transition-duration:.01ms; } }
+</style>
+<script>
+  const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
+  document.querySelectorAll<HTMLElement>('[data-system-grid][data-reveal="pointer"]').forEach((grid) => {
+    if (!finePointer.matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    let frame = 0;
+    grid.parentElement?.addEventListener('pointermove', (event) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        grid.querySelectorAll<HTMLElement>('[data-grid-label]').forEach((label) => {
+          const rect = label.getBoundingClientRect();
+          const distance = Math.hypot(event.clientX - (rect.left + rect.width / 2), event.clientY - (rect.top + rect.height / 2));
+          label.style.setProperty('--proximity', String(Math.max(.22, 1 - distance / 420)));
+        });
+      });
+    });
+    grid.parentElement?.addEventListener('pointerleave', () => grid.querySelectorAll<HTMLElement>('[data-grid-label]').forEach(label => label.style.removeProperty('--proximity')));
+  });
+</script>

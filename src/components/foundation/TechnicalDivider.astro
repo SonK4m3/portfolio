@@ -1,0 +1,12 @@
+---
+import Hairline from './Hairline.astro';
+export interface Props { className?: string; id?: string; label: string; index?: string }
+const { className = '', id, label, index } = Astro.props as Props;
+---
+<div id={id} class:list={['technical-divider', className]}>
+  <span>{label}{index && ` / ${index}`}</span>
+  <Hairline />
+</div>
+<style>
+  .technical-divider { display:grid; grid-template-columns:max-content 1fr; gap:var(--space-4); align-items:center; color:var(--color-muted); font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+</style>

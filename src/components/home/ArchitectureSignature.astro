@@ -1,23 +1,22 @@
 ---
 import Container from '../primitives/Container.astro';
 import Link from '../typography/Link.astro';
+import FigureLabel from '../editorial/FigureLabel.astro';
+import ArchitectureLayers from '../system/ArchitectureLayers.astro';
+const layers = [
+  { id:'experience', label:'Product experience', meta:'What the user sees', description:'The interaction should feel coherent even when its sources and lifetimes differ.' },
+  { id:'interaction', label:'Interaction', meta:'Zustand', description:'Short-lived local state stays responsive and close to the interface.' },
+  { id:'business', label:'Business', meta:'Product rules', description:'Domain decisions remain explicit instead of leaking into view components.' },
+  { id:'state', label:'Data ownership', meta:'Lifetime / source / sync', description:'Ownership is selected before a library is selected.' },
+  { id:'runtime', label:'Server / realtime / local', meta:'React Query / SSE / Dexie', description:'Each data mode has a distinct persistence and synchronization contract.' },
+  { id:'platform', label:'API / Platform', meta:'Web / extension / desktop', description:'Shared capabilities support context-specific product surfaces.' },
+];
 ---
 <section class="architecture-signature density-technical" id="architecture" aria-labelledby="architecture-title" data-density="technical">
   <Container>
-    <p class="architecture-eyebrow">DECISION.01 / STATE OWNERSHIP</p>
+    <FigureLabel type="SYS" index="01" title="DECISION" description="STATE OWNERSHIP" />
     <div class="architecture-intro"><h2 id="architecture-title">I design systems,<br />not just screens.</h2><p>The question is not which state library to use. It is which part of the product should own the truth.</p></div>
-    <figure class="architecture-map">
-      <figcaption><span>WHERE SHOULD THIS STATE LIVE?</span><small>[CONCEPTUAL MODEL / VERIFY AGAINST NOTEX]</small></figcaption>
-      <div class="map-level map-experience"><div class="map-node active"><span>Product experience</span><small>What the user sees</small></div></div>
-      <div class="map-branch map-branch-two" aria-hidden="true"></div>
-      <div class="map-level map-pair"><div class="map-node"><span>Interaction</span><small>Zustand</small></div><div class="map-node"><span>Business</span><small>Product rules</small></div></div>
-      <div class="map-branch" aria-hidden="true"></div>
-      <div class="map-level map-data"><div class="map-node"><span>Data ownership</span><small>Lifetime · source · sync</small></div></div>
-      <div class="map-branch map-branch-three" aria-hidden="true"></div>
-      <div class="map-level map-triple"><div class="map-node"><span>Server state</span><small>React Query</small></div><div class="map-node"><span>Realtime</span><small>SSE</small></div><div class="map-node"><span>Local data</span><small>Dexie</small></div></div>
-      <div class="map-branch" aria-hidden="true"></div>
-      <div class="map-level map-api"><div class="map-node"><span>API / Platform</span><small>Web · extension · desktop</small></div></div>
-    </figure>
+    <ArchitectureLayers className="architecture-map" layers={layers} activeLayer="state" verification="CONCEPTUAL / VERIFY" />
     <div class="decision-note"><span>DECISION / OWNERSHIP</span><p>Server data belongs to the server-state layer. Local interaction state should not become a second source of truth.</p><small>[VERIFY]</small></div>
     <div class="state-signature"><p>Not all state<br />deserves the<br />same home.</p><div><strong>The tools matter.</strong><span>The boundaries matter more.</span></div></div>
     <Link href="/work/notex#designing-the-frontend-architecture" variant="arrow">Explore the NoteX architecture</Link>
@@ -25,10 +24,22 @@ import Link from '../typography/Link.astro';
 </section>
 <style>
   .architecture-signature { min-height:155svh; border-top:1px solid var(--color-border); background:var(--color-surface); }
-  .architecture-eyebrow,.architecture-map figcaption,.map-node small,.decision-note span,.decision-note small { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
-  .architecture-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }.architecture-intro h2 { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-wrap:balance; }.architecture-intro > p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:var(--type-body); text-wrap:pretty; }
-  .architecture-map { width:min(92%,82rem); margin:clamp(10rem,17vw,16rem) 0 0 auto; }.architecture-map figcaption { display:flex; justify-content:space-between; gap:2rem; margin-bottom:3rem; }.architecture-map figcaption small { color:var(--color-accent); font:inherit; }.map-level { position:relative; display:grid; gap:var(--grid-gap); justify-content:center; }.map-pair { grid-template-columns:repeat(2,minmax(12rem,20rem)); }.map-triple { grid-template-columns:repeat(3,minmax(10rem,18rem)); }.map-node { min-height:6.5rem; display:grid; place-content:center; gap:.4rem; padding:1rem; border:1px solid var(--color-border); background:var(--color-bg); text-align:center; }.map-node span { font-size:clamp(1rem,1.5vw,1.4rem); font-weight:600; text-transform:uppercase; }.map-node.active { border-color:var(--color-accent); }.map-node.active span::before { content:'●'; margin-right:.5rem; color:var(--color-accent); font-size:.6em; vertical-align:.15em; }.map-branch { width:1px; height:3rem; margin:auto; background:var(--color-border); position:relative; }.map-branch-two::after,.map-branch-three::after { content:''; position:absolute; left:50%; bottom:0; height:1px; background:var(--color-border); transform:translateX(-50%); }.map-branch-two::after { width:21rem; }.map-branch-three::after { width:39rem; }
-  .decision-note { display:grid; grid-template-columns:3fr 6fr 2fr; gap:var(--grid-gap); width:min(82%,70rem); margin:5rem 0 0 auto; padding-block:1.5rem; border-block:1px solid var(--color-border); }.decision-note p { max-width:48ch; font-size:var(--type-body); text-wrap:pretty; }.decision-note small { color:var(--color-accent); text-align:right; }
-  .state-signature { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:clamp(12rem,20vw,20rem); }.state-signature > p { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; }.state-signature > div { grid-column:9 / span 4; align-self:end; display:grid; gap:.5rem; font-family:var(--font-serif); font-size:var(--type-lead); line-height:1.35; }.state-signature span { color:var(--color-muted); }
-  @media (max-width:640px) { .architecture-signature { min-height:auto; }.architecture-intro { display:block; }.architecture-intro h2 { font-size:3.5rem; }.architecture-intro > p { margin-top:2rem; }.architecture-map { width:100%; margin-top:7rem; }.architecture-map figcaption { display:grid; }.map-pair,.map-triple { grid-template-columns:1fr; }.map-branch-two::after,.map-branch-three::after { display:none; }.decision-note { width:100%; grid-template-columns:1fr; margin-top:4rem; }.decision-note small { text-align:left; }.state-signature { display:block; margin-top:9rem; }.state-signature > p { font-size:clamp(3.5rem,16vw,5rem); }.state-signature > div { margin-top:2rem; } }
+  .architecture-intro { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:3rem; }
+  .architecture-intro h2 { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-wrap:balance; }
+  .architecture-intro > p { grid-column:9 / span 4; align-self:end; color:var(--color-muted); font-size:var(--type-body); text-wrap:pretty; }
+  .architecture-signature :global(.architecture-map) { width:min(92%,82rem); margin:clamp(10rem,17vw,16rem) 0 0 auto; }
+  .decision-note { display:grid; grid-template-columns:3fr 6fr 2fr; gap:var(--grid-gap); width:min(82%,70rem); margin:5rem 0 0 auto; padding-block:1.5rem; border-block:1px solid var(--color-border); }
+  .decision-note span,.decision-note small { color:var(--color-muted); font:600 .7rem var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .decision-note p { max-width:48ch; font-size:var(--type-body); text-wrap:pretty; }.decision-note small { color:var(--color-signal); text-align:right; }
+  .state-signature { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--grid-gap); margin-top:clamp(12rem,20vw,20rem); }
+  .state-signature > p { grid-column:1 / span 8; font:560 var(--type-display-xl)/.91 var(--font-sans); letter-spacing:-.04em; text-transform:uppercase; }
+  .state-signature > div { grid-column:9 / span 4; align-self:end; display:grid; gap:.5rem; font:400 var(--type-lead)/1.35 var(--font-serif); }
+  .state-signature span { color:var(--color-muted); }
+  @media (max-width:640px) {
+    .architecture-signature { min-height:auto; }
+    .architecture-intro { display:block; }.architecture-intro h2 { font-size:3.5rem; }.architecture-intro > p { margin-top:2rem; }
+    .architecture-signature :global(.architecture-map) { width:100%; margin-top:7rem; }
+    .decision-note { width:100%; grid-template-columns:1fr; margin-top:4rem; }.decision-note small { text-align:left; }
+    .state-signature { display:block; margin-top:9rem; }.state-signature > p { font-size:clamp(3.5rem,16vw,5rem); }.state-signature > div { margin-top:2rem; }
+  }
 </style>

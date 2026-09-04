@@ -1,0 +1,30 @@
+---
+import FigureLabel from '../editorial/FigureLabel.astro';
+export interface SystemAxis { id: string; label: string; description: string }
+export interface Props { className?: string; id?: string; axes: SystemAxis[]; position?: { x: number; y: number }; figureIndex?: string }
+const { className = '', id, axes, position = { x: 61, y: 42 }, figureIndex = '04' } = Astro.props as Props;
+const [top,right,bottom,left] = axes;
+---
+<figure id={id} class:list={['system-map-component', className]} style={`--marker-x:${position.x}%;--marker-y:${position.y}%`}>
+  <FigureLabel type="SYS" index={figureIndex} title="PERSONAL POSITIONING" />
+  <div class="map-field" role="img" aria-label={`Positioned between ${axes.map(axis => axis.label).join(', ')}`}>
+    <i class="axis horizontal" aria-hidden="true"></i><i class="axis vertical" aria-hidden="true"></i>
+    {top && <span class="axis-label top">{top.label}</span>}
+    {right && <span class="axis-label right">{right.label}</span>}
+    {bottom && <span class="axis-label bottom">{bottom.label}</span>}
+    {left && <span class="axis-label left">{left.label}</span>}
+    <strong class="marker">YOU</strong>
+  </div>
+  <ul>{axes.map(axis => <li><strong>{axis.label}</strong><span>{axis.description}</span></li>)}</ul>
+</figure>
+<style>
+  .system-map-component { margin:0; }
+  .map-field { position:relative; min-height:30rem; max-width:64rem; margin:var(--space-7) auto 0; }
+  .axis { position:absolute; background:var(--color-border); }.axis.horizontal { left:0; top:50%; width:100%; height:1px; }.axis.vertical { left:50%; top:0; width:1px; height:100%; }
+  .axis-label,.marker { position:absolute; font:500 var(--type-meta)/1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  .top { top:0; left:50%; transform:translateX(-50%); }.right { right:0; top:50%; transform:translateY(-50%); }.bottom { bottom:0; left:50%; transform:translateX(-50%); }.left { left:0; top:50%; transform:translateY(-50%); }
+  .marker { left:var(--marker-x); top:var(--marker-y); display:grid; place-items:center; width:5rem; height:5rem; transform:translate(-50%,-50%) rotate(-4deg); border:1px solid var(--color-signal); background:var(--color-background); color:var(--color-signal); border-radius:50%; }
+  ul { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--grid-gap); margin:var(--space-7) 0 0; padding:var(--space-4) 0 0; border-top:1px solid var(--color-border); list-style:none; }
+  li { display:grid; gap:var(--space-2); } li strong { font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; } li span { color:var(--color-muted); font-size:var(--type-small); }
+  @media (max-width:640px) { .map-field { min-height:22rem; }.marker { width:4rem; height:4rem; } ul { grid-template-columns:1fr 1fr; } }
+</style>

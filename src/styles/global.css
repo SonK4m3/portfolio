@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import './tokens.css';
 @import './typography.css';
+@import './grid.css';
+@import './motion.css';
 @import './layout.css';
 @import './prose.css';
 
@@ -49,7 +51,7 @@ nav a[aria-current='page'] { color: var(--text); text-decoration: underline; tex
 .case-study .lead { max-width: var(--reading-width); margin-top: var(--space-6); font-size: var(--type-lead); color: var(--muted); }
 .prose { max-width: var(--reading-width); margin-top: var(--space-9); display: grid; gap: var(--space-5); }
 .prose h2 { margin-top: var(--space-6); font-size: var(--type-heading); }
-.prose blockquote { border-left: 2px solid var(--accent); padding-left: var(--space-5); color: var(--muted); font-family: var(--font-serif); }
+.prose blockquote { padding-left: var(--space-5); box-shadow: inset 1px 0 0 var(--color-signal); color: var(--muted); font-family: var(--font-serif); }
 .prose p { color: var(--muted); }
 
 @media (max-width: 900px) {

@@ -1,0 +1,36 @@
+---
+import FigureLabel from '../editorial/FigureLabel.astro';
+export interface LifecycleStep { id: string; label: string; meta?: string; description?: string }
+export interface Props { className?: string; id?: string; steps: LifecycleStep[]; active?: string; orientation?: 'horizontal' | 'vertical'; figureIndex?: string; title?: string; signalLabel?: string }
+const { className = '', id, steps, active, orientation = 'vertical', figureIndex = '03', title = 'TASK LIFECYCLE', signalLabel = 'CURRENT' } = Astro.props as Props;
+---
+<figure id={id} class:list={['lifecycle-flow', `orientation-${orientation}`, className]} data-lifecycle-flow style={`--flow-count:${steps.length}`}>
+  <FigureLabel type="SYS" index={figureIndex} title={title} />
+  <ol>
+    {steps.map((step) => <li class:list={{ active: step.id === active }}>
+      <span class="flow-marker" aria-hidden="true"></span>
+      {step.meta && <time class="flow-meta">{step.meta}</time>}
+      <strong>{step.label}</strong>
+      {step.description && <p>{step.description}</p>}
+      {step.id === active && <small>{signalLabel}</small>}
+    </li>)}
+  </ol>
+</figure>
+<style>
+  .lifecycle-flow { margin:0; container-type:inline-size; }
+  ol { margin:0; padding:0; list-style:none; }
+  li { position:relative; display:grid; grid-template-columns:5rem minmax(12rem,1fr) auto; gap:var(--grid-gap); align-items:baseline; min-height:6rem; padding:0 0 var(--space-6) var(--space-7); border-left:1px solid var(--color-border); }
+  .flow-marker { position:absolute; left:-.35rem; top:.25rem; width:.65rem; height:.65rem; border:1px solid var(--color-muted); background:var(--color-background); }
+  .flow-meta,li > small { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; font-variant-numeric:tabular-nums; }
+  li strong { font:600 clamp(1.5rem,3vw,3rem)/1 var(--font-sans); letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance; }
+  li p { grid-column:2; max-width:42ch; color:var(--color-muted); font-size:var(--type-small); text-wrap:pretty; }
+  li > small { color:var(--color-signal); }
+  li.active .flow-marker { border-color:var(--color-signal); background:var(--color-signal); }
+  .orientation-horizontal ol { display:grid; grid-template-columns:repeat(var(--flow-count,6),minmax(0,1fr)); border-top:1px solid var(--color-border); }
+  .orientation-horizontal li { min-height:9rem; display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-5) var(--space-4) 0 0; border-left:0; }
+  .orientation-horizontal .flow-marker { top:-.35rem; left:0; }
+  .orientation-horizontal li p { grid-column:auto; }
+  @container (max-width:50rem) { .orientation-horizontal ol { display:block; border-top:0; }.orientation-horizontal li { min-height:6rem; display:grid; grid-template-columns:4rem 1fr; padding:0 0 var(--space-5) var(--space-6); border-left:1px solid var(--color-border); }.orientation-horizontal .flow-marker { left:-.35rem; top:.25rem; } }
+  @media (max-width:760px) { .orientation-horizontal ol { display:block; border-top:0; }.orientation-horizontal li { min-height:6rem; display:grid; grid-template-columns:4rem 1fr; padding:0 0 var(--space-5) var(--space-6); border-left:1px solid var(--color-border); }.orientation-horizontal .flow-marker { left:-.35rem; top:.25rem; } }
+  @media (max-width:640px) { li { grid-template-columns:4rem 1fr; padding-left:var(--space-6); }.lifecycle-flow li > small { grid-column:2; }.lifecycle-flow li p { grid-column:2; } }
+</style>

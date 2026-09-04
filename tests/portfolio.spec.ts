@@ -33,6 +33,20 @@ test('keyboard focus and reduced motion are supported', async ({ page }) => {
   await expect(page.locator('html')).toBeVisible();
 });
 
+test('system grid proximity respects pointer capability and reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const finePointer = await page.evaluate(() => matchMedia('(hover:hover) and (pointer:fine)').matches);
+  const label = page.locator('[data-grid-label]').first();
+  await page.locator('section').first().hover({ position: { x: 320, y: 260 } });
+  const proximity = await label.evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'));
+  expect(Boolean(proximity)).toBe(finePointer);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await page.locator('section').first().hover({ position: { x: 360, y: 300 } });
+  await expect.poll(() => label.evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'))).toBe('');
+});
+
 test('theme control persists an explicit light or dark preference', async ({ page }) => {
   await page.goto('/');
   const theme = page.getByRole('button', { name: 'Toggle color theme' });
@@ -53,7 +67,7 @@ test('Vietnamese proof renders all required type voices and glyph groups', async
 });
 
 test('supported viewports have no horizontal overflow', async ({ page }) => {
-  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }, { width: 1600, height: 1000 }, { width: 1920, height: 1080 }]) {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 430, height: 932 }, { width: 1440, height: 900 }, { width: 1600, height: 1000 }, { width: 1920, height: 1080 }]) {
     await page.setViewportSize(viewport);
     await page.goto('/');
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
@@ -75,7 +89,7 @@ test('homepage presents NoteX and the architecture signature', async ({ page }) 
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'NoteX', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'I design systems, not just screens.' })).toBeVisible();
-  await expect(page.locator('.architecture-map .map-node')).toHaveCount(8);
+  await expect(page.locator('.architecture-map [data-layer]')).toHaveCount(6);
   await expect(page.locator('.task-trace li')).toHaveCount(8);
   await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
   await expect(page.getByRole('heading', { name: 'What I own.' })).toBeVisible();
@@ -84,6 +98,29 @@ test('homepage presents NoteX and the architecture signature', async ({ page }) 
   await expect(page.locator('.how-i-build li')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: /The principles only matter/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Build something thoughtful/ })).toBeVisible();
+});
+
+test('signature components are used on production routes', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('[data-system-grid]')).toBeVisible();
+  await expect(page.locator('[data-architecture-layers]')).toBeVisible();
+  await expect(page.locator('[data-lifecycle-flow]')).toBeVisible();
+
+  await page.goto('/about');
+  await expect(page.locator('.dossier-matrix')).toBeVisible();
+  await expect(page.locator('.system-map-component')).toBeVisible();
+
+  await page.goto('/work/notex');
+  await expect(page.locator('[data-architecture-layers]')).toBeVisible();
+  await expect(page.locator('[data-lifecycle-flow]')).toBeVisible();
+});
+
+test('development proofs expose the type, grid, and component foundations', async ({ page }) => {
+  for (const route of ['/dev/type', '/dev/grid', '/dev/components']) {
+    await page.goto(route);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+  }
 });
 
 test('homepage follows the Sprint B1 density rhythm', async ({ page }) => {

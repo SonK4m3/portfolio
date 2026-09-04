@@ -1,0 +1,17 @@
+---
+export interface DossierItem { label: string; value: string }
+export interface Props { className?: string; id?: string; items: DossierItem[]; columns?: 2 | 3; signalSlash?: boolean }
+const { className = '', id, items, columns = 3, signalSlash = true } = Astro.props as Props;
+---
+<dl id={id} class:list={['dossier-matrix', `columns-${columns}`, className]}>
+  {items.map((item) => <div><dt>{item.label}{signalSlash && <i aria-hidden="true"> /</i>}</dt><dd>{item.value}</dd></div>)}
+</dl>
+<style>
+  .dossier-matrix { --matrix-columns:3; display:grid; grid-template-columns:repeat(var(--matrix-columns),minmax(0,1fr)); margin:0; border-top:1px solid var(--color-border); }
+  .columns-2 { --matrix-columns:2; }
+  .dossier-matrix > div { min-height:8rem; display:grid; align-content:space-between; gap:var(--space-4); padding:var(--space-4) var(--space-5) var(--space-5) 0; border-bottom:1px solid var(--color-border); }
+  dt { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }
+  dt i { color:var(--color-signal); font-style:normal; }
+  dd { margin:0; font:500 var(--type-body-lg)/1.25 var(--font-sans); text-wrap:pretty; }
+  @media (max-width:640px) { .dossier-matrix { grid-template-columns:1fr; }.dossier-matrix > div { min-height:6.5rem; } }
+</style>
