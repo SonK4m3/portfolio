@@ -1,4 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import Container from '../../components/Container.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationArchive from '../../components/editorial/PublicationArchive.astro';
+import { getCollection } from 'astro:content';
+const notes = (await getCollection('notes', ({data}) => data.published)).sort((a,b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
-<BaseLayout title="Notes — Product Engineer"><section class="section"><Container><span class="eyebrow">Writing</span><h1>Notes</h1><p class="about-preview muted" style="margin-top:3rem">[CONTENT: notes will be added as they are written]</p></Container></section></BaseLayout>
+<BaseLayout title="Notes — Product Engineer" description="Notes on AI experiences, frontend architecture, and the practice of building products."><PublicationArchive title="Notes" description="Observations from the space between product and engineering." entries={notes.map(entry => ({title:entry.data.title,description:entry.data.description,href:`/notes/${entry.id}`}))} emptyTitle="The next thought is still taking shape." emptyDescription="No published notes yet. For now, the NoteX case study is the best place to read how I approach product decisions and frontend systems." topics={['AI experiences','Loading architecture','React server boundaries']} /></BaseLayout>

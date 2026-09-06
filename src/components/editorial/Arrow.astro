@@ -1,0 +1,6 @@
+---
+interface Props { direction?: 'right' | 'diagonal' | 'down'; }
+const { direction = 'diagonal' } = Astro.props;
+---
+<svg class:list={['editorial-arrow', direction]} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg>
+<style>.editorial-arrow { flex:none; }.right { rotate:45deg; }.down { rotate:135deg; }</style>

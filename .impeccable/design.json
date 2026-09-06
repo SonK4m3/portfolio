@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-06T20:04:10+07:00",
+  "title": "Design System: Technical Wallpaper Editorial",
+  "extensions": {
+    "colorMeta": {
+      "rust": { "role": "primary", "displayName": "Muted Rust", "tonalRamp": ["oklch(15% .08 32)", "oklch(26% .08 32)", "oklch(38% .08 32)", "oklch(49% .08 32)", "oklch(61% .08 32)", "oklch(72% .08 32)", "oklch(84% .08 32)", "oklch(95% .08 32)"] },
+      "chalk": { "role": "neutral", "displayName": "Chalk", "tonalRamp": ["oklch(15% .008 95)", "oklch(26% .008 95)", "oklch(38% .008 95)", "oklch(49% .008 95)", "oklch(61% .008 95)", "oklch(72% .008 95)", "oklch(84% .008 95)", "oklch(95% .008 95)"] }
+    },
+    "typographyMeta": { "display": { "displayName": "Editorial Display", "purpose": "Homepage cover; component documentation keeps its own larger inherited scale." } },
+    "shadows": [],
+    "motion": [
+      { "name": "fast", "value": "160ms", "purpose": "Compact state feedback." },
+      { "name": "base", "value": "280ms", "purpose": "Ordinary state transition." },
+      { "name": "slow", "value": "600ms", "purpose": "Work image hover, disabled for reduced motion." },
+      { "name": "system", "value": "cubic-bezier(.22,1,.36,1)", "purpose": "Shared easing." }
+    ],
+    "breakpoints": [
+      { "name": "compact-docs", "value": "640px" },
+      { "name": "editorial-mobile", "value": "700px" },
+      { "name": "docs-stacked", "value": "900px" },
+      { "name": "editorial-tablet", "value": "1000px" }
+    ],
+    "previewNote": "Tonal ramps are synthesized panel illustrations, not additional production colors. Snippets demonstrate appearance; the production theme control supplies JavaScript and accessibility state synchronization."
+  },
+  "components": [
+    {
+      "name": "Editorial Link", "kind": "custom", "refersTo": "editorial-link", "description": "A restrained native destination link.",
+      "html": "<a class=\"ds-link\" href=\"/work\">Explore selected work<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M4 16 16 4M4 4h12v12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"/></svg></a>",
+      "css": ".ds-link{display:inline-flex;align-items:center;justify-content:space-between;gap:1.5rem;min-height:2.75rem;border-bottom:1px solid currentColor;color:var(--color-foreground,#242520);font:400 .8125rem 'Geist Variable',sans-serif;text-decoration:none}.ds-link:hover{color:var(--color-signal,#8b4035)}.ds-link:focus-visible{outline:2px solid var(--color-signal,#8b4035);outline-offset:5px}"
+    },
+    {
+      "name": "Theme Control", "kind": "button", "refersTo": "theme-control", "description": "Visual specimen of the production theme control.",
+      "html": "<button class=\"ds-theme\" type=\"button\" aria-label=\"Toggle color theme\" aria-pressed=\"false\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"/><path d=\"M10 3a7 7 0 0 1 0 14Z\" fill=\"currentColor\"/></svg>Light</button>",
+      "css": ".ds-theme{display:flex;gap:.6rem;align-items:center;min-height:2.75rem;min-width:2.75rem;padding:.5rem;border:0;background:transparent;color:var(--color-muted,#63645e);font:400 .6875rem 'Geist Variable',sans-serif;cursor:pointer}.ds-theme:hover{color:var(--color-foreground,#242520)}.ds-theme:focus-visible{outline:2px solid var(--color-signal,#8b4035);outline-offset:5px}"
+    },
+    {
+      "name": "Publication Navigation", "kind": "nav", "description": "Plain native links with generous touch targets.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a href=\"/work\">Work</a><a href=\"/components\">Components</a><a href=\"/about\">About</a><a href=\"/notes\">Notes</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:1.5rem}.ds-nav a{display:flex;align-items:center;min-height:2.75rem;color:var(--color-muted,#63645e);font:400 .875rem 'Geist Variable',sans-serif;text-decoration:none}.ds-nav a:hover{color:var(--color-foreground,#242520)}.ds-nav a:focus-visible{outline:2px solid var(--color-signal,#8b4035);outline-offset:5px}"
+    },
+    {
+      "name": "Image Annotation", "kind": "custom", "description": "Native disclosure joins a conceptual image to the professional narrative.",
+      "html": "<details class=\"ds-note\"><summary>A note on the image <span aria-hidden=\"true\">+</span></summary><p>Good architecture gives complexity a place to live. This is AI-generated conceptual artwork.</p></details>",
+      "css": ".ds-note{max-width:30ch;color:var(--color-foreground,#242520);font:400 .75rem/1.7 'Geist Variable',sans-serif}.ds-note summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:2.75rem;border-bottom:1px solid var(--color-border,#cfcec6);cursor:pointer;list-style:none}.ds-note summary:hover{color:var(--color-signal,#8b4035)}.ds-note summary:focus-visible{outline:2px solid var(--color-signal,#8b4035);outline-offset:5px}.ds-note p{color:var(--color-muted,#63645e);margin-top:1rem}"
+    },
+    {
+      "name": "Ownership Layer", "kind": "custom", "description": "A selected row in the technical evidence hierarchy.",
+      "html": "<div class=\"ds-layer\"><span class=\"ds-number\">04</span><div><strong>Data ownership</strong><small>Where information belongs</small><p>One explicit source of truth for each kind of state.</p></div></div>",
+      "css": ".ds-layer{display:grid;grid-template-columns:1.25rem minmax(0,1fr);gap:1rem;padding:1.1rem 0;border-top:1px solid var(--color-signal,#8b4035);color:var(--color-foreground,#242520)}.ds-number{color:var(--color-signal,#8b4035);font:400 .75rem 'Geist Mono Variable',monospace;padding-top:.3rem}.ds-layer strong{font:500 1.25rem 'Geist Variable',sans-serif}.ds-layer small{display:block;margin-top:.4rem;color:var(--color-muted,#63645e);font:400 .625rem 'Geist Mono Variable',monospace}.ds-layer p{color:var(--color-muted,#63645e);font:400 .8125rem/1.6 'Geist Variable',sans-serif;margin:1rem 0 0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Technical Wallpaper Editorial",
+    "overview": "An art-directed technical publication: atmospheric imagery introduces a clear professional narrative. Swiss typography supplies structure; architecture and abstract images supply emotion. The system is restrained, intelligent, and exploratory, not a lifestyle magazine.",
+    "keyCharacteristics": ["Image-led asymmetry.", "Clear professional substance.", "Quiet technical annotations.", "Native, lightweight interactions."],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Use one restrained interface accent; image palettes may be richer without becoming additional UI token families.", "section": "colors" },
+      { "name": "The Type Authority Rule", "body": "Use grotesk type for authority, mono for metadata, and serif for reflection.", "section": "typography" },
+      { "name": "The Fit Rule", "body": "Fix intrinsic grid sizing and allow code blocks to scroll internally; never hide page overflow to disguise a layout defect.", "section": "layout" }
+    ],
+    "dos": ["Do connect images to professional substance.", "Do keep AI imagery and unknown facts explicitly labeled.", "Do preserve logical reading order at every width.", "Do use actual production components for technical evidence."],
+    "donts": ["Don't add ornamental heading kickers.", "Don't introduce fake physicality or decorative card shadows.", "Don't clip horizontal overflow to conceal broken layout.", "Don't turn this into a lifestyle magazine or invent commercial claims."]
+  }
+}

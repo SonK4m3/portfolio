@@ -45,13 +45,13 @@ test('system grid proximity respects pointer capability and reduced motion', asy
   await page.goto('/');
   const finePointer = await page.evaluate(() => matchMedia('(hover:hover) and (pointer:fine)').matches);
   const label = page.locator('[data-grid-label]').first();
-  await page.locator('section').first().hover({ position: { x: 320, y: 260 } });
+  await page.locator('.grid-specimen').hover();
   const proximity = await label.evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'));
   expect(Boolean(proximity)).toBe(finePointer);
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.reload();
-  await page.locator('section').first().hover({ position: { x: 360, y: 300 } });
+  await page.locator('.grid-specimen').hover();
   await expect.poll(() => label.evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'))).toBe('');
 });
 
@@ -103,19 +103,24 @@ test('NoteX case study follows the seven-chapter structure', async ({ page }) =>
   await expect(page.locator('.content-placeholder')).toContainText('[TBD]');
 });
 
-test('homepage presents NoteX and the architecture signature', async ({ page }) => {
+test('editorial homepage connects visual work to product and engineering evidence', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'NoteX', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'I design systems, not just screens.' })).toBeVisible();
-  await expect(page.locator('.architecture-map [data-layer]')).toHaveCount(6);
-  await expect(page.locator('.task-trace li')).toHaveCount(8);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('A sense ofstructure.');
+  await expect(page.getByRole('heading', { name: /^NoteX/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The invisible work matters.' })).toBeVisible();
+  await expect(page.locator('[data-architecture-layers] [data-layer]')).toHaveCount(6);
+  await expect(page.locator('[data-lifecycle-flow] li')).toHaveCount(6);
+  const lifecycle = page.locator('[data-lifecycle-flow] ol');
+  await expect(lifecycle.locator('li strong')).toHaveText(['Intent', 'Context', 'Generate', 'Verify', 'Recover', 'Return']);
+  if (page.viewportSize()!.width <= 700) {
+    const positions = await lifecycle.locator('li').evaluateAll(items => items.map(item => item.getBoundingClientRect().left));
+    expect(new Set(positions).size).toBe(1);
+  }
   await expect(page.getByRole('link', { name: 'Explore the NoteX architecture' })).toHaveAttribute('href', '/work/notex#designing-the-frontend-architecture');
-  await expect(page.getByRole('heading', { name: 'What I own.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Generation is easy/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Playground', exact: true })).toBeVisible();
-  await expect(page.locator('.how-i-build li')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: /The principles only matter/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Build something thoughtful/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Contact & profile' })).toHaveAttribute('href', '/about#contact');
 });
 
 test('signature components are used on production routes', async ({ page }) => {
@@ -201,14 +206,51 @@ test('System Grid detail keeps progressive enhancement and reduced motion', asyn
   await expect.poll(() => reducedPreview.locator('[data-grid-label]').first().evaluate((element) => (element as HTMLElement).style.getPropertyValue('--proximity'))).toBe('');
 });
 
-test('homepage follows the Sprint B1 density rhythm', async ({ page }) => {
+test('editorial imagery is loaded, labeled, and explained with an accessible disclosure', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('[data-density]')).toHaveCount(10);
-  const densitySequence = await page.locator('[data-density]').evaluateAll((sections) => sections.map((section) => section.getAttribute('data-density')));
-  expect(densitySequence).toEqual(['balanced','quiet','evidence','balanced','technical','technical','balanced','quiet','quiet','void']);
-  await expect(page.locator('.breathing-reset')).toBeVisible();
-  await expect(page.locator('.task-trace time').first()).toHaveText('00:00');
-  await expect(page.locator('.task-trace time').last()).toHaveText('00:21');
+  for (const image of await page.locator('.publication img').all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
+    await expect(image).toHaveAttribute('srcset', /\S/);
+    await expect(image).toHaveAttribute('alt', /\S/);
+  }
+  await expect(page.locator('.work-art figcaption')).toContainText('not a product screenshot');
+  const summary = page.locator('.image-note summary');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.image-note')).toHaveAttribute('open', '');
+  await expect(page.locator('.image-note p')).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.image-note')).not.toHaveAttribute('open', '');
+});
+
+test('editorial links lead to visible case-study chapters and contact', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Explore selected work' }).click();
+  await expect(page).toHaveURL(/#work$/);
+  await expect(page.locator('#work')).toBeInViewport();
+  const destinations = await page.locator('.chapter-index a').evaluateAll(links => links.map(link => (link as HTMLAnchorElement).getAttribute('href')!));
+  for (const destination of destinations) {
+    await page.goto(destination);
+    await expect(page.locator(new URL(page.url()).hash)).toBeVisible();
+  }
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Contact & profile' }).click();
+  await expect(page).toHaveURL(/\/about#contact$/);
+  await expect(page.locator('#contact')).toBeVisible();
+  await expect(page.locator('#contact')).toContainText('[EMAIL TBD]');
+});
+
+test('editorial content and native navigation work without JavaScript', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(baseURL!);
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.locator('.image-note summary').click();
+  await expect(page.locator('.image-note p')).toBeVisible();
+  await page.getByRole('link', { name: 'Read the case study', exact: true }).click();
+  await expect(page.locator('h1')).toHaveText('NoteX');
+  await context.close();
 });
 
 test('crawlability files exist', async ({ request }) => {

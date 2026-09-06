@@ -45,3 +45,9 @@ Playwright smoke tests cover all public routes, metadata, JSON-LD, navigation, k
 ## Handoff
 
 This foundation follows `PORTFOLIO_AGENT_HANDOFF.md` supplied by the owner.
+
+## Editorial version
+
+The `style-experiment` branch implements the owner's Technical Wallpaper Editorial direction. See `docs/EDITORIAL_REDESIGN.md` for the surface contract and verification, `docs/EDITORIAL_ASSETS.md` for AI-image provenance, and `docs/ORCHESTRATION_SETUP.md` for the project-scoped Astra/Luna setup. Source images live in `src/assets/editorial/`; Astro generates responsive WebP derivatives.
+
+Capture local visual evidence with `node scripts/capture-editorial.mjs` after building and starting the production preview on port 4322. Set `PREVIEW_URL` to use another preview. Review captures stay local and are ignored by Git.

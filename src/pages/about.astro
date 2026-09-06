@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
 import Link from '../components/typography/Link.astro';
-import FigureLabel from '../components/editorial/FigureLabel.astro';
+import { Image } from 'astro:assets';
+import structure from '../assets/editorial/structure.png';
 import DossierMatrix from '../components/system/DossierMatrix.astro';
 import SystemMap from '../components/system/SystemMap.astro';
 import { siteConfig } from '../data/site';
@@ -40,7 +41,7 @@ const projects = [
   <section class="dossier-hero" aria-labelledby="about-title">
     <Container>
       <div class="dossier-topline"><span>ABOUT / PROFILE</span><span>2026 / VIETNAM</span></div>
-      <div class="dossier-hero-grid"><div><p class="dossier-label">PERSONAL TECHNICAL DOSSIER</p><h1 id="about-title">Son<br />Nguyen</h1><p class="hero-role">Product Engineer<br />Frontend Lead<br />AI Product</p></div><figure class="profile-mark"><FigureLabel type="FIG" index="01" title="PROFILE" /><strong>How I work<br />is part of<br />what I build.</strong><small>[PORTRAIT / OPTIONAL ASSET]</small></figure></div>
+      <div class="dossier-hero-grid"><div><h1 id="about-title">Son<br />Nguyen</h1><p class="hero-role">Product Engineer<br />Frontend Lead<br />AI Product</p></div><figure class="profile-mark"><Image src={structure} alt="Concrete walls frame a quiet space overlooking the sea, an architectural metaphor for considered systems." widths={[480,800,1200]} sizes="(max-width:700px) calc(100vw - 40px), 45vw" format="webp" quality={85} loading="eager" /><figcaption>How I work is part of what I build.<small>Architectural study / AI-generated concept</small></figcaption></figure></div>
     </Container>
   </section>
 
@@ -60,11 +61,16 @@ const projects = [
 
   <section class="system-map-section" aria-labelledby="map-title"><Container><div class="section-label"><span id="map-title">PERSONAL SYSTEM MAP</span><small>POSITIONING / 08</small></div><SystemMap axes={systemAxes} position={{ x:61, y:42 }} /></Container></section>
 
-  <section class="contact-section" aria-labelledby="contact-title"><Container><div class="section-label"><span id="contact-title">CONTACT / SOCIAL</span><small>OPEN CHANNEL / 09</small></div><dl class="contact-list"><div><dt>Email</dt><dd>[EMAIL TBD]</dd></div><div><dt>GitHub</dt><dd>[GITHUB TBD]</dd></div><div><dt>LinkedIn</dt><dd>[LINKEDIN TBD]</dd></div></dl></Container></section>
+  <section id="contact" class="contact-section" aria-labelledby="contact-title"><Container><div class="section-label"><span id="contact-title">CONTACT / SOCIAL</span><small>OPEN CHANNEL / 09</small></div><dl class="contact-list"><div><dt>Email</dt><dd>[EMAIL TBD]</dd></div><div><dt>GitHub</dt><dd>[GITHUB TBD]</dd></div><div><dt>LinkedIn</dt><dd>[LINKEDIN TBD]</dd></div></dl></Container></section>
 
   <section class="about-closing" aria-labelledby="closing-title"><Container><p class="section-label">CLOSING / 10</p><h2 id="closing-title">The work<br />explains<br />the rest.</h2><p>See how these ideas become products.</p><Link href="/work" variant="arrow">View selected work</Link></Container></section>
 </BaseLayout>
 <style>
+  .dossier-hero .dossier-hero-grid { margin-top:4rem; }
+  .dossier-hero .profile-mark { padding:0; border:0; display:block; }
+  .profile-mark :global(img) { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:cover; object-position:70%; }
+  .profile-mark figcaption { margin-top:1rem; font-size:.875rem; line-height:1.6; }
+  .profile-mark figcaption small { display:block; margin-top:.5rem; font-size:.625rem; }
   .dossier-hero,.quick-info,.about-introduction,.capability-section,.experience-section,.now-section,.education-section,.projects-section,.system-map-section,.contact-section,.about-closing { border-top:1px solid var(--color-border); }
   .dossier-hero { padding-block:1.5rem clamp(7rem,14vw,13rem); }.dossier-topline,.dossier-label,.section-label,.hero-role,.profile-mark span,.profile-mark small,.quick-info dt,.capability-row > span,.record-company,.record-period,.now-grid span,.education-record span,.project-registry > *,.contact-list dt { color:var(--color-muted); font:500 var(--type-meta)/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; }.dossier-topline { display:flex; justify-content:space-between; }.dossier-hero-grid { display:grid; grid-template-columns:7fr 5fr; gap:var(--grid-gap); margin-top:clamp(7rem,14vw,13rem); }.dossier-hero h1 { margin-top:1rem; font:560 var(--type-display-xxl)/.82 var(--font-sans); letter-spacing:-.045em; }.hero-role { margin-top:3rem; line-height:1.7; color:var(--color-text); }.profile-mark { align-self:end; min-height:20rem; display:grid; align-content:space-between; margin:0; padding:1rem; border:1px solid var(--color-border); }.profile-mark strong { font:400 var(--type-display-md)/.95 var(--font-serif); letter-spacing:-.025em; }.profile-mark small { color:var(--color-accent); }
   .section-label { display:flex; justify-content:space-between; gap:2rem; padding-block:1rem; }.section-label small { color:var(--color-muted); font:inherit; }.quick-info { padding-block:0 clamp(6rem,10vw,10rem); }.quick-info :global(.dossier-matrix),.system-map-section :global(.system-map-component) { margin-top:4rem; }

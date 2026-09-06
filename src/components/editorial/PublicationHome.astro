@@ -1,0 +1,228 @@
+---
+import { Image } from 'astro:assets';
+import structure from '../../assets/editorial/structure.png';
+import collectedThought from '../../assets/editorial/collected-thought.png';
+import Arrow from './Arrow.astro';
+import ArchitectureLayers from '../system/ArchitectureLayers.astro';
+import LifecycleFlow from '../system/LifecycleFlow.astro';
+import SystemGrid from '../system/SystemGrid.astro';
+import { siteConfig } from '../../data/site';
+
+const chapters = [
+  { title: 'From product to system', detail: 'Learning, notes, meetings. One coherent product.', href: '/work/notex#from-product-to-system' },
+  { title: 'Designing the boundaries', detail: 'State ownership across server, browser, and realtime.', href: '/work/notex#designing-the-frontend-architecture' },
+  { title: 'Making AI feel like product', detail: 'Context, progress, failure, recovery, and return.', href: '/work/notex#making-ai-feel-like-product' },
+];
+const layers = [
+  { id: 'experience', label: 'Experience', meta: 'What the user understands', description: 'Clear feedback, preserved context, predictable behavior.' },
+  { id: 'interaction', label: 'Interaction', meta: 'What happens on the screen', description: 'Local UI state and responsive interactions.' },
+  { id: 'business', label: 'Product rules', meta: 'What the product allows', description: 'Capabilities, permissions, and meaningful boundaries.' },
+  { id: 'state', label: 'Data ownership', meta: 'Where information belongs', description: 'One explicit source of truth for each kind of state.' },
+  { id: 'runtime', label: 'Runtime', meta: 'How change arrives', description: 'Server data, realtime events, and local persistence.' },
+  { id: 'platform', label: 'Platform', meta: 'Where the work happens', description: 'Shared capabilities across web, extension, and desktop.' },
+];
+const principles = [
+  { title: 'Start with the real problem.', copy: 'Before a transition gets another loader, I ask which layer owns it and what the user is actually waiting for.' },
+  { title: 'Design the boundaries.', copy: 'Server state, local state, realtime events, and persisted browser data should not share one ownership model.' },
+  { title: 'Ship it, then learn.', copy: 'A technical choice becomes a product decision only after it meets users, latency, failures, and production.' },
+];
+---
+<div class="publication">
+  <section class="publication-cover editorial-container" aria-labelledby="cover-title">
+    <div class="edition-line"><span>Son Nguyen / Product Engineer</span><span>Independent portfolio · Vietnam</span></div>
+    <div class="cover-heading editorial-grid">
+      <h1 id="cover-title">A sense of<br /><span>structure.</span></h1>
+      <div class="cover-intro"><p>I build AI products with taste and technical depth.</p><p class="cover-description">Product thinking, interface craft, and the systems that hold them together.</p><a class="editorial-link" href="#work">Explore selected work <Arrow direction="down" /></a></div>
+    </div>
+    <div class="cover-plate editorial-grid">
+      <aside class="cover-margin"><span class="plate-number">FIG. 01</span><p>Space.<br />Structure.<br />Possibility.</p><details class="image-note"><summary>A note on the image <span aria-hidden="true">+</span></summary><p>Good architecture gives complexity a place to live. The same idea runs through the software I build. This is AI-generated conceptual artwork.</p></details></aside>
+      <figure class="cover-image"><Image src={structure} alt="A monumental concrete pavilion overlooking the sea, its repeating walls framing a small illuminated doorway." widths={[480, 800, 1200, 1536]} sizes="(max-width: 700px) calc(100vw - 40px), 80vw" format="webp" quality={85} loading="eager" fetchpriority="high" /><figcaption><span>Structure as a way of thinking.</span><span>Architectural study / AI-generated</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="perspective-spread editorial-container editorial-grid" aria-labelledby="perspective-title">
+    <div class="spread-title"><h2 id="perspective-title">I work in the<br />space between.</h2><span class="section-index">Perspective / About me</span></div>
+    <div class="perspective-copy"><p class="editorial-lead">The moment when a product problem stops being just a design problem or just an engineering problem.</p><p>That middle space is where I like to work. I’m {siteConfig.name}, a Product Engineer focused on AI products, frontend architecture, and the details that make technology feel considered.</p><a class="editorial-link" href="/about">A little more about me <Arrow /></a></div>
+    <ul class="practice-line"><li>Product / UI decisions</li><li>Frontend architecture</li><li>Technical ownership</li></ul>
+  </section>
+
+  <section id="work" class="work-spread editorial-container" aria-labelledby="notex-title">
+    <div class="spread-rule"><a href="/work">View work index <Arrow direction="right" /></a></div>
+    <div class="work-heading editorial-grid"><h2 id="notex-title">NoteX<span class="title-period">.</span></h2><p>Building the product system behind<br class="desktop-break" /> how people learn, think, and work.</p></div>
+    <div class="work-composition editorial-grid">
+      <figure class="work-art"><a href="/work/notex" aria-label="Read the NoteX case study"><Image src={collectedThought} alt="Many ivory paper sheets fold into a single continuous wave against a deep red background, a conceptual study of collected thought." widths={[480, 800, 1200, 1536]} sizes="(max-width: 700px) calc(100vw - 40px), 65vw" format="webp" quality={85} loading="lazy" /></a><figcaption><span>FIG. 02 / Collected thought</span><span>AI-generated concept, not a product screenshot</span></figcaption></figure>
+      <div class="work-story"><p class="work-role">Product Engineer / Frontend Lead</p><p>NoteX started as an application. It grew into a system.</p><p class="supporting-copy">Learning, note-taking, and meetings create different expectations. The challenge is to connect those experiences through shared capabilities and clear responsibility.</p><a class="editorial-link" href="/work/notex">Read the case study <Arrow /></a><ol class="chapter-index">{chapters.map((chapter, index) => <li><a href={chapter.href}><span class="chapter-number">{String(index + 1).padStart(2, '0')}</span><span><strong>{chapter.title}</strong><small>{chapter.detail}</small></span><Arrow /></a></li>)}</ol></div>
+    </div>
+  </section>
+
+  <section class="systems-spread" aria-labelledby="systems-title">
+    <div class="editorial-container">
+      <div class="systems-composition editorial-grid">
+        <div class="systems-intro"><h2 id="systems-title">The invisible<br />work matters.</h2><p>I design systems, not just screens. What owns this information? How long should it live? Who needs to know when it changes?</p><a class="editorial-link" href="/work/notex#designing-the-frontend-architecture">Explore the NoteX architecture <Arrow /></a><p class="diagram-note">A conceptual ownership model.<br />See the case study for context and verification notes.</p></div>
+        <ArchitectureLayers className="publication-layers" layers={layers} activeLayer="state" title="NOTEX / OWNERSHIP MODEL" figureIndex="03" verification="CONCEPTUAL" />
+      </div>
+      <div class="reliability-intro"><h3>Generation is easy.<br />Reliability is the product.</h3><p>AI introduces uncertainty. The interface needs to turn that uncertainty into something people can understand and trust.</p></div>
+      <LifecycleFlow className="publication-lifecycle" orientation="horizontal" title="AI / PRODUCT LIFECYCLE" figureIndex="04" active="recover" signalLabel="DESIGN FOR THIS TOO" steps={[{id:'intent',label:'Intent'},{id:'context',label:'Context'},{id:'generate',label:'Generate'},{id:'verify',label:'Verify'},{id:'recover',label:'Recover'},{id:'return',label:'Return'}]} />
+    </div>
+  </section>
+
+  <section class="practice-spread editorial-container" aria-labelledby="practice-title">
+    <div class="practice-heading editorial-grid"><h2 id="practice-title">Considered.<br />Then built.</h2><p>The principles only matter when they change a decision.</p></div>
+    <div class="practice-entries">{principles.map(principle => <article><h3>{principle.title}</h3><p>{principle.copy}</p></article>)}</div>
+  </section>
+
+  <section class="lab-spread editorial-container" aria-labelledby="lab-title">
+    <div class="spread-rule"><h2 id="lab-title">From the workbench</h2><span>Reusable systems / Open explorations</span></div>
+    <div class="lab-composition editorial-grid">
+      <article class="component-feature"><a class="grid-specimen" href="/components" aria-label="Explore the component laboratory"><SystemGrid reveal="pointer" intensity="active" labels={[{id:'type',label:'TYPE',x:2,y:24},{id:'space',label:'SPACE',x:8,y:34},{id:'behavior',label:'BEHAVIOR',x:4,y:76}]} /><span class="specimen-text" aria-hidden="true">Aa<span>↔</span></span><span class="specimen-tag">Layout is a system, too.</span></a><div class="lab-caption"><h3><a href="/components">The component laboratory <Arrow /></a></h3><p>Six working pieces. The same components you see throughout this portfolio, opened up for inspection.</p><span>Astro / Type / Layout / Behavior</span></div></article>
+      <div class="field-notes"><h3>Playground</h3><p>Smaller questions.<br />Room to explore.</p><a class="notebook-entry" href="/playground"><span><strong>AI LaTeX Generator</strong><small>Structured output / AI systems</small></span><Arrow /></a><a class="notebook-entry" href="/playground"><span><strong>AI Skills</strong><small>Agent workflows / Experiments</small></span><Arrow /></a><a class="notebook-entry" href="/notes"><span><strong>Notes from the process</strong><small>Writing archive / In progress</small></span><Arrow /></a><a class="editorial-link" href="/playground">Explore the playground <Arrow direction="right" /></a></div>
+    </div>
+  </section>
+
+  <section class="closing-spread editorial-container editorial-grid" aria-labelledby="closing-title"><div><h2 id="closing-title">Build something<br /><em>thoughtful.</em></h2><p>Good products come from people who care about the details—and the whole.</p></div><a class="closing-link" href={siteConfig.email ? `mailto:${siteConfig.email}` : '/about#contact'}><span>{siteConfig.email ? 'Start a conversation' : 'Contact & profile'}</span><Arrow /></a></section>
+</div>
+
+<style>
+  .publication { --editorial-space:clamp(5rem,9vw,9rem); }
+  .editorial-container { width:min(calc(100% - var(--page-gutter)*2),var(--content-width)); margin-inline:auto; }
+  .editorial-grid { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:var(--grid-gap); }
+  .publication h1,.publication h2,.publication h3 { text-wrap:balance; }
+  .publication p { text-wrap:pretty; }
+  .publication figure { margin:0; min-width:0; }
+  .publication img { display:block; width:100%; height:auto; }
+  .publication figcaption { display:flex; justify-content:space-between; gap:1.5rem; margin-top:.8rem; color:var(--muted); font:400 .6875rem/1.55 var(--font-mono); }
+  .edition-line,.spread-rule { display:flex; justify-content:space-between; align-items:center; gap:1.5rem; padding-block:1.25rem; font:500 .6875rem/1.5 var(--font-mono); color:var(--muted); }
+  .edition-line { border-bottom:1px solid var(--border); }
+  .spread-rule { border-top:1px solid var(--text); }
+  .spread-rule a { display:inline-flex; align-items:center; gap:.75rem; min-height:2.75rem; }
+  .editorial-link { display:inline-flex; justify-content:space-between; align-items:center; gap:1.5rem; min-height:2.75rem; width:fit-content; max-width:100%; border-bottom:1px solid currentColor; font-size:.8125rem; font-weight:500; }
+  .cover-heading { align-items:end; padding-block:3.5rem 2.5rem; }
+  .cover-heading h1 { grid-column:1 / 9; font:500 clamp(4rem,8vw,6rem)/.96 var(--font-sans); letter-spacing:-.04em; }
+  .cover-heading h1 span { padding-left:1.04em; }
+  .cover-intro { grid-column:10 / 13; padding-bottom:.35rem; }
+  .cover-intro > p:first-child { max-width:22ch; font-size:1.125rem; line-height:1.35; }
+  .cover-description { color:var(--muted); font-size:.8125rem; line-height:1.6; margin-block:1rem 1.2rem; }
+  .cover-margin { grid-column:1 / 3; align-self:end; padding-bottom:2rem; }
+  .plate-number { font:400 .6875rem var(--font-mono); color:var(--muted); }
+  .cover-margin > p { font-size:1rem; line-height:1.4; margin-top:1rem; }
+  .image-note { margin-top:2rem; font-size:.75rem; color:var(--muted); max-width:21ch; }
+  .image-note summary { display:flex; gap:.5rem; align-items:center; min-height:2.75rem; cursor:pointer; list-style:none; border-bottom:1px solid var(--border); color:var(--text); }
+  .image-note summary::-webkit-details-marker { display:none; }
+  .image-note summary span { margin-left:auto; }
+  .image-note[open] summary span { rotate:45deg; }
+  .image-note p { margin-top:.75rem; line-height:1.6; }
+  .cover-image { grid-column:3 / 13; }
+  .cover-image img { aspect-ratio:1.95; object-fit:cover; object-position:50% 54%; }
+  .perspective-spread { padding-block:var(--editorial-space); }
+  .spread-title { grid-column:1 / 6; }
+  .spread-title h2,.systems-intro h2,.practice-heading h2 { font:450 clamp(2.5rem,4.2vw,4.25rem)/1.04 var(--font-sans); letter-spacing:-.04em; }
+  .section-index { display:block; margin-top:1.5rem; color:var(--muted); font:400 .6875rem var(--font-mono); }
+  .perspective-copy { grid-column:7 / 12; }
+  .editorial-lead { font-size:clamp(1.35rem,2vw,1.875rem); line-height:1.4; letter-spacing:-.02em; }
+  .perspective-copy > p + p { margin-top:1.5rem; font-size:.9375rem; line-height:1.75; color:var(--muted); }
+  .perspective-copy .editorial-link { margin-top:1.5rem; }
+  .practice-line { grid-column:7 / 13; display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; list-style:none; padding:1.25rem 0 0; margin:2.5rem 0 0; border-top:1px solid var(--border); color:var(--muted); font-size:.6875rem; }
+  .work-spread { padding-bottom:var(--editorial-space); scroll-margin-top:6rem; }
+  .work-heading { align-items:end; margin:2rem 0 2.5rem; }
+  .work-heading h2 { grid-column:1 / 8; font:500 clamp(4rem,8vw,6rem)/1 var(--font-sans); letter-spacing:-.04em; }
+  .title-period { color:var(--accent); }
+  .work-heading > p { grid-column:9 / 13; font-size:1.2rem; line-height:1.4; letter-spacing:-.015em; }
+  .work-art { grid-column:1 / 9; }
+  .work-art > a { display:block; overflow:hidden; }
+  .work-art img { aspect-ratio:1.24; object-fit:cover; transition:transform 600ms var(--ease-system); }
+  .work-art a:hover img { transform:scale(1.025); }
+  .work-story { grid-column:10 / 13; padding-top:.5rem; }
+  .work-role { color:var(--muted); font:400 .6875rem/1.7 var(--font-mono); margin-bottom:2rem; }
+  .work-story > p:nth-child(2) { font-size:1.55rem; line-height:1.3; letter-spacing:-.025em; }
+  .supporting-copy { font-size:.875rem; color:var(--muted); margin-top:1.25rem; line-height:1.7; }
+  .work-story > .editorial-link { margin-top:1.5rem; }
+  .chapter-index { list-style:none; margin:3rem 0 0; padding:0; border-top:1px solid var(--border); }
+  .chapter-index a { display:grid; grid-template-columns:1.5rem 1fr auto; gap:.5rem; padding-block:1.2rem; border-bottom:1px solid var(--border); }
+  .chapter-number { font:400 .625rem var(--font-mono); color:var(--muted); padding-top:.25rem; }
+  .chapter-index strong { display:block; font-size:.8125rem; font-weight:500; line-height:1.5; }
+  .chapter-index small { display:block; color:var(--muted); font-size:.75rem; line-height:1.5; margin-top:.5rem; }
+  .chapter-index :global(svg) { width:14px; height:14px; margin-top:.25rem; }
+  .systems-spread { padding-block:2rem 4rem; background:var(--surface); border-block:1px solid var(--border); }
+  .systems-spread .spread-rule { border-top:0; }
+  .systems-composition { padding-top:3rem; }
+  .systems-intro { grid-column:1 / 5; padding-right:1rem; }
+  .systems-intro > p { max-width:35ch; margin-top:2rem; color:var(--muted); font-size:.9375rem; line-height:1.7; }
+  .systems-intro .editorial-link { margin-top:2rem; font-size:.75rem; }
+  .systems-intro > .diagram-note { font:400 .6875rem/1.7 var(--font-mono); margin-top:3.5rem; }
+  .systems-composition :global(.publication-layers) { grid-column:6 / 13; }
+  .publication :global(.publication-layers ol) { gap:0; }
+  .publication :global(.publication-layers .layer) { min-height:5.5rem; grid-template-columns:1.25rem minmax(0,1.1fr) minmax(0,1fr); padding:1rem 0; border:0; border-top:1px solid var(--border); background:transparent; gap:1rem; }
+  .publication :global(.publication-layers .layer.active) { border-top-color:var(--accent); }
+  .publication :global(.publication-layers .layer strong) { font-size:1.25rem; font-weight:500; text-transform:none; letter-spacing:-.02em; }
+  .publication :global(.publication-layers .layer small) { font-size:.625rem; letter-spacing:0; text-transform:none; }
+  .publication :global(.publication-layers .layer p) { font-size:.75rem; }
+  .reliability-intro { display:flex; justify-content:space-between; align-items:end; gap:2rem; border-top:1px solid var(--border); padding-top:3rem; margin-top:4rem; }
+  .reliability-intro h3 { font-size:clamp(1.5rem,2.5vw,2.25rem); font-weight:450; line-height:1.15; letter-spacing:-.03em; }
+  .reliability-intro p { max-width:38ch; font-size:.875rem; line-height:1.7; color:var(--muted); }
+  .publication :global(.publication-lifecycle) { margin-top:3rem; }
+  .publication :global(.publication-lifecycle strong) { font-size:1.125rem; font-weight:500; text-transform:none; letter-spacing:-.02em; }
+  .publication :global(.publication-lifecycle li) { min-height:5rem; }
+  .publication :global(.publication-lifecycle li > small) { font-size:.5625rem; letter-spacing:0; }
+  .practice-spread { padding-block:var(--editorial-space); }
+  .practice-heading { align-items:end; }
+  .practice-heading h2 { grid-column:1 / 7; }
+  .practice-heading > p { grid-column:9 / 13; max-width:24ch; font:400 1.4rem/1.4 var(--font-serif); }
+  .practice-entries { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4rem; margin-top:3.5rem; }
+  .practice-entries article { border-top:1px solid var(--border); padding-top:1.5rem; }
+  .practice-entries h3 { font-size:1.1rem; font-weight:500; letter-spacing:-.02em; }
+  .practice-entries p { font-size:.875rem; color:var(--muted); line-height:1.75; margin-top:1rem; }
+  .lab-spread { padding-bottom:var(--editorial-space); }
+  .lab-spread .spread-rule h2 { color:var(--text); font-size:1.75rem; text-transform:none; letter-spacing:-.035em; }
+  .lab-composition { margin-top:2rem; }
+  .component-feature { grid-column:1 / 8; }
+  .grid-specimen { position:relative; isolation:isolate; display:flex; align-items:center; justify-content:center; aspect-ratio:1.7; background:var(--surface); overflow:hidden; }
+  .specimen-text { font-size:clamp(5rem,10vw,9rem); letter-spacing:-.04em; font-weight:450; }
+  .specimen-text > span { color:var(--accent); display:inline-block; margin-left:1.5rem; font-weight:250; }
+  .specimen-tag { position:absolute; bottom:1.3rem; left:1.5rem; font:400 .6875rem var(--font-mono); }
+  .lab-caption { margin-top:1.5rem; }
+  .lab-caption h3 a { display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:2.75rem; font-size:1.35rem; font-weight:500; letter-spacing:-.025em; }
+  .lab-caption p { max-width:50ch; color:var(--muted); font-size:.875rem; line-height:1.65; margin-block:.65rem 1rem; }
+  .lab-caption > span { color:var(--muted); font:400 .625rem var(--font-mono); }
+  .field-notes { grid-column:9 / 13; padding-top:3rem; }
+  .field-notes > h3 { font-size:.875rem; font-weight:500; }
+  .field-notes > p { font-size:clamp(1.5rem,2.8vw,2.5rem); line-height:1.2; letter-spacing:-.03em; margin-block:1rem 2rem; }
+  .notebook-entry { display:flex; justify-content:space-between; align-items:start; gap:1rem; padding-block:1.25rem; border-top:1px solid var(--border); }
+  .notebook-entry strong { display:block; font-size:.9375rem; font-weight:500; }
+  .notebook-entry small { display:block; font-size:.6875rem; color:var(--muted); margin-top:.5rem; }
+  .field-notes > .editorial-link { margin-top:2rem; }
+  .closing-spread { border-top:1px solid var(--text); padding-block:5rem 6rem; align-items:end; }
+  .closing-spread > div { grid-column:1 / 9; }
+  .closing-spread h2 { font:450 clamp(2.8rem,5.5vw,5.5rem)/1.04 var(--font-sans); letter-spacing:-.04em; }
+  .closing-spread em { font-weight:400; font-family:var(--font-serif); font-size:.9em; }
+  .closing-spread p { max-width:44ch; margin-top:2rem; font-size:.875rem; color:var(--muted); }
+  .closing-link { grid-column:10 / 13; display:flex; justify-content:space-between; align-items:center; gap:1rem; min-height:3.5rem; border-bottom:1px solid currentColor; font-size:.875rem; }
+  .closing-link :global(svg) { width:32px; height:32px; }
+  @media (min-width:1600px) { .cover-heading h1 { font-size:6rem; }.cover-image img { max-height:42rem; } }
+  @media (max-width:1000px) {
+    .cover-heading h1 { grid-column:1 / 8; }.cover-intro { grid-column:9 / 13; }
+    .work-heading > p { grid-column:8 / 13; }.work-art { grid-column:1 / 8; }.work-story { grid-column:9 / 13; }
+    .work-art img { aspect-ratio:.8; }.chapter-index { margin-top:2rem; }
+    .systems-intro { grid-column:1 / 6; }.systems-composition :global(.publication-layers) { grid-column:7 / 13; }
+    .publication :global(.publication-layers .layer) { grid-template-columns:1.25rem 1fr; }.publication :global(.publication-layers .layer p) { grid-column:2; }
+    .practice-entries { gap:2rem; }.practice-heading > p { grid-column:8 / 13; }
+    .component-feature { grid-column:1 / 8; }.field-notes { grid-column:9 / 13; padding-top:0; }
+  }
+  @media (max-width:700px) {
+    .editorial-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .edition-line { padding-block:1rem; font-size:.5625rem; }.edition-line > span:last-child { max-width:15ch; text-align:right; }
+    .cover-heading { padding-block:2.25rem 1.75rem; row-gap:1.75rem; }.cover-heading h1 { grid-column:1 / -1; font-size:clamp(3.4rem,12.3vw,5rem); }.cover-heading h1 span { padding-left:.5em; }
+    .cover-intro { grid-column:2 / 5; }.cover-intro > p:first-child { max-width:27ch; font-size:1rem; }.cover-description { margin-block:.75rem .5rem; font-size:.8125rem; }
+    .cover-image { grid-column:1 / -1; grid-row:1; }.cover-image img { aspect-ratio:1.06; object-position:64% 50%; }.publication figcaption { font-size:.5625rem; gap:1rem; }.publication figcaption > span:last-child { text-align:right; max-width:24ch; }
+    .cover-margin { grid-column:1 / -1; display:flex; justify-content:space-between; align-items:start; gap:1rem; padding:0; margin-top:.5rem; }.cover-margin > p { display:none; }.plate-number { margin-top:1.1rem; font-size:.625rem; }.image-note { margin-top:0; max-width:30ch; width:70%; }
+    .spread-title,.perspective-copy { grid-column:1 / -1; }.perspective-copy { margin-top:1.5rem; }.spread-title h2,.systems-intro h2,.practice-heading h2 { font-size:2.65rem; }.perspective-copy .editorial-lead { font-size:1.4rem; }.section-index { margin-top:1rem; }
+    .practice-line { grid-column:1 / -1; margin-top:1.5rem; font-size:.625rem; gap:.75rem 1rem; }
+    .spread-rule { font-size:.625rem; padding-block:.75rem; }.work-heading { margin:1.5rem 0 2rem; gap:1.5rem; }.work-heading h2 { grid-column:1 / -1; font-size:4.5rem; }.work-heading > p { grid-column:2 / 5; font-size:1.125rem; }.desktop-break { display:none; }
+    .work-art,.work-story { grid-column:1 / -1; }.work-art img { aspect-ratio:1.03; }.work-story { margin-top:1.75rem; }.work-role { margin-bottom:1rem; }.work-story > p:nth-child(2) { max-width:25ch; font-size:1.75rem; }.chapter-index { margin-top:2rem; }.chapter-index a { grid-template-columns:2rem 1fr auto; }.chapter-index strong { font-size:.9375rem; }
+    .systems-spread { padding-block:1rem 2.5rem; }.systems-spread .spread-rule > span:last-child { max-width:17ch; text-align:right; }.systems-composition { padding-top:2rem; gap:2rem; }.systems-intro { grid-column:1 / -1; }.systems-intro > p { max-width:44ch; margin-top:1.5rem; }.systems-intro .editorial-link { margin-top:1rem; }.systems-intro > .diagram-note { margin-top:1.5rem; }.systems-composition :global(.publication-layers) { grid-column:1 / -1; }.publication :global(.publication-layers .layer) { padding-block:1.1rem; }
+    .reliability-intro { display:block; margin-top:2rem; padding-top:2rem; }.reliability-intro h3 { font-size:1.8rem; }.reliability-intro p { margin-top:1.25rem; }.publication :global(.publication-lifecycle ol) { display:grid; grid-template-columns:minmax(0,1fr); gap:0; border:0; }.publication :global(.publication-lifecycle li) { display:flex; min-height:4.5rem; padding:.75rem 0 1.5rem 1.25rem; border-left:1px solid var(--border); gap:.5rem; }.publication :global(.publication-lifecycle .flow-marker) { top:1rem; }
+    .practice-heading h2,.practice-heading > p { grid-column:1 / -1; }.practice-heading > p { margin-top:1rem; font-size:1.2rem; max-width:30ch; }.practice-entries { grid-template-columns:1fr; gap:2rem; margin-top:2.5rem; }.practice-entries h3 { font-size:1.2rem; }
+    .lab-spread .spread-rule { align-items:start; }.lab-spread .spread-rule h2 { font-size:1.5rem; max-width:13ch; }.lab-spread .spread-rule > span { max-width:16ch; text-align:right; }.component-feature,.field-notes { grid-column:1 / -1; }.grid-specimen { aspect-ratio:1.2; }.specimen-text { font-size:6rem; }.specimen-tag { font-size:.625rem; left:1rem; }.field-notes { margin-top:3rem; }.field-notes > p { font-size:2.25rem; }.lab-caption h3 a { font-size:1.25rem; }
+    .closing-spread { padding-block:3rem 4rem; gap:2rem; }.closing-spread > div { grid-column:1 / -1; }.closing-spread h2 { font-size:clamp(2.5rem,9.5vw,3.8rem); }.closing-link { grid-column:2 / 5; margin-top:1rem; }
+  }
+  @media (prefers-reduced-motion:reduce) { .work-art img { transition:none; }.work-art a:hover img { transform:none; } }
+</style>

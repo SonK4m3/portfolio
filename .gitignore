@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local editorial review captures (keep the design system trackable)
+.impeccable/review/
+.impeccable/mocks/

@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --color-background: #f4f4f0; --color-surface: #fafaf7; --color-foreground: #111111; --color-muted: #70706b; --color-border: #d8d8d2; --color-signal: #ff3b30; --color-signal-contrast: #111111;
+  --color-background: #f5f4f0; --color-surface: #ecebe5; --color-foreground: #242520; --color-muted: #63645e; --color-border: #cfcec6; --color-signal: #8b4035; --color-signal-contrast: #ffffff;
   --color-bg: var(--color-background); --color-text: var(--color-foreground); --color-line: var(--color-border); --color-accent: var(--color-signal); --color-accent-contrast: var(--color-signal-contrast);
   --bg: var(--color-background); --surface: var(--color-surface); --text: var(--color-foreground); --muted: var(--color-muted); --border: var(--color-border); --accent: var(--color-signal);
   --font-sans: 'Geist Variable', 'Geist', sans-serif; --font-serif: 'IBM Plex Serif', serif; --font-mono: 'Geist Mono Variable', 'Geist Mono', monospace; --font-annotation: 'Caveat Variable', 'Caveat', cursive; --font-handwritten: var(--font-annotation);
@@ -13,6 +13,6 @@
   --motion-fast: 160ms; --motion-base: 280ms; --motion-slow: 600ms; --ease-system: cubic-bezier(.22, 1, .36, 1);
   --duration-fast: var(--motion-fast); --duration-base: var(--motion-base); --duration-slow: var(--motion-slow); --ease-out: var(--ease-system);
 }
-[data-theme='dark'] { color-scheme: dark; --color-background: #0c0c0c; --color-surface: #131313; --color-foreground: #f1f1ec; --color-muted: #8a8a84; --color-border: #292929; --color-signal-contrast: #0c0c0c; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme]) { color-scheme: dark; --color-background: #0c0c0c; --color-surface: #131313; --color-foreground: #f1f1ec; --color-muted: #8a8a84; --color-border: #292929; --color-signal-contrast: #0c0c0c; } }
+[data-theme='dark'] { color-scheme: dark; --color-background: #171815; --color-surface: #20211d; --color-foreground: #f1f0e9; --color-muted: #aaa99f; --color-border: #42433b; --color-signal: #e7a18c; --color-signal-contrast: #171815; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) { color-scheme: dark; --color-background: #171815; --color-surface: #20211d; --color-foreground: #f1f0e9; --color-muted: #aaa99f; --color-border: #42433b; --color-signal: #e7a18c; --color-signal-contrast: #171815; } }
 @theme { --font-display: var(--font-sans); --font-body: var(--font-sans); --font-mono: var(--font-mono); --breakpoint-wide: 90rem; }

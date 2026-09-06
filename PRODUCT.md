@@ -31,13 +31,14 @@ Visitors browse selected work, inspect NoteX as the primary case study, read not
 
 ## Brand Commitments
 
-The established visual language is Swiss technical editorial: off-white and near-black surfaces, Geist and IBM Plex Serif typography, Geist Mono for system metadata, one-pixel rules, a restrained vermilion signal, and sparse purposeful motion.
+The visual language is Technical Wallpaper Editorial: off-white and deep-ink surfaces, Swiss grotesk typography, Geist Mono annotations, sparse IBM Plex Serif reflections, one-pixel rules, a restrained rust accent, and quiet purposeful motion. Atmospheric architecture and abstract imagery introduce professional substance; they do not substitute for product evidence.
 
 ## Evidence on Hand
 
 - NoteX case-study content and architecture chapters in the repository.
 - Six signature Astro components already used across Home, About, and NoteX.
 - No verified portrait, company, education, contact, or product screenshot assets are currently available.
+- Two original AI-generated editorial images are explicitly labeled as conceptual imagery, not a portrait, verified building, or NoteX screenshot. Provenance is recorded in `docs/EDITORIAL_ASSETS.md`.
 
 ## Product Principles
 

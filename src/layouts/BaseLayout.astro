@@ -10,5 +10,46 @@ import '@fontsource/ibm-plex-serif/400-italic.css';
 const { title = siteConfig.title, description = siteConfig.description, image = '/og.svg', noindex = false } = Astro.props;
 const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: siteConfig.name, jobTitle: siteConfig.role, url: Astro.site?.toString() ?? Astro.url.toString() };
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} />{noindex && <meta name="robots" content="noindex, nofollow" />}<link rel="canonical" href={Astro.url} /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" /><meta property="og:url" content={Astro.url} /><meta property="og:image" content={new URL(image, Astro.url)} /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={new URL(image, Astro.url)} /><link rel="icon" href="/favicon.svg" /><script is:inline>const saved=localStorage.getItem('portfolio-theme');document.documentElement.dataset.theme=saved==='light'||saved==='dark'?saved:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');</script><script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script><title>{title}</title></head><body><a class="skip-link" href="#main">Skip to content</a><Header /><main id="main"><slot /></main><Footer /></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.url)} />
+    <link rel="icon" href="/favicon.svg" />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('portfolio-theme');
+        document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : 'light';
+      } catch { document.documentElement.dataset.theme = 'light'; }
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <!--
+    THESIS: Technical Wallpaper Editorial; visual atmosphere followed immediately by product evidence.
+    OWN-WORLD: Chalk #f5f4f0, ink #242520, muted rust #8b4035; Geist structure, mono captions, spare serif reflection.
+    STORY: Encounter a point of view, meet Son, read NoteX, inspect its systems, explore the workbench.
+    FIRST VIEWPORT: Left 96px headline, narrow right introduction and work link, ten-column architectural plate with a two-column margin note. Native image-note disclosure; restrained image hover, static reduced-motion fallback.
+    FORM: Brief-pinned Technical Wallpaper, candidate 1; seed 37c053ec. Asymmetric twelve-column publication, stacked mobile spreads.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+  </body>
+</html>
 <style is:global>@import '../styles/global.css';</style>

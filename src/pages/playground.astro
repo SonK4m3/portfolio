@@ -1,4 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import Container from '../components/Container.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationArchive from '../components/editorial/PublicationArchive.astro';
+import { getCollection } from 'astro:content';
+const experiments = (await getCollection('experiments', ({data}) => data.published)).sort((a,b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
-<BaseLayout title="Playground — Product Engineer"><section class="section"><Container><span class="eyebrow">Playground</span><h1>Experiments</h1><p class="about-preview muted" style="margin-top:3rem">[CONTENT: experiments and prototypes]</p></Container></section></BaseLayout>
+<BaseLayout title="Playground — Product Engineer" description="Explorations in AI, agent workflows, and interfaces by Son Nguyen."><PublicationArchive title="Playground" description="Smaller questions. Room to explore what comes next." entries={experiments.map(entry => ({title:entry.data.title,description:entry.data.description,href:`/playground/${entry.id}`}))} emptyTitle="A workbench, still in progress." emptyDescription="Experiment write-ups are not published yet. The component laboratory is open for a closer look at the working systems used in this portfolio." topics={['AI LaTeX Generator','AI Skills','Agent workflows']} /></BaseLayout>

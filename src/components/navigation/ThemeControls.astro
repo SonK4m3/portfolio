@@ -1,28 +1,23 @@
-<div class="theme-controls" aria-label="Display preferences">
-  <span class="language" aria-label="English selected; Vietnamese localization is planned"><strong>EN</strong><span aria-hidden="true">/</span><span>VI</span></span>
-  <button type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false"><span data-theme-label>Light / Dark</span></button>
-</div>
-<script is:inline>
-  const button = document.querySelector('[data-theme-toggle]');
-  const label = button?.querySelector('[data-theme-label]');
+<div class="theme-controls"><button type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.2" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg><span data-theme-label>Light</span></button></div>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const label = button?.querySelector<HTMLElement>('[data-theme-label]');
   const sync = () => {
     const dark = document.documentElement.dataset.theme === 'dark';
     button?.setAttribute('aria-pressed', String(dark));
-    if (label) label.textContent = dark ? 'Dark / Light' : 'Light / Dark';
+    if (label) label.textContent = dark ? 'Dark' : 'Light';
   };
   button?.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
-    localStorage.setItem('portfolio-theme', next);
+    try { localStorage.setItem('portfolio-theme', next); } catch { /* A theme change still works without storage. */ }
     sync();
   });
   sync();
 </script>
 <style>
-  .theme-controls { display:flex; align-items:center; gap:var(--space-5); color:var(--color-muted); font:500 .68rem/1 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
-  .language { display:flex; gap:.35rem; }.language strong { color:var(--color-text); font-weight:500; }.language span:last-child { opacity:.55; }
-  button { appearance:none; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; text-transform:uppercase; }
-  button:hover { color:var(--color-text); }
-  button[aria-pressed='true'] [data-theme-label] { color:var(--color-accent); }
-  @media (max-width:640px) { .theme-controls { gap:var(--space-3); }.language { display:none; } }
+  .theme-controls { display:flex; align-items:center; justify-content:end; color:var(--muted); }
+  button { appearance:none; display:flex; gap:.6rem; align-items:center; min-height:2.75rem; min-width:2.75rem; border:0; padding:.5rem; background:transparent; color:inherit; cursor:pointer; font-size:.6875rem; }
+  button:hover { color:var(--text); }
+  @media (scripting:none) { .theme-controls { display:none; } }
 </style>
