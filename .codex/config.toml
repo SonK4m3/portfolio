@@ -12,10 +12,6 @@
 # For a personal/global setup, merge the same settings into:
 #   ~/.codex/config.toml
 
-# Root / orchestrator
-model = "gpt-6-astra"
-model_reasoning_effort = "high"
-
 # Safe interactive defaults. Change if your workflow needs otherwise.
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
